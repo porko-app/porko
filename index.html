@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FerretFeels</title>
+  <title>Porko</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <!-- First Screen (Main UI) -->
   <div class="app-container" id="first-screen">
-    <h1>FerretFeels</h1>
+    <h1>Porko</h1>
     <img src="logohelikon.png" alt="FerretFeels Logo" class="logo" />
 
     <form id="user-info-form">
@@ -43,6 +43,10 @@
   <!-- ✅ NEW Welcome Screen -->
   <div class="app-container" id="welcome-screen" style="display: none;">
     <h2>Welcome to FerretFeels! 🐾</h2>
+
+     <!-- Add Logo here -->
+  <img src="logohelikon.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
+
     <p>This is your friendly BAC buddy! 💬</p>
     <p>Here's how it works:</p>
     <ul>
@@ -53,18 +57,6 @@
     <p>Always drink responsibly. This app is for fun and education only!</p>
     <button id="continue-btn">Let’s go! →</button>
   </div>
-
-<!-- Welcome Screen -->
-<div id="welcome-screen" class="app-container">
-  <h2>Welcome to FerretFeels! 🦦</h2>
-  <img src="ferret-welcome.png" alt="Welcome Ferret" id="welcome-ferret" />
-  <p>
-    This app helps estimate your Blood Alcohol Content (BAC) based on your weight and gender.
-    Choose drinks, have fun with your digital ferret buddy, and always remember to drink responsibly! 🍹💬
-  </p>
-  <button id="continue-btn">Let’s go!</button>
-</div>
-
 
   <!-- Second Screen -->
   <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
@@ -87,4 +79,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
