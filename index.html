@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FerretFeels</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- First Screen (Main UI) -->
+  <div class="app-container" id="first-screen">
+    <h1>FerretFeels</h1>
+    <img src="logohelikon.png" alt="FerretFeels Logo" class="logo" />
+
+    <form id="user-info-form">
+      <label for="gender">Gender</label>
+      <select id="gender" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+      </select>
+
+      <label for="weight">Weight (kg)</label>
+      <input type="number" id="weight" min="1" step="1" placeholder="Your weight" />
+
+      <button type="submit">Start</button>
+    </form>
+
+    <!-- Info button inside 9:16 frame -->
+    <button id="info-btn" class="info-btn">i</button>
+  </div>
+
+  <!-- Info Popup -->
+  <div id="info-popup" class="info-popup">
+    <div class="info-content">
+      <h2>Important Info</h2>
+      <p>This app is just for fun! It helps estimate your Blood Alcohol Content (BAC) based on your gender and weight. Always drink responsibly and never drink and drive!</p>
+      <button id="back-btn" class="back-btn">← Back</button>
+    </div>
+  </div>
+
+  <!-- ✅ NEW Welcome Screen -->
+  <div class="app-container" id="welcome-screen" style="display: none;">
+    <h2>Welcome to FerretFeels! 🐾</h2>
+    <p>This is your friendly BAC buddy! 💬</p>
+    <p>Here's how it works:</p>
+    <ul>
+      <li>Enter your gender and weight to get started</li>
+      <li>Log drinks to see how your BAC changes</li>
+      <li>Watch your ferret react in fun and silly ways!</li>
+    </ul>
+    <p>Always drink responsibly. This app is for fun and education only!</p>
+    <button id="continue-btn">Let’s go! →</button>
+  </div>
+
+<!-- Welcome Screen -->
+<div id="welcome-screen" class="app-container">
+  <h2>Welcome to FerretFeels! 🦦</h2>
+  <img src="ferret-welcome.png" alt="Welcome Ferret" id="welcome-ferret" />
+  <p>
+    This app helps estimate your Blood Alcohol Content (BAC) based on your weight and gender.
+    Choose drinks, have fun with your digital ferret buddy, and always remember to drink responsibly! 🍹💬
+  </p>
+  <button id="continue-btn">Let’s go!</button>
+</div>
+
+
+  <!-- Second Screen -->
+  <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
+
+    <!-- Speech Bubble -->
+    <div class="speech-bubble" id="ferret-message">
+      Hi there! I’m your fun ferret friend! 🐾
+    </div>
+
+    <!-- Ferret Image -->
+    <img src="ferret-neutral.png" alt="Ferret" class="ferret-image" id="ferret-image" />
+  
+    <!-- Bottom Buttons -->
+    <div class="bottom-buttons">
+      <button id="menu-btn">Menu</button>
+      <button id="settings-btn">⚙️</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

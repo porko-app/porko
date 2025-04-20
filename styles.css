@@ -1,0 +1,322 @@
+/* GENERAL STYLES */
+
+/* Make the body take full screen and align content to the top */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #c2d0de;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligns everything to the top */
+    min-height: 100vh;
+    height: 100%;
+}
+
+/* Container with 9:16 aspect ratio (360x640 is standard mobile) */
+.app-container {
+    width: 360px;
+    height: 640px;
+    background-color: #1a2a6c; /* Dark Blue Background for the container */
+    border-radius: 0px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content at the top */
+    align-items: center;
+    margin-top: 0; /* Remove any margin from top */
+}
+
+/* Title styling */
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px; /* Reduced margin */
+    color: #f4f4f4; /* Almost white text */
+}
+
+/* Logo styling */
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px; /* Adjust this to control the space between logo and content */
+    border-radius: 10px; /* Optional: make it roundy */
+}
+
+/* Label styling */
+label {
+    font-size: 16px;
+    color: #f4f4f4; /* Almost white text */
+    margin-top: 15px;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+/* Input and select field styling */
+input,
+select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #f4f4f4; /* Almost white input fields */
+    color: #333; /* Dark text inside inputs for contrast */
+}
+
+/* Button styling */
+button {
+    margin-top: 40px; /* Increase the space above the button */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #FFA500; /* Orange background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #FF8C00; /* Darker orange on hover */
+}
+
+/* Container with 9:16 aspect ratio (360x640) */
+.app-container {
+    width: 360px;
+    height: 640px;
+    background-color: #1a2a6c; /* Dark Blue Background */
+    position: relative; /* Make the container relative so children (like the button) can be positioned inside */
+    padding: 30px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content at the top */
+    align-items: center;
+}
+
+/* Info Button inside 9:16 frame (below start button) */
+.info-btn {
+    padding: 8px 15px;
+    font-size: 18px;
+    background-color: #FF8C00; /* Always orange */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative; /* Adjust position relative to other elements in the flex container */
+    margin-top: 20px; /* Space below the start button */
+    margin-left: 240px; /* Add margin to push it to the right */
+    width: 40px; /* Size of the button */
+    height: 40px; /* Round shape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Info Button hover effect */
+.info-btn:hover {
+    background-color: #FF8C00; /* Keep it orange on hover */
+}
+
+/* Info Popup */
+.info-popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Popup content styling */
+.info-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%; /* Adjusted to fit the 9:16 container */
+    max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
+    box-sizing: border-box;
+}
+
+.info-content h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.info-content p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Back button */
+.back-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #1a2a6c;
+    cursor: pointer;
+    margin-top: 20px; /* Margin to position it below the text */
+}
+
+.back-btn:hover {
+    color: #FF8C00; /* Change color on hover */
+}
+
+/* For Webkit browsers like Chrome/Safari */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Second Screen Layout */
+#second-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align elements to the top */
+    align-items: center;
+    padding: 20px;
+    background-color: #1a2a6c; /* Dark blue background for second screen */
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Full height for the second screen */
+    box-sizing: border-box;
+}
+
+/* Title for Second Screen */
+#second-screen h1 {
+    font-size: 24px;
+    color: #f4f4f4;
+    margin-bottom: 20px;
+}
+
+/* Speech Bubble Styling */
+.speech-bubble {
+    position: relative;
+    background-color: #FFCC00; /* Yellow color for the bubble */
+    color: #1a2a6c; /* Dark text for better contrast */
+    padding: 15px 25px;
+    border-radius: 10px;
+    max-width: 70%; /* Make sure it's not too wide */
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Tail for the Speech Bubble */
+.speech-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.bubble-tail {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bubble-tail span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #FFCC00;
+    border-radius: 50%;
+    margin: 0 3px;
+}
+
+/* Ferret Image Styling */
+.ferret-image {
+    width: 150px; /* Adjust size as necessary */
+    height: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* Bottom Buttons (Menu & Settings) */
+.bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.bottom-buttons button {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #FFA500; /* Orange for buttons */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bottom-buttons button:hover {
+    background-color: #FF8C00; /* Darker orange on hover */
+}
+
+/* WELCOME SCREEN */
+#welcome-screen {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #1a2a6c;
+    color: #f4f4f4;
+    height: 100%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+#welcome-screen h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+#welcome-screen p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #f4f4f4;
+}
+
+/* Optional: Welcome screen ferret image */
+#welcome-ferret {
+    width: 140px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+/* Continue Button */
+#continue-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+
+#continue-btn:hover {
+    background-color: #FF8C00;
+}
