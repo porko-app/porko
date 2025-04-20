@@ -13,10 +13,17 @@ body {
     height: 100%;
 }
 
+/* Making sure the container doesn't overflow or look too small on mobile */
+@media (max-width: 480px) {
+    .app-container {
+        width: 100%;
+        height: auto; /* Allow height to be flexible */
+    }
+}
 
 /* Container with 10:16 aspect ratio (360x640 is standard mobile) */
 .app-container {
-    aspect-ratio: 10 / 16;               /* Maintain perfect 10:16 ratio */
+    aspect-ratio: 8 / 16;               /* Maintain perfect 10:16 ratio */
     width: 360px;                       /* Base width for phone-sized view */
     max-height: 100vh;                  /* Prevent it from exceeding screen height */
     background-color: #1a2a6c;          /* Dark blue frame */
@@ -96,7 +103,7 @@ button:hover {
 
 /* Container with 10:16 aspect ratio (360x640) */
 .app-container {
-    aspect-ratio: 10 / 16;               /* Maintain perfect 10:16 ratio */
+    aspect-ratio: 8 / 16;               /* Maintain perfect 10:16 ratio */
     width: 360px;
     height: 640px;
     background-color: #1a2a6c; /* Dark Blue Background */
