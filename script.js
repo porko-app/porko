@@ -15,12 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener to the user info form on the first screen
     document.getElementById('user-info-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent page reload
+        console.log('Start button clicked');
+event.preventDefault();
+ // Prevent page reload on form submit
     
         // Get user input values
         const gender = document.getElementById('gender').value;
         const weight = document.getElementById('weight').value;
-        
+
+        // Ensure that user has selected gender and entered weight
+    if (!gender || !weight) {
+        alert('Please enter your gender and weight!');
+        return;
+    }
+
         // Calculate BAC (Blood Alcohol Content) based on gender and weight
         const bac = calculateBAC(gender, weight);
         
@@ -72,11 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show the info popup when the "i" button is clicked
     infoBtn.addEventListener('click', function() {
+        console.log('Info button clicked');
         infoPopup.style.display = 'flex'; // Display the popup
     });
 
     // Hide the info popup when the back button is clicked
     backBtn.addEventListener('click', function() {
+        console.log('Back button clicked');
         infoPopup.style.display = 'none'; // Hide the popup
     });
 });
