@@ -8,8 +8,9 @@ body {
     background-color: #c2d0de;
     display: flex;
     justify-content: center;
-    align-items: center;               /* Center the container vertically */
+    align-items: flex-start; /* Aligns everything to the top */
     min-height: 100vh;
+    height: 100%;
 }
 
 
@@ -62,6 +63,8 @@ select {
     width: 100%;
     padding: 8px 10px;
     margin-top: 5px;
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -73,7 +76,7 @@ select {
 /* Button styling */
 button {
     margin-top: 40px; /* Increase the space above the button */
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
     background-color: #FFA500; /* Orange background */
     color: #fff; /* White text */
@@ -81,6 +84,10 @@ button {
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 50%; /* Make button take full width */
+    margin-top: 20px; /* Add space between button and form elements */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
 }
 
 button:hover {
@@ -89,19 +96,16 @@ button:hover {
 
 /* Container with 9:16 aspect ratio (360x640) */
 .app-container {
-    aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
-    width: 360px;                       /* Base width for phone-sized view */
-    max-height: 100vh;                  /* Prevent it from exceeding screen height */
-    background-color: #1a2a6c;          /* Dark blue frame */
-    border-radius: 0px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    padding: 30px 20px;                 /* Consistent inner spacing */
-    box-sizing: border-box;            /* Includes padding in size */
+    width: 360px;
+    height: 640px;
+    background-color: #1a2a6c; /* Dark Blue Background */
+    position: relative; /* Make the container the reference point for absolute positioning */
+    padding: 30px 20px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;           /* Center content vertically */
-    align-items: center;               /* Center content horizontally */
-    margin: 0 auto;                    /* Center horizontally on large screens */
+    justify-content: flex-start; /* Align content at the top */
+    align-items: center;
 }
 
 /* Info Button inside 9:16 frame (below start button) */
@@ -113,9 +117,10 @@ button:hover {
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    position: relative; /* Adjust position relative to other elements in the flex container */
-    margin-top: 20px; /* Space below the start button */
-    margin-left: 240px; /* Add margin to push it to the right */
+    position: absolute; /* Position it relative to the container */
+    top: 75%; /* Position it 10% from the top of the container (below the start button) */
+    right: 15%; /* Align to the right side of the container with some margin */
+    transform: translateX(50%); /* Adjust to center horizontally */
     width: 40px; /* Size of the button */
     height: 40px; /* Round shape */
     display: flex;
