@@ -8,25 +8,26 @@ body {
     background-color: #c2d0de;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Aligns everything to the top */
+    align-items: center;               /* Center the container vertically */
     min-height: 100vh;
-    height: 100%;
 }
+
 
 /* Container with 9:16 aspect ratio (360x640 is standard mobile) */
 .app-container {
-    width: 360px;
-    height: 640px;
-    background-color: #1a2a6c; /* Dark Blue Background for the container */
+    aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+    width: 360px;                       /* Base width for phone-sized view */
+    max-height: 100vh;                  /* Prevent it from exceeding screen height */
+    background-color: #1a2a6c;          /* Dark blue frame */
     border-radius: 0px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    padding: 30px 20px;
-    box-sizing: border-box;
+    padding: 30px 20px;                 /* Consistent inner spacing */
+    box-sizing: border-box;            /* Includes padding in size */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align content at the top */
-    align-items: center;
-    margin-top: 0; /* Remove any margin from top */
+    justify-content: center;           /* Center content vertically */
+    align-items: center;               /* Center content horizontally */
+    margin: 0 auto;                    /* Center horizontally on large screens */
 }
 
 /* Title styling */
@@ -88,16 +89,19 @@ button:hover {
 
 /* Container with 9:16 aspect ratio (360x640) */
 .app-container {
-    width: 360px;
-    height: 640px;
-    background-color: #1a2a6c; /* Dark Blue Background */
-    position: relative; /* Make the container relative so children (like the button) can be positioned inside */
-    padding: 30px 20px;
-    box-sizing: border-box;
+    aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+    width: 360px;                       /* Base width for phone-sized view */
+    max-height: 100vh;                  /* Prevent it from exceeding screen height */
+    background-color: #1a2a6c;          /* Dark blue frame */
+    border-radius: 0px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;                 /* Consistent inner spacing */
+    box-sizing: border-box;            /* Includes padding in size */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align content at the top */
-    align-items: center;
+    justify-content: center;           /* Center content vertically */
+    align-items: center;               /* Center content horizontally */
+    margin: 0 auto;                    /* Center horizontally on large screens */
 }
 
 /* Info Button inside 9:16 frame (below start button) */
@@ -189,7 +193,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
     padding: 20px;
     background-color: #1a2a6c; /* Dark blue background for second screen */
-    border-radius: 10px;
+    border-radius: 00px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     height: 100%; /* Full height for the second screen */
     box-sizing: border-box;
@@ -274,7 +278,7 @@ input::-webkit-inner-spin-button {
 #welcome-screen {
     display: none; /* Hidden by default */
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center; /* Center content vertically */
     align-items: center;
     text-align: center;
     background-color: #1a2a6c;
@@ -286,28 +290,36 @@ input::-webkit-inner-spin-button {
 
 #welcome-screen h2 {
     font-size: 22px;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Reduced margin for h2 */
+    margin-top: 50px; /* Added margin to push the header down */
+    line-height: 1.2; /* Tightened line height */
 }
 
 #welcome-screen p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 30px;
+    font-size: 14px;
+    line-height: 1.0; /* Reduced line height for paragraphs */
+    margin-bottom: 10px; /* Reduced margin between paragraphs */
     color: #f4f4f4;
 }
 
-/* Optional: Welcome screen ferret image */
-#welcome-ferret {
-    width: 140px;
+#welcome-screen ul {
+    font-size: 14px;  /* Reduce font size of list items */
+    line-height: 1.2; /* Reduced line height */
+    margin-bottom: 10px; /* Reduced margin-bottom to give more space */
+}
+
+/* New Logo Styling */
+#welcome-logo {
+    width: 120px; /* Adjust logo size */
     height: auto;
-    margin-bottom: 20px;
-    border-radius: 10px;
+    margin: 20px 0; /* Adjusted margin for spacing between text */
+    border-radius: 10px; /* Optional: round the edges of the logo */
 }
 
 /* Continue Button */
 #continue-btn {
-    padding: 12px 25px;
-    font-size: 18px;
+    padding: 10px 20px;
+    font-size: 17px;
     background-color: #FFA500;
     color: white;
     border: none;
@@ -319,4 +331,16 @@ input::-webkit-inner-spin-button {
 
 #continue-btn:hover {
     background-color: #FF8C00;
+}
+
+/* Hide spinner arrows in number input fields for Webkit browsers (Chrome/Safari) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide spinner arrows in number input fields for Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
