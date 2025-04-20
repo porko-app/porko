@@ -14,9 +14,9 @@ body {
 }
 
 
-/* Container with 9:16 aspect ratio (360x640 is standard mobile) */
+/* Container with 10:16 aspect ratio (360x640 is standard mobile) */
 .app-container {
-    aspect-ratio: 8 / 16;               /* Maintain perfect 9:16 ratio */
+    aspect-ratio: 10 / 16;               /* Maintain perfect 10:16 ratio */
     width: 360px;                       /* Base width for phone-sized view */
     max-height: 100vh;                  /* Prevent it from exceeding screen height */
     background-color: #1a2a6c;          /* Dark blue frame */
@@ -94,9 +94,9 @@ button:hover {
     background-color: #FF8C00; /* Darker orange on hover */
 }
 
-/* Container with 9:16 aspect ratio (360x640) */
+/* Container with 10:16 aspect ratio (360x640) */
 .app-container {
-    aspect-ratio: 8 / 16;               /* Maintain perfect 10:16 ratio */
+    aspect-ratio: 10 / 16;               /* Maintain perfect 10:16 ratio */
     width: 360px;
     height: 640px;
     background-color: #1a2a6c; /* Dark Blue Background */
