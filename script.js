@@ -1,105 +1,107 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initially show the welcome screen
     document.getElementById('welcome-screen').style.display = 'flex';
-    document.getElementById('first-screen').style.display = 'none'; // Hide first screen initially
-    document.getElementById('second-screen').style.display = 'none'; // Hide second screen initially
+    document.getElementById('first-screen').style.display = 'none';
+    document.getElementById('second-screen').style.display = 'none';
 
-    // Add event listener for the continue button on the welcome screen
-    document.getElementById('continue-btn').addEventListener('click', function() {
-        // Hide welcome screen
+    // Continue button on welcome screen
+    document.getElementById('continue-btn').addEventListener('click', function () {
         document.getElementById('welcome-screen').style.display = 'none';
-        
-        // Show first screen
         document.getElementById('first-screen').style.display = 'flex';
     });
 
-    // Add event listener to the user info form on the first screen
-    document.getElementById('user-info-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent page reload on form submit
-        
-        // Debugging: Log the event to check if the form is being submitted
-        console.log('Form submitted');
-        
-        // Get user input values
+    // Start button (form submission)
+    const userForm = document.getElementById('user-info-form');
+    userForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent reload
+
         const gender = document.getElementById('gender').value;
         const weight = document.getElementById('weight').value;
 
-        // Debugging: Log the values of gender and weight
-        console.log(`Gender: ${gender}, Weight: ${weight}`);
-
-        // Ensure that user has selected gender and entered weight
         if (!gender || !weight) {
             alert('Please enter your gender and weight!');
             return;
         }
 
-        // Calculate BAC (Blood Alcohol Content) based on gender and weight
+        console.log("✅ Start button clicked");
+
         const bac = calculateBAC(gender, weight);
-        
-        // Debugging: Log the calculated BAC
-        console.log(`Calculated BAC: ${bac}`);
-
-        // Update ferret's speech bubble with personalized message
         updateFerretMessage(gender, bac);
+        updateSpeechBubbleImage(bac); // ← Switches image based on BAC
 
-        // Hide first screen and show second screen
         document.getElementById('first-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'flex'; // Show second screen
+        document.getElementById('second-screen').style.display = 'flex';
     });
 
-    // Function to calculate BAC
+    // BAC Calculation
     function calculateBAC(gender, weight) {
-        let bac = 0;
-        const alcoholConsumed = 0.5; // Just a placeholder, this can be dynamic based on drink choice
-        const averageMetabolismRate = 0.017; // Standard metabolism rate per hour
-        
+        const alcoholConsumed = 0.5;
+        const averageMetabolismRate = 0.017;
+        let bac;
+
         if (gender === 'female') {
             bac = (alcoholConsumed / (weight * 0.55)) - averageMetabolismRate;
-        } else if (gender === 'male') {
+        } else {
             bac = (alcoholConsumed / (weight * 0.68)) - averageMetabolismRate;
         }
 
         return bac;
     }
 
-    // Function to update the ferret's speech bubble based on BAC
+    // Text-based message
     function updateFerretMessage(gender, bac) {
-        const ferretMessageElement = document.getElementById('ferret-message'); // Ensure this element exists in your HTML
-        
-        // Different messages based on BAC level
+        const ferretMessageElement = document.getElementById('ferret-message');
+        if (!ferretMessageElement) return;
+
         if (bac < 0.05) {
             ferretMessageElement.innerHTML = "Hey there, I'm ready for a fun night! 🐾";
-        } else if (bac >= 0.05 && bac < 0.1) {
+        } else if (bac < 0.1) {
             ferretMessageElement.innerHTML = "Whew, I'm starting to feel tipsy! 🍸";
-        } else if (bac >= 0.1 && bac < 0.15) {
+        } else if (bac < 0.15) {
             ferretMessageElement.innerHTML = "Uh-oh, I think I'm feeling a little dizzy... 😵";
-        } else if (bac >= 0.15) {
-            ferretMessageElement.innerHTML = "Whoa, I'm a bit wobbly! 🤪 Stay safe, friend!";
         } else {
-            ferretMessageElement.innerHTML = "You’re my favorite human, let’s keep this fun going! 🎉";
+            ferretMessageElement.innerHTML = "Whoa, I'm a bit wobbly! 🤪 Stay safe, friend!";
         }
     }
 
-    // Info Button handling (for the popup)
+    // 🖼️ Swap bubble image based on BAC
+    function updateSpeechBubbleImage(bac) {
+        const bubbleImage = document.getElementById('ferret-bubble');
+        const ferretImage = document.getElementById('ferret-image');
+
+        if (!bubbleImage || !ferretImage) return;
+
+        if (bac < 0.05) {
+            bubbleImage.src = 'speech-bubble-neutral.png';
+            ferretImage.src = 'ferret-neutral.png';
+        } else if (bac < 0.1) {
+            bubbleImage.src = 'speech-bubble-tipsy.png';
+            ferretImage.src = 'ferret-tipsy.png';
+        } else if (bac < 0.15) {
+            bubbleImage.src = 'speech-bubble-drunk.png';
+            ferretImage.src = 'ferret-drunk.png';
+        } else {
+            bubbleImage.src = 'speech-bubble-sobering-up.png';
+            ferretImage.src = 'ferret-sobering-up.png';
+        }
+    }
+
+    // Info popup handling
     const infoBtn = document.getElementById('info-btn');
     const infoPopup = document.getElementById('info-popup');
     const backBtn = document.getElementById('back-btn');
-    
-    // Show the info popup when the "i" button is clicked
-    infoBtn.addEventListener('click', function() {
-        console.log('Info button clicked');
-        infoPopup.style.display = 'flex'; // Show the popup
+
+    infoBtn.addEventListener('click', () => {
+        infoPopup.style.display = 'flex';
         setTimeout(() => {
-            infoPopup.style.opacity = 1; // Fade in effect
-        }, 10); // Small delay to ensure opacity transition starts
+            infoPopup.style.opacity = 1;
+        }, 10);
     });
 
-    // Hide the info popup when the back button is clicked
-    backBtn.addEventListener('click', function() {
-        console.log('Back button clicked');
-        infoPopup.style.opacity = 0; // Fade-out effect
+    backBtn.addEventListener('click', () => {
+        infoPopup.style.opacity = 0;
         setTimeout(() => {
-            infoPopup.style.display = 'none'; // Hide after fade-out completes
-        }, 300); // Wait for the fade-out transition to finish
+            infoPopup.style.display = 'none';
+        }, 300);
     });
 });
