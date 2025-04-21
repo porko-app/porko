@@ -118,29 +118,33 @@ button:hover {
 
 /* Info Button inside 9:16 frame (below start button) */
 .info-btn {
-    padding: 8px 15px;
-    font-size: 18px;
-    background-color: #FF8C00; /* Always orange */
-    color: white;
+    background: none;
     border: none;
-    border-radius: 50%;
+    padding: 0;
     cursor: pointer;
-    position: absolute; /* Position it relative to the container */
-    top: 75%; /* Position it 10% from the top of the container (below the start button) */
-    right: 15%; /* Align to the right side of the container with some margin */
-    transform: translateX(50%); /* Adjust to center horizontally */
-    width: 40px; /* Size of the button */
-    height: 40px; /* Round shape */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-/* Info Button hover effect */
-.info-btn:hover {
-    background-color: #FF8C00; /* Keep it orange on hover */
-}
+    position: absolute;
+    top: 500px;
+    right: 40px;
+    width: 40px;
+    height: 40px;
+    outline: none;         /* removes the dotted border on focus */
+  }
+  
+  .info-btn img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none; /* ensures image doesn't trigger hover style separately */
+  }
+  
+  /* Remove any orange-ish hover/focus styles */
+  .info-btn:focus,
+  .info-btn:hover {
+    outline: none;
+    background: none;
+    box-shadow: none;
+  }
+   
 
 /* Info Popup */
 .info-popup {
@@ -154,6 +158,8 @@ button:hover {
     justify-content: center;
     align-items: center;
     z-index: 999;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in/out */
 }
 
 /* Popup content styling */
@@ -165,13 +171,16 @@ button:hover {
     width: 80%; /* Adjusted to fit the 9:16 container */
     max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
     box-sizing: border-box;
+    opacity: 1; /* Keep the content visible when the pop-up shows */
 }
 
+/* Title styling */
 .info-content h2 {
     margin-bottom: 15px;
     font-size: 22px;
 }
 
+/* Paragraph styling */
 .info-content p {
     font-size: 16px;
     line-height: 1.5;
@@ -378,3 +387,18 @@ input[type="number"] {
     display: block;
   margin: 0 auto;
 }
+
+@keyframes ferretTailShake {
+    0%   { transform: rotate(0deg); }
+    15%  { transform: rotate(15deg); }
+    30%  { transform: rotate(-15deg); }
+    45%  { transform: rotate(10deg); }
+    60%  { transform: rotate(-10deg); }
+    75%  { transform: rotate(5deg); }
+    90%  { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  .info-btn:hover {
+    animation: ferretTailShake 0.6s ease-in-out;
+  } 
