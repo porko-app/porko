@@ -358,3 +358,23 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+/* Style for the "Start" button */
+#start-btn {
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    cursor: pointer; /* Change cursor to pointer to indicate clickability */
+    display: block;
+    margin: 35px auto; /* This centers the button horizontally */
+    text-align: center;
+    transform: translateX(-25px); /* Moves it slightly left */
+}
+
+/* Style the image inside the button */
+#start-btn img {
+    width: 150px; /* Adjust width of the button image as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+  margin: 0 auto;
+}
