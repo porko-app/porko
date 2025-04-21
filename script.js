@@ -70,20 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Info Button handling (for the popup)
-    const infoBtn = document.getElementById('info-btn');
-    const infoPopup = document.getElementById('info-popup');
-    const backBtn = document.getElementById('back-btn');
-
-    // Show the info popup when the "i" button is clicked
+        // Info Button handling (for the popup)
+        const infoBtn = document.getElementById('info-btn');
+        const infoPopup = document.getElementById('info-popup');
+        const backBtn = document.getElementById('back-btn');
+    
+        // Show the info popup when the "i" button is clicked
     infoBtn.addEventListener('click', function() {
         console.log('Info button clicked');
-        infoPopup.style.display = 'flex'; // Display the popup
+        infoPopup.style.display = 'flex'; // Show the popup
+        setTimeout(() => {
+            infoPopup.style.opacity = 1; // Fade in effect
+        }, 10); // Small delay to ensure opacity transition starts
     });
 
     // Hide the info popup when the back button is clicked
     backBtn.addEventListener('click', function() {
         console.log('Back button clicked');
-        infoPopup.style.display = 'none'; // Hide the popup
+        infoPopup.style.opacity = 0; // Fade-out effect
+        setTimeout(() => {
+            infoPopup.style.display = 'none'; // Hide after fade-out completes
+        }, 300); // Wait for the fade-out transition to finish
     });
 });
