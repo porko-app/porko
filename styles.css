@@ -288,23 +288,49 @@ input::-webkit-inner-spin-button {
 .bottom-buttons {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin-top: 20px;
+    width: 70%;
+    margin-top: -10px;
 }
 
+/* Style for the bottom buttons */
 .bottom-buttons button {
-    padding: 12px 25px;
-    font-size: 18px;
-    background-color: #FFA500; /* Orange for buttons */
-    color: white;
+    background: none;
     border: none;
-    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-right: 20px; /* Adjust space between the buttons */
 }
 
-.bottom-buttons button:hover {
-    background-color: #FF8C00; /* Darker orange on hover */
+/* Style for the button images */
+.bottom-buttons img {
+    width: 50px;  /* Adjust the size of the button images */
+    height: 50px;
+}
+
+.bottom-buttons img {
+    width: 50px;  /* Adjust the size of the button images */
+    height: 50px;
+}
+
+/* Make the Menu button bigger */
+#menu-btn img {
+    width: 60px;  /* Increase the size of the Menu button */
+    height: 60px; /* Increase the size of the Menu button */
+}
+
+/* Specific style for the Settings button */
+#settings-btn img {
+    width: 50px;  /* Keep the Settings button size the same */
+    height: 50px; /* Keep the Settings button size the same */
+}
+
+/* Push the Menu button to the left */
+#menu-btn {
+    margin-left: 60px;  /* Pushes the menu button to the left */
+}
+
+/* Specific style for the Settings button */
+#settings-btn {
+    margin-left: -5px; /* Adds space between Menu and Settings */
 }
 
 /* WELCOME SCREEN */
@@ -448,5 +474,50 @@ input[type="number"] {
       width: 80%; /* Slightly smaller on mobile */
       margin-top: -10px; /* Adjust position if necessary */
     }
+  }
+
+
+/* Subtle wobble (small BAC) */
+@keyframes subtle-wobble {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  @keyframes moderate-wobble {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  /* Strong wobble (high BAC) */
+  @keyframes strong-wobble {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  /* Apply to ferret image */
+  #ferret-image {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Wobble classes */
+  .wobble-subtle {
+    animation: subtle-wobble 2s infinite ease-in-out;
+  }
+  
+  .wobble-moderate {
+    animation: moderate-wobble 1.5s infinite ease-in-out;
+  }
+  
+  .wobble-strong {
+    animation: strong-wobble 1s infinite ease-in-out;
   }
   
