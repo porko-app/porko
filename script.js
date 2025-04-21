@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('first-screen').style.display = 'none'; // Hide first screen initially
     document.getElementById('second-screen').style.display = 'none'; // Hide second screen initially
 
-    // Add event listener to the continue button on the welcome screen
     document.getElementById('continue-btn').addEventListener('click', function() {
         // Hide welcome screen
         document.getElementById('welcome-screen').style.display = 'none';
@@ -13,11 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('first-screen').style.display = 'flex';
     });
 
-    // Add event listener to the user info form on the first screen
-    document.getElementById('user-info-form').addEventListener('submit', function(event) {
-        console.log('Start button clicked');
-event.preventDefault();
- // Prevent page reload on form submit
+        // Add event listener to the user info form on the first screen
+        document.getElementById('user-info-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload on form submit
     
         // Get user input values
         const gender = document.getElementById('gender').value;
