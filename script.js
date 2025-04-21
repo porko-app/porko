@@ -86,6 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Function to apply wobble effect based on BAC level
+    function applyFerretWobble(bac) {
+        const ferretImage = document.getElementById('ferret-image');
+
+        // Remove previous wobble classes
+        ferretImage.classList.remove('wobble-subtle', 'wobble-moderate', 'wobble-strong');
+
+        // Apply new wobble class based on BAC level
+        if (bac >= 0.05 && bac < 0.1) {
+            ferretImage.classList.add('wobble-subtle');  // Small wobble
+        } else if (bac >= 0.1 && bac < 0.15) {
+            ferretImage.classList.add('wobble-moderate');  // Moderate wobble
+        } else if (bac >= 0.15) {
+            ferretImage.classList.add('wobble-strong');  // Strong wobble
+        }
+    }
+
     // Info popup handling
     const infoBtn = document.getElementById('info-btn');
     const infoPopup = document.getElementById('info-popup');
