@@ -186,19 +186,35 @@ button:hover {
     line-height: 1.5;
 }
 
-/* Back button */
+/* Image-style back button */
 .back-btn {
-    background-color: transparent;
+    background: none;
     border: none;
-    font-size: 30px;
-    color: #1a2a6c;
     cursor: pointer;
-    margin-top: 20px; /* Margin to position it below the text */
-}
+    padding: 0;
+    margin-top: 20px;
+    outline: none;
+  }
+  
+  .back-icon {
+    width: 40px;
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+  
+  .back-btn:hover {
+    animation:  0.4s ease-in-out;
+    background: none;
+    border: none;
+  }
+  
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+  }
+  
 
-.back-btn:hover {
-    color: #FF8C00; /* Change color on hover */
-}
 
 /* For Webkit browsers like Chrome/Safari */
 input::-webkit-outer-spin-button,
@@ -401,4 +417,5 @@ input[type="number"] {
   
   .info-btn:hover {
     animation: ferretTailShake 0.6s ease-in-out;
-  } 
+  }
+  
