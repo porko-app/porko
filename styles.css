@@ -331,20 +331,21 @@ input::-webkit-inner-spin-button {
 
 /* Continue Button */
 #continue-btn {
-    padding: 10px 20px;
-    font-size: 17px;
-    background-color: #FFA500;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: auto;
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove any padding */
+    outline: none; /* Remove focus outline */
+    margin-left: 55px; /* Move the button 20px to the left */
+    margin-top: -10px; /* Moves it a little upwards */
 }
 
-#continue-btn:hover {
-    background-color: #FF8C00;
+#continue-btn img {
+    display: block; /* Ensure image is displayed as block */
+    width: 200px; /* Adjust the size if needed */
+    height: auto; /* Keep aspect ratio */
+    border: none; /* Remove any border if there is one around the image */
 }
+
 
 /* Hide spinner arrows in number input fields for Webkit browsers (Chrome/Safari) */
 input[type="number"]::-webkit-outer-spin-button,
