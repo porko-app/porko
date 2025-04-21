@@ -244,26 +244,21 @@ input::-webkit-inner-spin-button {
     margin-bottom: 20px;
 }
 
-/* Speech Bubble Styling */
-.speech-bubble {
-    position: relative;
-    background-color: #FFCC00; /* Yellow color for the bubble */
-    color: #1a2a6c; /* Dark text for better contrast */
-    padding: 15px 25px;
-    border-radius: 10px;
-    max-width: 70%; /* Make sure it's not too wide */
-    margin-bottom: 10px;
-    font-size: 16px;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-/* Tail for the Speech Bubble */
-.speech-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
+.speech-bubble-img {
+    width: 90%;
+    max-width: 450px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    margin-top: -20px; /* Try -30px or more for higher */
+  }
+  
+  @media (max-width: 600px) {
+    .speech-bubble-img {
+      width: 100%;
+      max-width: 300px;
+    }
+  }  
 
 .bubble-tail {
     position: absolute;
@@ -283,9 +278,9 @@ input::-webkit-inner-spin-button {
 
 /* Ferret Image Styling */
 .ferret-image {
-    width: 150px; /* Adjust size as necessary */
+    width: 300px; /* Adjust size as necessary */
     height: auto;
-    margin-top: 20px;
+    margin-top: -70px;
     border-radius: 10px;
 }
 
@@ -417,5 +412,41 @@ input[type="number"] {
   
   .info-btn:hover {
     animation: ferretTailShake 0.6s ease-in-out;
+  }
+  
+  /* Speech bubble animation */
+@keyframes floatBubble {
+    0% {
+      transform: translateY(0);  /* Start position */
+    }
+    50% {
+      transform: translateY(-10px); /* Move up */
+    }
+    100% {
+      transform: translateY(0);  /* Return to original position */
+    }
+  }
+  
+  /* Apply the floating effect to the speech bubble */
+  .speech-bubble-img {
+    width: 90%;
+    max-width: 450px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  
+    /* Position it a little higher */
+    margin-top: -20px;
+  
+    /* Apply animation */
+    animation: floatBubble 3s ease-in-out infinite; /* Float forever */
+  }
+  
+  /* Responsive design for mobile screens */
+  @media (max-width: 600px) {
+    .speech-bubble-img {
+      width: 80%; /* Slightly smaller on mobile */
+      margin-top: -10px; /* Adjust position if necessary */
+    }
   }
   
