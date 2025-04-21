@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('first-screen').style.display = 'none'; // Hide first screen initially
     document.getElementById('second-screen').style.display = 'none'; // Hide second screen initially
 
+    // Add event listener for the continue button on the welcome screen
     document.getElementById('continue-btn').addEventListener('click', function() {
         // Hide welcome screen
         document.getElementById('welcome-screen').style.display = 'none';
@@ -12,26 +13,35 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('first-screen').style.display = 'flex';
     });
 
-        // Add event listener to the user info form on the first screen
-        document.getElementById('user-info-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent page reload on form submit
-    
+    // Add event listener to the user info form on the first screen
+    document.getElementById('user-info-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent page reload on form submit
+        
+        // Debugging: Log the event to check if the form is being submitted
+        console.log('Form submitted');
+        
         // Get user input values
         const gender = document.getElementById('gender').value;
         const weight = document.getElementById('weight').value;
 
+        // Debugging: Log the values of gender and weight
+        console.log(`Gender: ${gender}, Weight: ${weight}`);
+
         // Ensure that user has selected gender and entered weight
-    if (!gender || !weight) {
-        alert('Please enter your gender and weight!');
-        return;
-    }
+        if (!gender || !weight) {
+            alert('Please enter your gender and weight!');
+            return;
+        }
 
         // Calculate BAC (Blood Alcohol Content) based on gender and weight
         const bac = calculateBAC(gender, weight);
         
+        // Debugging: Log the calculated BAC
+        console.log(`Calculated BAC: ${bac}`);
+
         // Update ferret's speech bubble with personalized message
         updateFerretMessage(gender, bac);
-    
+
         // Hide first screen and show second screen
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex'; // Show second screen
@@ -54,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to update the ferret's speech bubble based on BAC
     function updateFerretMessage(gender, bac) {
-        const ferretMessageElement = document.getElementById('ferret-message');
+        const ferretMessageElement = document.getElementById('ferret-message'); // Ensure this element exists in your HTML
         
         // Different messages based on BAC level
         if (bac < 0.05) {
@@ -70,12 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-        // Info Button handling (for the popup)
-        const infoBtn = document.getElementById('info-btn');
-        const infoPopup = document.getElementById('info-popup');
-        const backBtn = document.getElementById('back-btn');
+    // Info Button handling (for the popup)
+    const infoBtn = document.getElementById('info-btn');
+    const infoPopup = document.getElementById('info-popup');
+    const backBtn = document.getElementById('back-btn');
     
-        // Show the info popup when the "i" button is clicked
+    // Show the info popup when the "i" button is clicked
     infoBtn.addEventListener('click', function() {
         console.log('Info button clicked');
         infoPopup.style.display = 'flex'; // Show the popup
