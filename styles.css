@@ -2,522 +2,524 @@
 
 /* Make the body take full screen and align content to the top */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #c2d0de;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Aligns everything to the top */
-    min-height: 100vh;
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #c2d0de;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns everything to the top */
+  min-height: 100vh;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
 }
 
-/* Making sure the container doesn't overflow or look too small on mobile */
+/* Media Query for smaller screens (mobile) */
 @media (max-width: 480px) {
-    .app-container {
-        width: 100%;
-        height: auto; /* Allow height to be flexible */
-    }
+  body {
+      background-color: #1a2a6c; /* Dark Blue Background on mobile */
+  }
 }
 
 /* Container with 9:16 aspect ratio (360x640 is standard mobile) */
 .app-container {
-    aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
-    width: 360px;                       /* Base width for phone-sized view */
-    max-height: 100vh;                  /* Prevent it from exceeding screen height */
-    background-color: #1a2a6c;          /* Dark blue frame */
-    border-radius: 0px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    padding: 30px 20px;                 /* Consistent inner spacing */
-    box-sizing: border-box;            /* Includes padding in size */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;           /* Center content vertically */
-    align-items: center;               /* Center content horizontally */
-    margin: 0 auto;                    /* Center horizontally on large screens */
+  aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+  max-width: 100%;                       /* Base width for phone-sized view */
+  max-height: 100vh;                  /* Prevent it from exceeding screen height */
+  background-color: #1a2a6c;          /* Dark blue frame */
+  border-radius: 0px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px 20px;                 /* Consistent inner spacing */
+  box-sizing: border-box;            /* Includes padding in size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;           /* Center content vertically */
+  align-items: center;               /* Center content horizontally */
+  margin: 0 auto;                    /* Center horizontally on large screens */
+  position: relative;
 }
 
 /* Title styling */
 h1 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 10px; /* Reduced margin */
-    color: #f4f4f4; /* Almost white text */
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px; /* Reduced margin */
+  color: #f4f4f4; /* Almost white text */
 }
 
 /* Logo styling */
 .logo {
-    width: 120px;
-    height: auto;
-    margin-bottom: 20px; /* Adjust this to control the space between logo and content */
-    border-radius: 10px; /* Optional: make it roundy */
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px; /* Adjust this to control the space between logo and content */
+  border-radius: 10px; /* Optional: make it roundy */
 }
 
 /* Label styling */
 label {
-    font-size: 16px;
-    color: #f4f4f4; /* Almost white text */
-    margin-top: 15px;
-    display: block;
-    text-align: left;
-    width: 100%;
+  font-size: 16px;
+  color: #f4f4f4; /* Almost white text */
+  margin-top: 15px;
+  display: block;
+  text-align: left;
+  width: 100%;
 }
 
 /* Input and select field styling */
 input,
 select {
-    width: 100%;
-    padding: 8px 10px;
-    margin-top: 5px;
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto; /* Center horizontally */
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    background-color: #f4f4f4; /* Almost white input fields */
-    color: #333; /* Dark text inside inputs for contrast */
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #f4f4f4; /* Almost white input fields */
+  color: #333; /* Dark text inside inputs for contrast */
 }
 
 /* Button styling */
 button {
-    margin-top: 40px; /* Increase the space above the button */
-    padding: 12px 25px;
-    font-size: 16px;
-    background-color: #FFA500; /* Orange background */
-    color: #fff; /* White text */
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 50%; /* Make button take full width */
-    margin-top: 20px; /* Add space between button and form elements */
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto; /* Center horizontally */
+  margin-top: 40px; /* Increase the space above the button */
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #FFA500; /* Orange background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 50%; /* Make button take full width */
+  margin-top: 20px; /* Add space between button and form elements */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
 }
 
 button:hover {
-    background-color: #FF8C00; /* Darker orange on hover */
+  background-color: #FF8C00; /* Darker orange on hover */
 }
 
 /* Container with 9:16 aspect ratio (360x640) */
 .app-container {
-    aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
-    width: 360px;
-    height: 640px;
-    background-color: #1a2a6c; /* Dark Blue Background */
-    position: relative; /* Make the container the reference point for absolute positioning */
-    padding: 30px 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align content at the top */
-    align-items: center;
+  aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+  width: 360px;
+  height: 640px;
+  background-color: #1a2a6c; /* Dark Blue Background */
+  position: relative; /* Make the container the reference point for absolute positioning */
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
 }
 
 /* Info Button inside 9:16 frame (below start button) */
 .info-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    position: absolute;
-    top: 500px;
-    right: 40px;
-    width: 40px;
-    height: 40px;
-    outline: none;         /* removes the dotted border on focus */
-  }
-  
-  .info-btn img {
-    width: 100%;
-    height: auto;
-    display: block;
-    pointer-events: none; /* ensures image doesn't trigger hover style separately */
-  }
-  
-  /* Remove any orange-ish hover/focus styles */
-  .info-btn:focus,
-  .info-btn:hover {
-    outline: none;
-    background: none;
-    box-shadow: none;
-  }
-   
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 500px;
+  right: 40px;
+  width: 40px;
+  height: 40px;
+  outline: none;         /* removes the dotted border on focus */
+}
+
+.info-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none; /* ensures image doesn't trigger hover style separately */
+}
+
+/* Remove any orange-ish hover/focus styles */
+.info-btn:focus,
+.info-btn:hover {
+  outline: none;
+  background: none;
+  box-shadow: none;
+}
+ 
 
 /* Info Popup */
 .info-popup {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease; /* Smooth fade-in/out */
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth fade-in/out */
 }
 
 /* Popup content styling */
 .info-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    width: 80%; /* Adjusted to fit the 9:16 container */
-    max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
-    box-sizing: border-box;
-    opacity: 1; /* Keep the content visible when the pop-up shows */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%; /* Adjusted to fit the 9:16 container */
+  max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
+  box-sizing: border-box;
+  opacity: 1; /* Keep the content visible when the pop-up shows */
 }
 
 /* Title styling */
 .info-content h2 {
-    margin-bottom: 15px;
-    font-size: 22px;
+  margin-bottom: 15px;
+  font-size: 22px;
 }
 
 /* Paragraph styling */
 .info-content p {
-    font-size: 16px;
-    line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 /* Image-style back button */
 .back-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-top: 20px;
-    outline: none;
-  }
-  
-  .back-icon {
-    width: 40px;
-    height: auto;
-    transition: transform 0.2s ease;
-  }
-  
-  .back-btn:hover {
-    animation:  0.4s ease-in-out;
-    background: none;
-    border: none;
-  }
-  
-  @keyframes wiggle {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-5deg); }
-    75% { transform: rotate(5deg); }
-  }
-  
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 20px;
+  outline: none;
+}
+
+.back-icon {
+  width: 40px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+  animation:  0.4s ease-in-out;
+  background: none;
+  border: none;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
 
 
 /* For Webkit browsers like Chrome/Safari */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Second Screen Layout */
 #second-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align elements to the top */
-    align-items: center;
-    padding: 20px;
-    background-color: #1a2a6c; /* Dark blue background for second screen */
-    border-radius: 00px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    height: 100%; /* Full height for the second screen */
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align elements to the top */
+  align-items: center;
+  padding: 20px;
+  background-color: #1a2a6c; /* Dark blue background for second screen */
+  border-radius: 00px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  height: 100%; /* Full height for the second screen */
+  box-sizing: border-box;
 }
 
 /* Title for Second Screen */
 #second-screen h1 {
-    font-size: 24px;
-    color: #f4f4f4;
-    margin-bottom: 20px;
+  font-size: 24px;
+  color: #f4f4f4;
+  margin-bottom: 20px;
 }
 
 .speech-bubble-img {
-    width: 90%;
-    max-width: 450px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-    margin-top: -20px; /* Try -30px or more for higher */
+  width: 90%;
+  max-width: 450px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  margin-top: -20px; /* Try -30px or more for higher */
+}
+
+@media (max-width: 600px) {
+  .speech-bubble-img {
+    width: 100%;
+    max-width: 300px;
   }
-  
-  @media (max-width: 600px) {
-    .speech-bubble-img {
-      width: 100%;
-      max-width: 300px;
-    }
-  }  
+}  
 
 .bubble-tail {
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .bubble-tail span {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background-color: #FFCC00;
-    border-radius: 50%;
-    margin: 0 3px;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #FFCC00;
+  border-radius: 50%;
+  margin: 0 3px;
 }
 
 /* Ferret Image Styling */
 .ferret-image {
-    width: 300px; /* Adjust size as necessary */
-    height: auto;
-    margin-top: -70px;
-    border-radius: 10px;
+  width: 300px; /* Adjust size as necessary */
+  height: auto;
+  margin-top: -70px;
+  border-radius: 10px;
 }
 
 /* Bottom Buttons (Menu & Settings) */
 .bottom-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 70%;
-    margin-top: -10px;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-top: -10px;
 }
 
 /* Style for the bottom buttons */
 .bottom-buttons button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-right: 20px; /* Adjust space between the buttons */
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 20px; /* Adjust space between the buttons */
 }
 
 /* Style for the button images */
 .bottom-buttons img {
-    width: 50px;  /* Adjust the size of the button images */
-    height: 50px;
+  width: 50px;  /* Adjust the size of the button images */
+  height: 50px;
 }
 
 .bottom-buttons img {
-    width: 50px;  /* Adjust the size of the button images */
-    height: 50px;
+  width: 50px;  /* Adjust the size of the button images */
+  height: 50px;
 }
 
 /* Make the Menu button bigger */
 #menu-btn img {
-    width: 60px;  /* Increase the size of the Menu button */
-    height: 60px; /* Increase the size of the Menu button */
+  width: 60px;  /* Increase the size of the Menu button */
+  height: 60px; /* Increase the size of the Menu button */
 }
 
 /* Specific style for the Settings button */
 #settings-btn img {
-    width: 50px;  /* Keep the Settings button size the same */
-    height: 50px; /* Keep the Settings button size the same */
+  width: 50px;  /* Keep the Settings button size the same */
+  height: 50px; /* Keep the Settings button size the same */
 }
 
 /* Push the Menu button to the left */
 #menu-btn {
-    margin-left: 60px;  /* Pushes the menu button to the left */
+  margin-left: 60px;  /* Pushes the menu button to the left */
 }
 
 /* Specific style for the Settings button */
 #settings-btn {
-    margin-left: -5px; /* Adds space between Menu and Settings */
+  margin-left: -5px; /* Adds space between Menu and Settings */
 }
 
 /* WELCOME SCREEN */
 #welcome-screen {
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center;
-    text-align: center;
-    background-color: #1a2a6c;
-    color: #f4f4f4;
-    height: 100%;
-    padding: 30px 20px;
-    box-sizing: border-box;
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center;
+  text-align: center;
+  background-color: #1a2a6c;
+  color: #f4f4f4;
+  height: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
 }
 
 #welcome-screen h2 {
-    font-size: 22px;
-    margin-bottom: 10px; /* Reduced margin for h2 */
-    margin-top: 50px; /* Added margin to push the header down */
-    line-height: 1.2; /* Tightened line height */
+  font-size: 22px;
+  margin-bottom: 40px; /* Reduced margin for h2 */
+  margin-top: -50px; /* Added margin to push the header down */
+  line-height: 1.2; /* Tightened line height */
 }
 
 #welcome-screen p {
-    font-size: 14px;
-    line-height: 1.0; /* Reduced line height for paragraphs */
-    margin-bottom: 10px; /* Reduced margin between paragraphs */
-    color: #f4f4f4;
+  font-size: 14px;
+  line-height: 1.0; /* Reduced line height for paragraphs */
+  margin-bottom: 2px; /* Reduced margin between paragraphs */
+  margin-top: 30px; /* Add margin-top to move text down */
+  color: #f4f4f4;
 }
 
 #welcome-screen ul {
-    font-size: 14px;  /* Reduce font size of list items */
-    line-height: 1.2; /* Reduced line height */
-    margin-bottom: 10px; /* Reduced margin-bottom to give more space */
+  font-size: 14px;  /* Reduce font size of list items */
+  line-height: 1.2; /* Reduced line height */
+  margin-bottom: 10px; /* Reduced margin-bottom to give more space */
 }
 
 /* New Logo Styling */
 #welcome-logo {
-    width: 120px; /* Adjust logo size */
-    height: auto;
-    margin: 20px 0; /* Adjusted margin for spacing between text */
-    border-radius: 10px; /* Optional: round the edges of the logo */
+  width: 120px; /* Adjust logo size */
+  height: auto;
+  margin: -10px 0; /* Adjusted margin for spacing between text */
+  border-radius: 10px; /* Optional: round the edges of the logo */
 }
 
-/* Continue Button */
+/* Continue Button welcome screen */
 #continue-btn {
-    background: none; /* Remove background */
-    border: none; /* Remove border */
-    padding: 0; /* Remove any padding */
-    outline: none; /* Remove focus outline */
-    margin-left: 55px; /* Move the button 20px to the left */
-    margin-top: -10px; /* Moves it a little upwards */
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  padding: 0; /* Remove any padding */
+  outline: none; /* Remove focus outline */
+  margin-left: 55px; /* Move the button 20px to the left */
+  margin-top: 30px; /* Moves it a little upwards */
 }
 
 #continue-btn img {
-    display: block; /* Ensure image is displayed as block */
-    width: 200px; /* Adjust the size if needed */
-    height: auto; /* Keep aspect ratio */
-    border: none; /* Remove any border if there is one around the image */
+  display: block; /* Ensure image is displayed as block */
+  width: 200px; /* Adjust the size if needed */
+  height: auto; /* Keep aspect ratio */
+  border: none; /* Remove any border if there is one around the image */
 }
 
 
 /* Hide spinner arrows in number input fields for Webkit browsers (Chrome/Safari) */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Hide spinner arrows in number input fields for Firefox */
 input[type="number"] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
-/* Style for the "Start" button */
+/* Style for the "Start" button first screen */
 #start-btn {
-    background: none; /* Remove background */
-    border: none; /* Remove border */
-    padding: 0; /* Remove padding */
-    cursor: pointer; /* Change cursor to pointer to indicate clickability */
-    display: block;
-    margin: 35px auto; /* This centers the button horizontally */
-    text-align: center;
-    transform: translateX(-25px); /* Moves it slightly left */
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  padding: 0; /* Remove padding */
+  cursor: pointer; /* Change cursor to pointer to indicate clickability */
+  display: block;
+  margin: 35px auto; /* This centers the button horizontally */
+  text-align: center;
+  transform: translateX(-25px); /* Moves it slightly left */
+  margin-top: 40px; /* Move the button 50px down */
 }
 
 /* Style the image inside the button */
 #start-btn img {
-    width: 150px; /* Adjust width of the button image as needed */
-    height: auto; /* Maintain aspect ratio */
-    display: block;
-  margin: 0 auto;
+  width: 150px; /* Adjust width of the button image as needed */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+margin: 0 auto;
 }
 
 @keyframes ferretTailShake {
-    0%   { transform: rotate(0deg); }
-    15%  { transform: rotate(15deg); }
-    30%  { transform: rotate(-15deg); }
-    45%  { transform: rotate(10deg); }
-    60%  { transform: rotate(-10deg); }
-    75%  { transform: rotate(5deg); }
-    90%  { transform: rotate(-5deg); }
-    100% { transform: rotate(0deg); }
-  }
-  
-  .info-btn:hover {
-    animation: ferretTailShake 0.6s ease-in-out;
-  }
-  
-  /* Speech bubble animation */
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(15deg); }
+  30%  { transform: rotate(-15deg); }
+  45%  { transform: rotate(10deg); }
+  60%  { transform: rotate(-10deg); }
+  75%  { transform: rotate(5deg); }
+  90%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.info-btn:hover {
+  animation: ferretTailShake 0.6s ease-in-out;
+}
+
+/* Speech bubble animation */
 @keyframes floatBubble {
-    0% {
-      transform: translateY(0);  /* Start position */
-    }
-    50% {
-      transform: translateY(-10px); /* Move up */
-    }
-    100% {
-      transform: translateY(0);  /* Return to original position */
-    }
+  0% {
+    transform: translateY(0);  /* Start position */
   }
-  
-  /* Apply the floating effect to the speech bubble */
+  50% {
+    transform: translateY(-10px); /* Move up */
+  }
+  100% {
+    transform: translateY(0);  /* Return to original position */
+  }
+}
+
+/* Apply the floating effect to the speech bubble */
+.speech-bubble-img {
+  width: 90%;
+  max-width: 450px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+
+  /* Position it a little higher */
+  margin-top: -20px;
+
+  /* Apply animation */
+  animation: floatBubble 3s ease-in-out infinite; /* Float forever */
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 600px) {
   .speech-bubble-img {
-    width: 90%;
-    max-width: 450px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-  
-    /* Position it a little higher */
-    margin-top: -20px;
-  
-    /* Apply animation */
-    animation: floatBubble 3s ease-in-out infinite; /* Float forever */
+    width: 80%; /* Slightly smaller on mobile */
+    margin-top: -10px; /* Adjust position if necessary */
   }
-  
-  /* Responsive design for mobile screens */
-  @media (max-width: 600px) {
-    .speech-bubble-img {
-      width: 80%; /* Slightly smaller on mobile */
-      margin-top: -10px; /* Adjust position if necessary */
-    }
-  }
+}
 
 
 /* Subtle wobble (small BAC) */
 @keyframes subtle-wobble {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(5deg); }
-    50% { transform: rotate(0deg); }
-    75% { transform: rotate(-5deg); }
-    100% { transform: rotate(0deg); }
-  }
-  
-  @keyframes moderate-wobble {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(10deg); }
-    50% { transform: rotate(0deg); }
-    75% { transform: rotate(-10deg); }
-    100% { transform: rotate(0deg); }
-  }
-  
-  /* Strong wobble (high BAC) */
-  @keyframes strong-wobble {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(15deg); }
-    50% { transform: rotate(0deg); }
-    75% { transform: rotate(-15deg); }
-    100% { transform: rotate(0deg); }
-  }
-  
-  /* Apply to ferret image */
-  #ferret-image {
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  /* Wobble classes */
-  .wobble-subtle {
-    animation: subtle-wobble 2s infinite ease-in-out;
-  }
-  
-  .wobble-moderate {
-    animation: moderate-wobble 1.5s infinite ease-in-out;
-  }
-  
-  .wobble-strong {
-    animation: strong-wobble 1s infinite ease-in-out;
-  }
-  
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes moderate-wobble {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Strong wobble (high BAC) */
+@keyframes strong-wobble {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Apply to ferret image */
+#ferret-image {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Wobble classes */
+.wobble-subtle {
+  animation: subtle-wobble 2s infinite ease-in-out;
+}
+
+.wobble-moderate {
+  animation: moderate-wobble 1.5s infinite ease-in-out;
+}
+
+.wobble-strong {
+  animation: strong-wobble 1s infinite ease-in-out;
+}
