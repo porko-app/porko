@@ -33,6 +33,52 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('second-screen').style.display = 'flex';
     });
 
+    // Event listener for the "Choose Drink" button to open the modal
+    const menuButton = document.getElementById('menu-btn'); // Use the menu-btn for triggering the modal
+    const drinkModal = document.getElementById('drink-modal');
+    const closeModalButton = document.getElementById('close-modal-btn');
+
+    menuButton.addEventListener('click', () => {
+        drinkModal.style.display = 'flex'; // Show the modal when menu button is clicked
+    });
+
+    // Close modal when clicking the close button (X)
+    closeModalButton.addEventListener('click', () => {
+        drinkModal.style.display = 'none'; // Hide the modal
+    });
+
+    // Event listeners for each drink option
+    const whiskeyButton = document.getElementById('whiskey-btn');
+    const vodkaButton = document.getElementById('vodka-btn');
+    const rumButton = document.getElementById('rum-btn');
+    const ginButton = document.getElementById('gin-btn');
+    const tequilaButton = document.getElementById('tequila-btn');
+
+    whiskeyButton.addEventListener('click', () => {
+        alert('You selected Whiskey!');
+        drinkModal.style.display = 'none'; // Close the modal
+    });
+
+    vodkaButton.addEventListener('click', () => {
+        alert('You selected Vodka!');
+        drinkModal.style.display = 'none'; // Close the modal
+    });
+
+    rumButton.addEventListener('click', () => {
+        alert('You selected Rum!');
+        drinkModal.style.display = 'none'; // Close the modal
+    });
+
+    ginButton.addEventListener('click', () => {
+        alert('You selected Gin!');
+        drinkModal.style.display = 'none'; // Close the modal
+    });
+
+    tequilaButton.addEventListener('click', () => {
+        alert('You selected Tequila!');
+        drinkModal.style.display = 'none'; // Close the modal
+    });
+
     // BAC Calculation
     function calculateBAC(gender, weight) {
         const alcoholConsumed = 0.5;
