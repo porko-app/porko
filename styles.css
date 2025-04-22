@@ -86,7 +86,7 @@ button {
   margin-top: 40px; /* Increase the space above the button */
   padding: 12px 25px;
   font-size: 16px;
-  background-color: #FFA500; /* Orange background */
+  background-color: orange; /* Orange background */
   color: #fff; /* White text */
   border: none;
   border-radius: 10px;
@@ -98,9 +98,7 @@ button {
   margin-right: auto; /* Center horizontally */
 }
 
-button:hover {
-  background-color: #FF8C00; /* Darker orange on hover */
-}
+
 
 /* Container with 9:16 aspect ratio (360x640) */
 .app-container {
@@ -526,25 +524,65 @@ margin: 0 auto;
 
 /* Modal for Drink Selection (still targeting #drink-modal) */
 #drink-modal {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110vw; /* Modal width is 110% of the viewport width */
+  height: 160vh; /* Set the height to 70% of the viewport height for a bigger modal */
+  max-width: 110vw;
+  max-height: 160vh; /* Limit the maximum height to 80% of the viewport height */
   justify-content: center;
   align-items: center;
+  z-index: 10;
 }
 
 #modal-content {
   background-color: white;
   padding: 20px;
-  position: relative;
   border-radius: 10px;
-  width: 300px;
-  max-width: 400px;
-  text-align: center;
+  max-width: 90vh; /* Make the content fill the modal width */
+  max-height: 80vh; /* Limit the max height to 80% of the viewport height */
+  position: relative;
+  overflow: hidden;
+}
+
+#drink-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align buttons from the top */
+  align-items: center; /* Center buttons horizontally */
+  margin-top: 0; /* Removed negative margin to keep proper spacing */
+  gap: 10px; /* Space between buttons */
+}
+
+.drink-option {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px;
+  color: white;
+  border-radius: 5px; /* Optional: gives a slight rounded edge */
+  outline: none !important;
+  box-shadow: none !important;
+  transition: transform 0.3s ease;
+  width: 250px; /* Set a fixed width to make it rectangular */
+  height: 50px; /* Set a fixed height to make it rectangular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drink-option:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.drink-option img {
+  width: 400px; /* Set the image width to make it rectangular */
+  height: 80px; /* Set the image height */
+  object-fit: cover; /* Ensures the image is cropped proportionally */
+  border-radius: 5px; /* Optional: gives the image rounded corners */
 }
 
 #close-modal-btn {
@@ -560,21 +598,36 @@ margin: 0 auto;
   color: orange; /* Optional: Make the X button red when hovered */
 }
 
-#drink-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.drink-option:focus,
+.drink-option:active {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.drink-option {
-  background-color: #007BFF;
-  color: white;
-  padding: 10px;
+.drink-option img {
+  width: 70px; /* make it bigger if you want */
+  height: 50px;
+  object-fit: cover;
   border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  outline: none;
+  box-shadow: none;
+}
+
+.drink-option img {
+  width: 300px; /* Increase the width to make the image more rectangular */
+  height: 60px; /* Set height for a longer rectangular shape */
+  object-fit: cover; /* Ensure the image covers the button without distortion */
+  border-radius: 5px; /* Optional: rounded edges for the image */
 }
 
 .drink-option:hover {
-  background-color: #0056b3;
+  transform: scale(1.1); /* Button scaling effect */
+}
+
+#choose-drink {
+  text-align: center; /* Centers the text horizontally */
+  margin-right: 80px;
+  margin-top: 2px; /* Moves it a little lower from the top */
+  font-size: 24px; /* You can adjust the size of the text */
+  color: white; /* Or whatever color you prefer */
 }
