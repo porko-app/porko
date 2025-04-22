@@ -540,8 +540,10 @@ margin: 0 auto;
 #modal-content {
   background-color: white;
   padding: 20px;
+  position: relative;
   border-radius: 10px;
   width: 300px;
+  max-width: 400px;
   text-align: center;
 }
 
@@ -551,6 +553,11 @@ margin: 0 auto;
   right: 10px;
   font-size: 20px;
   cursor: pointer;
+  color: black;
+}
+
+#close-modal-btn:hover {
+  color: orange; /* Optional: Make the X button red when hovered */
 }
 
 #drink-options {
