@@ -58,20 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const tequilaButton = document.getElementById('tequila-btn');
 
 
-    // 🖼️ Swap bubble image based on BAC
-    function updateSpeechBubbleImage(bac) {
+    function updateFerretMood(units) {
         const bubbleImage = document.getElementById('ferret-bubble');
         const ferretImage = document.getElementById('ferret-image');
-
+    
         if (!bubbleImage || !ferretImage) return;
-
-        if (bac < 0.05) {
+    
+        if (units <= 1.5) {
             bubbleImage.src = 'speech-bubble-neutral.png';
             ferretImage.src = 'ferret-neutral.png';
-        } else if (bac < 0.1) {
+        } else if (units <= 3.5) {
             bubbleImage.src = 'speech-bubble-tipsy.png';
             ferretImage.src = 'ferret-tipsy.png';
-        } else if (bac < 0.15) {
+        } else if (units <= 6) {
             bubbleImage.src = 'speech-bubble-drunk.png';
             ferretImage.src = 'ferret-drunk.png';
         } else {
@@ -79,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ferretImage.src = 'ferret-sobering-up.png';
         }
     }
+    
 
     // Function to apply wobble effect based on BAC level
     function applyFerretWobble(bac) {
@@ -204,11 +204,19 @@ function goToSecondScreen() {
             return;
         }
 
-        // Calculate BAC using the updated formula
-        let bac = calculateBAC(gender, weight, alcoholPercentage, drinkAmount);
+        // Calculate alcohol unit using the updated formula
+        let units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
+        totalUnits += units;
+        updateAlcoholUnitsDisplay();
+        updateFerretMood(totalUnits);    
+        
+        // Close modals
+document.getElementById('drink-modal').style.display = 'none';
+document.getElementById('drink-details-modal').style.display = 'none';
 
-        // Update BAC text on the second screen
-        updateBACText(bac);
+// Switch screens
+goToSecondScreen();
+
    // 1. Hide the modals (both the drink modal and drink details modal)
    document.getElementById('drink-modal').style.display = 'none'; // Close the drink modal
    document.getElementById('drink-details-modal').style.display = 'none'; // Close the details modal
@@ -218,31 +226,18 @@ function goToSecondScreen() {
 });
 });
 
-// Widmark formula for BAC calculation
-function calculateBAC(gender, weight, alcoholPercentage, drinkAmount) {
-    // Convert weight to grams (from kg)
-    let weightInGrams = weight * 1000;
-
-    // Widmark factor based on gender
-    let r = (gender === 'male') ? 0.68 : 0.55;
-
-    // Calculate alcohol consumed in grams (0.789 is the density of ethanol in g/ml)
-    let alcoholConsumedGrams = (alcoholPercentage * drinkAmount * 0.789) / 100;
-
-    // Calculate BAC
-    let bac = (alcoholConsumedGrams / (weightInGrams * r)) * 100;
-
-    return bac;
+// calculator alcohol units
+function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
+    return (alcoholPercentage * drinkAmount) / 1000;
 }
 
-// Update the BAC text on the second screen
-function updateBACText(bac) {
-    let bacTextElement = document.getElementById('bac-text');
-    let dynamicBacElement = document.getElementById('dynamic-bac');
 
-    // Update dynamic BAC number
-    dynamicBacElement.innerHTML = bac.toFixed(2) + "%";
+// Update the alcohol unit on the second screen
+function updateAlcoholUnitsDisplay() {
+    let unitsTextElement = document.getElementById('bac-text');
+    unitsTextElement.innerHTML = `You have consumed <span id="dynamic-units">${totalUnits.toFixed(1)}</span> alcohol units.`;
 }
+
   // Transition to second screen after calculation
   goToSecondScreen();
 
@@ -257,6 +252,7 @@ function goToSecondScreen() {
 }
 
 let selectedDrink = ""; // global
+let totalUnits = 0;      // global tracker for alcohol units
 
 document.querySelectorAll('.drink-option').forEach(button => {
   button.addEventListener('click', () => {
