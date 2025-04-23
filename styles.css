@@ -277,9 +277,9 @@ input::-webkit-inner-spin-button {
 
 /* Ferret Image Styling */
 .ferret-image {
-  width: 300px; /* Adjust size as necessary */
-  height: auto;
-  margin-top: -70px;
+  width: 224px; /* Adjust size as necessary */
+  height: 336px;
+  margin-top: -30px;
   border-radius: 10px;
 }
 
@@ -631,3 +631,77 @@ margin: 0 auto;
   font-size: 24px; /* You can adjust the size of the text */
   color: white; /* Or whatever color you prefer */
 }
+
+.details-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); /* dark background */
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.details-content {
+  background: white;
+  padding: 25px 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.details-content input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.details-content button {
+  padding: 10px;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+}
+
+#second-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#bac-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+#dynamic-bac {
+  font-weight: normal;
+  color: #7bff00;  /* Blue color for dynamic BAC number */
+}
+
