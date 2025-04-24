@@ -64,20 +64,30 @@ document.addEventListener('DOMContentLoaded', () => {
     
         if (!bubbleImage || !ferretImage) return;
     
-        if (units <= 1.5) {
-            bubbleImage.src = 'speech-bubble-neutral.png';
-            ferretImage.src = 'ferret-neutral.png';
-        } else if (units <= 3.5) {
-            bubbleImage.src = 'speech-bubble-tipsy.png';
-            ferretImage.src = 'ferret-tipsy.png';
-        } else if (units <= 6) {
-            bubbleImage.src = 'speech-bubble-drunk.png';
-            ferretImage.src = 'ferret-drunk.png';
-        } else {
-            bubbleImage.src = 'speech-bubble-sobering-up.png';
-            ferretImage.src = 'ferret-sobering-up.png';
-        }
+       // First, hide all ferret mood divs
+    allMoods.forEach(mood => {
+        mood.style.display = 'none';
+    });
+
+    // Then decide which one to show
+    let moodId = 'mood-neutral'; // Default
+
+    if (units <= 1.5) {
+        moodId = 'mood-neutral';
+    } else if (units <= 3.5) {
+        moodId = 'mood-tipsy';
+    } else if (units <= 6) {
+        moodId = 'mood-drunk';
+    } else {
+        moodId = 'mood-sobering-up';
     }
+
+    // Show the correct mood
+    const selectedMood = document.getElementById(moodId);
+    if (selectedMood) {
+        selectedMood.style.display = 'flex';
+    }
+}
     
 
     // Function to apply wobble effect based on BAC level
@@ -151,18 +161,6 @@ tequilaButton.addEventListener('click', () => {
     openDetailsModal("Tequila");
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Initially show the welcome screen
-    document.getElementById('welcome-screen').style.display = 'flex';
-    document.getElementById('first-screen').style.display = 'none';
-    document.getElementById('second-screen').style.display = 'none';
-
-    // Continue button on welcome screen
-    document.getElementById('continue-btn').addEventListener('click', function () {
-        console.log("Continue button clicked");
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('first-screen').style.display = 'flex';
-    });
 
     // Start button (form submission)
     const userForm = document.getElementById('user-info-form');
@@ -189,42 +187,32 @@ function goToSecondScreen() {
     document.getElementById('first-screen').style.display = 'none'; // Hide the first screen
     document.getElementById('second-screen').style.display = 'flex'; // Show the second screen
 }
-    // Event listener for the "Submit Drink" button
-    document.getElementById('submit-drink').addEventListener('click', () => {
-        console.log("OK button clicked!");
+// Event listener for the "Submit Drink" button
+document.getElementById('submit-drink').addEventListener('click', () => {
+    console.log("OK button clicked!");
 
-        const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
-        const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
-        const gender = document.getElementById('gender').value;
-        const weight = document.getElementById('weight').value;
+    const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
+    const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
 
-        // Handle empty or invalid values
-        if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
-            alert("Please enter valid alcohol percentage and drink amount.");
-            return;
-        }
+    // Calculate alcohol unit using the updated formula
+    const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
+    totalUnits += units;
+    updateAlcoholUnitsDisplay();
+    updateFerretMood(totalUnits);
 
-        // Calculate alcohol unit using the updated formula
-        let units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
-        totalUnits += units;
-        updateAlcoholUnitsDisplay();
-        updateFerretMood(totalUnits);    
-        
-        // Close modals
-document.getElementById('drink-modal').style.display = 'none';
-document.getElementById('drink-details-modal').style.display = 'none';
+    // Handle empty or invalid values
+    if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
+        alert("Please enter valid alcohol percentage and drink amount.");
+        return;
+    }
 
-// Switch screens
-goToSecondScreen();
+    // Close the drink details modal before going to the second screen
+    document.getElementById('drink-details-modal').style.display = 'none'; // Close the second modal
 
-   // 1. Hide the modals (both the drink modal and drink details modal)
-   document.getElementById('drink-modal').style.display = 'none'; // Close the drink modal
-   document.getElementById('drink-details-modal').style.display = 'none'; // Close the details modal
-
-   // 2. Transition to second screen after calculation
-   goToSecondScreen();
+    // Close modals and switch screens (only this function is needed to do both!)
+    goToSecondScreen();
 });
-});
+
 
 // calculator alcohol units
 function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
@@ -234,16 +222,12 @@ function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
 
 // Update the alcohol unit on the second screen
 function updateAlcoholUnitsDisplay() {
-    let unitsTextElement = document.getElementById('bac-text');
-    unitsTextElement.innerHTML = `You have consumed <span id="dynamic-units">${totalUnits.toFixed(1)}</span> alcohol units.`;
+    let unitsTextElement = document.getElementById('dynamic-units');
+    unitsTextElement.innerHTML = `${totalUnits.toFixed(1)}`;  // Display total units
 }
 
   // Transition to second screen after calculation
   goToSecondScreen();
-
-  // Hide the drink details modal and the main modal
-  document.getElementById('drink-modal').style.display = 'none'; // Close the drink modal
-  document.getElementById('drink-details-modal').style.display = 'none'; // Close the details modal
 
   // Function to transition to the second screen after drink details are submitted
 function goToSecondScreen() {
@@ -257,7 +241,12 @@ let totalUnits = 0;      // global tracker for alcohol units
 document.querySelectorAll('.drink-option').forEach(button => {
   button.addEventListener('click', () => {
     selectedDrink = button.dataset.drinkName;
-    document.getElementById('drink-name').textContent = selectedDrink;
-    openDrinkDetailsModal(); // show the second modal
+    const drinkModal = document.getElementById('drink-modal');
+    if (drinkModal) {
+        // Do something with the modal if it exists
+    } else {
+        console.error("The modal element was not found!");
+    }
+    
   });
 });
