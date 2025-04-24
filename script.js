@@ -58,54 +58,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const tequilaButton = document.getElementById('tequila-btn');
 
 
-    function updateFerretMood(units) {
-        const bubbleImage = document.getElementById('ferret-bubble');
-        const ferretImage = document.getElementById('ferret-image');
-    
-        if (!bubbleImage || !ferretImage) return;
-    
-       // First, hide all ferret mood divs
-    allMoods.forEach(mood => {
-        mood.style.display = 'none';
-    });
+   function updateFerretMood(units) {
+    const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
 
-    // Then decide which one to show
-    let moodId = 'mood-neutral'; // Default
+  // Determine current mood based on units
+  let mood = 'neutral';
 
-    if (units <= 1.5) {
-        moodId = 'mood-neutral';
-    } else if (units <= 3.5) {
-        moodId = 'mood-tipsy';
-    } else if (units <= 6) {
-        moodId = 'mood-drunk';
-    } else {
-        moodId = 'mood-sobering-up';
-    }
+  if (units <= 1.5) {
+      mood = 'neutral';
+  } else if (units <= 3.5) {
+      mood = 'tipsy';
+  } else if (units <= 6.0) {
+      mood = 'drunk';
+  } else {
+      mood = 'wobbly'; // Covers 6.1 and above, including 12.0+
+  }
+  
 
-    // Show the correct mood
-    const selectedMood = document.getElementById(moodId);
-    if (selectedMood) {
-        selectedMood.style.display = 'flex';
-    }
+// Hide all mood images
+states.forEach(state => {
+    const ferret = document.getElementById(`ferret-${state}`);
+    const bubble = document.getElementById(`bubble-${state}`);
+    if (ferret) ferret.style.display = 'none';
+    if (bubble) bubble.style.display = 'none';
+});
+
+// Show the correct mood images based on the updated `mood`
+const selectedFerret = document.getElementById(`ferret-${mood}`);
+const selectedBubble = document.getElementById(`bubble-${mood}`);
+if (selectedFerret) selectedFerret.style.display = 'block';
+if (selectedBubble) selectedBubble.style.display = 'block';
+
+
+    // Show current mood images
+    const currentFerret = document.getElementById(`ferret-${mood}`);
+    const currentBubble = document.getElementById(`bubble-${mood}`);
+    if (currentFerret) currentFerret.style.display = 'block';
+    if (currentBubble) currentBubble.style.display = 'block';
 }
-    
 
-    // Function to apply wobble effect based on BAC level
-    function applyFerretWobble(bac) {
-        const ferretImage = document.getElementById('ferret-image');
-
-        // Remove previous wobble classes
-        ferretImage.classList.remove('wobble-subtle', 'wobble-moderate', 'wobble-strong');
-
-        // Apply new wobble class based on BAC level
-        if (bac >= 0.05 && bac < 0.1) {
-            ferretImage.classList.add('wobble-subtle');  // Small wobble
-        } else if (bac >= 0.1 && bac < 0.15) {
-            ferretImage.classList.add('wobble-moderate');  // Moderate wobble
-        } else if (bac >= 0.15) {
-            ferretImage.classList.add('wobble-strong');  // Strong wobble
-        }
-    }
 
     // Info popup handling
     const infoBtn = document.getElementById('info-btn');
@@ -179,6 +170,8 @@ tequilaButton.addEventListener('click', () => {
 
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
+         // Immediately show the neutral mood (0 units)
+    updateFerretMood(0);
     });
 
 
@@ -249,4 +242,21 @@ document.querySelectorAll('.drink-option').forEach(button => {
     }
     
   });
+
+  const settingsBtn = document.getElementById("settings-btn");
+  const secondScreen = document.getElementById("second-screen");
+  const settingsScreen = document.getElementById("settings-screen");
+  const backToSecondBtn = document.getElementById("back-to-second-btn");
+  
+  settingsBtn.addEventListener("click", () => {
+    secondScreen.style.display = "none";
+    settingsScreen.style.display = "flex";
+  });
+  
+  backToSecondBtn.addEventListener("click", () => {
+    settingsScreen.style.display = "none";
+    secondScreen.style.display = "flex";
+  });
+  
+
 });
