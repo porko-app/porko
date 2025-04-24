@@ -1,3 +1,45 @@
+// Move this function here (above DOMContentLoaded)
+function updateFerretMood(units) {
+    const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
+
+    let mood = 'neutral';
+
+    if (units <= 1.5) {
+        mood = 'neutral';
+    } else if (units <= 3.5) {
+        mood = 'tipsy';
+    } else if (units <= 6.0) {
+        mood = 'drunk';
+    } else {
+        mood = 'wobbly'; // Covers 6.1 and above, including 12.0+
+    }
+
+    // Hide all mood images and speech bubbles
+    states.forEach(state => {
+        const ferret = document.getElementById(`ferret-${state}`);
+        const bubble = document.getElementById(`bubble-${state}`);
+        const bubbleText = document.getElementById(`bubble-text-${state}`);
+
+        if (ferret) ferret.style.display = 'none';
+        if (bubble) bubble.style.display = 'none';
+    });
+
+    // Show the correct mood images and text based on the updated `mood`
+    const selectedFerret = document.getElementById(`ferret-${mood}`);
+    const selectedBubble = document.getElementById(`bubble-${mood}`);
+    const selectedBubbleText = document.getElementById(`bubble-text-${mood}`);
+
+    if (selectedFerret) selectedFerret.style.display = 'block';
+    if (selectedBubble) selectedBubble.style.display = 'block';
+    if (selectedBubbleText) selectedBubbleText.style.display = 'block';
+
+    // Replace "Friend" with the user's name in the text
+    const userNamePlaceholder = document.getElementById(`user-name-placeholder-${mood}`);
+    if (userNamePlaceholder) {
+        userNamePlaceholder.textContent = userName;  // Use the user's name dynamically
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Initially show the welcome screen
     document.getElementById('welcome-screen').style.display = 'flex';
@@ -52,54 +94,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('drink-details-modal').style.display = 'none';
     });
 
-    // Event listeners for each drink option
-    const whiskeyButton = document.getElementById('whiskey-btn');
-    const vodkaButton = document.getElementById('vodka-btn');
-    const rumButton = document.getElementById('rum-btn');
-    const ginButton = document.getElementById('gin-btn');
-    const tequilaButton = document.getElementById('tequila-btn');
+// Event listeners for each drink option
+const whiskeyButton = document.getElementById('whiskey-btn');
+const vodkaButton = document.getElementById('vodka-btn');
+const rumButton = document.getElementById('rum-btn');
+const ginButton = document.getElementById('gin-btn');
+const tequilaButton = document.getElementById('tequila-btn');
 
-    // Function to update the ferret mood based on the units of alcohol
-    function updateFerretMood(units) {
-        const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
-
-        let mood = 'neutral';
-
-        if (units <= 1.5) {
-            mood = 'neutral';
-        } else if (units <= 3.5) {
-            mood = 'tipsy';
-        } else if (units <= 6.0) {
-            mood = 'drunk';
-        } else {
-            mood = 'wobbly'; // Covers 6.1 and above, including 12.0+
-        }
-
-        // Hide all mood images and speech bubbles
-        states.forEach(state => {
-            const ferret = document.getElementById(`ferret-${state}`);
-            const bubble = document.getElementById(`bubble-${state}`);
-            const bubbleText = document.getElementById(`bubble-text-${state}`);
-
-            if (ferret) ferret.style.display = 'none';
-            if (bubble) bubble.style.display = 'none';
-        });
-
-        // Show the correct mood images and text based on the updated `mood`
-        const selectedFerret = document.getElementById(`ferret-${mood}`);
-        const selectedBubble = document.getElementById(`bubble-${mood}`);
-        const selectedBubbleText = document.getElementById(`bubble-text-${mood}`);
-
-        if (selectedFerret) selectedFerret.style.display = 'block';
-        if (selectedBubble) selectedBubble.style.display = 'block';
-        if (selectedBubbleText) selectedBubbleText.style.display = 'block';
-
-        // Replace "Friend" with the user's name in the text
-        const userNamePlaceholder = document.getElementById(`user-name-placeholder-${mood}`);
-        if (userNamePlaceholder) {
-            userNamePlaceholder.textContent = userName;  // Use the user's name dynamically
-        }
-    }
+// Add event listeners for each drink button
+whiskeyButton.addEventListener('click', () => openDetailsModal('Whiskey'));
+vodkaButton.addEventListener('click', () => openDetailsModal('Vodka'));
+rumButton.addEventListener('click', () => openDetailsModal('Rum'));
+ginButton.addEventListener('click', () => openDetailsModal('Gin'));
+tequilaButton.addEventListener('click', () => openDetailsModal('Tequila'));
 
     // Info popup handling
     const infoBtn = document.getElementById('info-btn');
@@ -164,22 +171,23 @@ document.getElementById('submit-drink').addEventListener('click', () => {
     const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
     const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
 
+// Handle empty or invalid values
+if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
+    alert("Моля въведете алкохолен процент и милилитри.");
+    return;
+}
+
     // Calculate alcohol unit using the updated formula
     const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
     totalUnits += units;
     updateAlcoholUnitsDisplay();
     updateFerretMood(totalUnits);
 
-    // Handle empty or invalid values
-    if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
-        alert("Please enter valid alcohol percentage and drink amount.");
-        return;
-    }
+    // Close both modals
+    document.getElementById('drink-details-modal').style.display = 'none'; // Hide the second modal
+    document.getElementById('drink-modal').style.display = 'none'; // Hide the first modal
 
-    // Close the drink details modal before going to the second screen
-    document.getElementById('drink-details-modal').style.display = 'none'; // Close the second modal
-
-    // Close modals and switch screens (only this function is needed to do both!)
+    // Switch to the second screen
     goToSecondScreen();
 });
 
