@@ -20,9 +20,8 @@ function updateFerretMood(units) {
         const bubble = document.getElementById(`bubble-${state}`);
         const bubbleText = document.getElementById(`bubble-text-${state}`);
 
-        if (ferret) ferret.style.display = 'none'; // Hide ferret image
-        if (bubble) bubble.style.display = 'none'; // Hide speech bubble
-        if (bubbleText) bubbleText.style.display = 'none'; // Hide bubble text
+        if (ferret) ferret.style.display = 'none';
+        if (bubble) bubble.style.display = 'none';
     });
 
     // Show the correct mood images and text based on the updated `mood`
@@ -103,11 +102,11 @@ const ginButton = document.getElementById('gin-btn');
 const tequilaButton = document.getElementById('tequila-btn');
 
 // Add event listeners for each drink button
-whiskeyButton.addEventListener('click', () => openDetailsModal('Whiskey'));
-vodkaButton.addEventListener('click', () => openDetailsModal('Vodka'));
-rumButton.addEventListener('click', () => openDetailsModal('Rum'));
-ginButton.addEventListener('click', () => openDetailsModal('Gin'));
-tequilaButton.addEventListener('click', () => openDetailsModal('Tequila'));
+whiskeyButton.addEventListener('click', () => openDetailsModal('Уиски'));
+vodkaButton.addEventListener('click', () => openDetailsModal('Водка'));
+rumButton.addEventListener('click', () => openDetailsModal('Ром'));
+ginButton.addEventListener('click', () => openDetailsModal('Джин'));
+tequilaButton.addEventListener('click', () => openDetailsModal('Текила'));
 
     // Info popup handling
     const infoBtn = document.getElementById('info-btn');
@@ -151,7 +150,7 @@ tequilaButton.addEventListener('click', () => openDetailsModal('Tequila'));
         // Update the modal title
         const drinkDetailsModal = document.getElementById('drink-details-modal');
         const modalTitle = drinkDetailsModal.querySelector('h2');
-        modalTitle.textContent = `Enter Info for ${drinkName}`;
+        modalTitle.textContent = `Въведи повече информация за ${drinkName}`;
 
     // Show the details modal
     drinkDetailsModal.style.display = 'flex';
@@ -174,7 +173,7 @@ document.getElementById('submit-drink').addEventListener('click', () => {
 
 // Handle empty or invalid values
 if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
-    alert("Моля въведете алкохолен процент и милилитри.");
+    alert("Моля въведете процент на алкохола и милилитри.");
     return;
 }
 
