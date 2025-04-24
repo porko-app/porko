@@ -75,9 +75,20 @@
 
 
     <!-- Ferret Image -->
-    <img src="ferret-neutral.png" alt="Ferret" class="ferret-image" id="ferret-image" />
+  <div class="ferret-mood" id="mood-neutral">
+    <img class="ferret" src="ferret-neutral.png" alt="Neutral ferret" />
+  </div>
+  <div class="ferret-mood" id="mood-tipsy" style="display: none;">
+    <img class="ferret" src="ferret-tipsy.png" alt="Tipsy ferret" />
+  </div>
+  <div class="ferret-mood" id="mood-drunk" style="display: none;">
+    <img class="ferret" src="ferret-drunk.png" alt="Drunk ferret" />
+  </div>
+  <div class="ferret-mood" id="mood-wobbly" style="display: none;">
+    <img class="ferret" src="ferret-wobbly.png" alt="Wobbly ferret" />
+  </div>
   
-    <div id="bac-text">
+    <div id="alcohol-units-text">
       You've had: <span id="dynamic-units">0.0</span> alcohol units 🍹
     </div>
     
@@ -132,7 +143,6 @@
     
     <label for="drink-amount">Amount (ml)</label>
     <input type="number" id="drink-amount" placeholder="e.g. 330" min="0" />
-
     <button id="submit-drink" type="button">OK</button>
   </div>
 </div>
