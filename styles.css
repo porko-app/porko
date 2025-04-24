@@ -276,19 +276,20 @@ input::-webkit-inner-spin-button {
 }
 
 /* Ferret Image Styling */
-.ferret-image {
-  width: 224px; /* Adjust size as necessary */
-  height: 336px;
+.ferret-mood img {
+  width: 190px; /* Adjust size as necessary */
+  height: auto;
   margin-top: -30px;
   border-radius: 10px;
 }
+
 
 /* Bottom Buttons (Menu & Settings) */
 .bottom-buttons {
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin-top: -10px;
+  margin-top: -15px;
 }
 
 /* Style for the bottom buttons */
@@ -562,7 +563,7 @@ margin: 0 auto;
   border: none;
   cursor: pointer;
   padding: 0px;
-  color: white;
+  color: red;
   border-radius: 5px; /* Optional: gives a slight rounded edge */
   outline: none !important;
   box-shadow: none !important;
@@ -705,3 +706,54 @@ margin: 0 auto;
   color: #7bff00;  /* Blue color for dynamic BAC number */
 }
 
+/* 🟢 Light wobble for neutral ferret */
+.wobble-neutral {
+  animation: neutralWobble 3s infinite ease-in-out;
+}
+
+@keyframes neutralWobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+
+/* 🟡 Moderate wobble */
+.wobble-tipsy {
+  animation: tipsyWobble 1.5s infinite ease-in-out;
+}
+
+@keyframes tipsyWobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+/* 🔴 Strong wobble */
+.wobble-drunk {
+  animation: drunkWobble 0.8s infinite ease-in-out;
+}
+
+@keyframes drunkWobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-6deg);
+  }
+  75% {
+    transform: rotate(6deg);
+  }
+}
+
+#alcohol-units-text {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  text-align: center;
+  color: #ffffff;
+}
