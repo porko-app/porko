@@ -70,23 +70,18 @@
   <!-- Second Screen -->
   <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
 
-    <!-- Speech Bubble -->
-<img src="speech-bubble-neutral.png" alt="Speech Bubble" class="speech-bubble-img" id="ferret-bubble" />
+<!-- Speech bubble images -->
+<img id="bubble-neutral" class="speech-bubble" src="speech-bubble-neutral.png" style="display: none;">
+<img id="bubble-tipsy" class="speech-bubble" src="speech-bubble-tipsy.png" style="display: none;">
+<img id="bubble-drunk" class="speech-bubble" src="speech-bubble-drunk.png" style="display: none;">
+<img id="bubble-wobbly" class="speech-bubble" src="speech-bubble-wobbly.png" style="display: none;">
 
+<!-- Ferret images -->
+<img id="ferret-neutral" class="ferret-mood" src="ferret-neutral.png" style="display: none;">
+<img id="ferret-tipsy" class="ferret-mood" src="ferret-tipsy.png" style="display: none;">
+<img id="ferret-drunk" class="ferret-mood" src="ferret-drunk.png" style="display: none;">
+<img id="ferret-wobbly" class="ferret-mood" src="ferret-wobbly.png" style="display: none;">
 
-    <!-- Ferret Image -->
-  <div class="ferret-mood" id="mood-neutral">
-    <img class="ferret" src="ferret-neutral.png" alt="Neutral ferret" />
-  </div>
-  <div class="ferret-mood" id="mood-tipsy" style="display: none;">
-    <img class="ferret" src="ferret-tipsy.png" alt="Tipsy ferret" />
-  </div>
-  <div class="ferret-mood" id="mood-drunk" style="display: none;">
-    <img class="ferret" src="ferret-drunk.png" alt="Drunk ferret" />
-  </div>
-  <div class="ferret-mood" id="mood-wobbly" style="display: none;">
-    <img class="ferret" src="ferret-wobbly.png" alt="Wobbly ferret" />
-  </div>
   
     <div id="alcohol-units-text">
       You've had: <span id="dynamic-units">0.0</span> alcohol units 🍹
@@ -146,6 +141,21 @@
     <button id="submit-drink" type="button">OK</button>
   </div>
 </div>
+
+<!-- THIRD SCREEN: Settings -->
+<div id="settings-screen" class="app-container" style="display: none;">
+  <h2>Settings ⚙️</h2>
+
+  <!-- Add anything you want in the settings screen here -->
+  <p>Settings will go here... Maybe a timer later? ⏳</p>
+
+  <!-- Back button image -->
+  <button id="back-to-second-btn">
+    <img src="back-button-settings.png" alt="Back to Main" style="width: 60px;" />
+  </button>
+</div>
+
+
 
   <script src="script.js"></script>
 </body>
