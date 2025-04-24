@@ -20,8 +20,9 @@ function updateFerretMood(units) {
         const bubble = document.getElementById(`bubble-${state}`);
         const bubbleText = document.getElementById(`bubble-text-${state}`);
 
-        if (ferret) ferret.style.display = 'none';
-        if (bubble) bubble.style.display = 'none';
+        if (ferret) ferret.style.display = 'none'; // Hide ferret image
+        if (bubble) bubble.style.display = 'none'; // Hide speech bubble
+        if (bubbleText) bubbleText.style.display = 'none'; // Hide bubble text
     });
 
     // Show the correct mood images and text based on the updated `mood`
