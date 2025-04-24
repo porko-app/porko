@@ -1,262 +1,620 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Initially show the welcome screen
-    document.getElementById('welcome-screen').style.display = 'flex';
-    document.getElementById('first-screen').style.display = 'none';
-    document.getElementById('second-screen').style.display = 'none';
+/* GENERAL STYLES */
 
-    // Continue button on welcome screen
-    document.getElementById('continue-btn').addEventListener('click', function () {
-        console.log("Continue button clicked");
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('first-screen').style.display = 'flex';
-    });
+/* Make the body take full screen and align content to the top */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f0f0f;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns everything to the top */
+  min-height: 100vh;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
 
-    // Start button (form submission)
-    const userForm = document.getElementById('user-info-form');
-    userForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent reload
-
-        const gender = document.getElementById('gender').value;
-        const weight = document.getElementById('weight').value;
-
-        if (!gender || !weight) {
-            alert('Please enter your gender and weight!');
-            return;
-        }
-
-        console.log("✅ Start button clicked");
-
-        document.getElementById('first-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'flex';
-    });
-});
-
-    // Event listener for the "Choose Drink" button to open the modal
-    const menuButton = document.getElementById('menu-btn'); // Use the menu-btn for triggering the modal
-    const drinkModal = document.getElementById('drink-modal');
-    const closeModalButton = document.getElementById('close-modal-btn');
-    const closeDetailsBtn = document.getElementById('close-details-btn');
-
-    menuButton.addEventListener('click', () => {
-        drinkModal.style.display = 'flex'; // Show the modal when menu button is clicked
-    });
-
-    // Close modal when clicking the close button (X)
-    closeModalButton.addEventListener('click', () => {
-        drinkModal.style.display = 'none'; // Hide the modal
-    });
- // Close drink detail modal
-    closeDetailsBtn.addEventListener('click', () => {
-        document.getElementById('drink-details-modal').style.display = 'none';
-    });
-
-    // Event listeners for each drink option
-    const whiskeyButton = document.getElementById('whiskey-btn');
-    const vodkaButton = document.getElementById('vodka-btn');
-    const rumButton = document.getElementById('rum-btn');
-    const ginButton = document.getElementById('gin-btn');
-    const tequilaButton = document.getElementById('tequila-btn');
-
-
-   function updateFerretMood(units) {
-    const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
-
-  // Determine current mood based on units
-  let mood = 'neutral';
-
-  if (units <= 1.5) {
-      mood = 'neutral';
-  } else if (units <= 3.5) {
-      mood = 'tipsy';
-  } else if (units <= 6.0) {
-      mood = 'drunk';
-  } else {
-      mood = 'wobbly'; // Covers 6.1 and above, including 12.0+
+/* Media Query for smaller screens (mobile) */
+@media (max-width: 480px) {
+  body {
+      background-color: #1d192e; /* Dark Blue Background on mobile */
   }
-  
+}
 
-// Hide all mood images
-states.forEach(state => {
-    const ferret = document.getElementById(`ferret-${state}`);
-    const bubble = document.getElementById(`bubble-${state}`);
-    if (ferret) ferret.style.display = 'none';
-    if (bubble) bubble.style.display = 'none';
-});
+/* Container with 9:16 aspect ratio (360x640 is standard mobile) */
+.app-container {
+  aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+  max-width: 100%;                       /* Base width for phone-sized view */
+  max-height: 100vh;                  /* Prevent it from exceeding screen height */
+  background-color: #1d192e;          /* Dark blue frame */
+  border-radius: 0px;
+  box-shadow: none;
+  padding: 30px 20px;                 /* Consistent inner spacing */
+  box-sizing: border-box;            /* Includes padding in size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;           /* Center content vertically */
+  align-items: center;               /* Center content horizontally */
+  margin: 0 auto;                    /* Center horizontally on large screens */
+  position: relative;
+}
 
-// Show the correct mood images based on the updated `mood`
-const selectedFerret = document.getElementById(`ferret-${mood}`);
-const selectedBubble = document.getElementById(`bubble-${mood}`);
-if (selectedFerret) selectedFerret.style.display = 'block';
-if (selectedBubble) selectedBubble.style.display = 'block';
+/* Title styling */
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px; /* Reduced margin */
+  color: #f4f4f4; /* Almost white text */
+}
 
+/* Logo styling */
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px; /* Adjust this to control the space between logo and content */
+  border-radius: 10px; /* Optional: make it roundy */
+}
 
-    // Show current mood images
-    const currentFerret = document.getElementById(`ferret-${mood}`);
-    const currentBubble = document.getElementById(`bubble-${mood}`);
-    if (currentFerret) currentFerret.style.display = 'block';
-    if (currentBubble) currentBubble.style.display = 'block';
+/* Label styling */
+label {
+  font-size: 16px;
+  color: #1d192e;
+  margin-top: 15px;
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+
+/* Input and select field styling */
+input,
+select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #f4f4f4; /* Almost white input fields */
+  color: #333; /* Dark text inside inputs for contrast */
+}
+
+/* Button styling */
+button {
+  margin-top: 40px; /* Increase the space above the button */
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: orange; /* Orange background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 50%; /* Make button take full width */
+  margin-top: 20px; /* Add space between button and form elements */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
 }
 
 
-    // Info popup handling
-    const infoBtn = document.getElementById('info-btn');
-    const infoPopup = document.getElementById('info-popup');
-    const backBtn = document.getElementById('back-btn');
 
-    infoBtn.addEventListener('click', () => {
-        infoPopup.style.display = 'flex';
-        setTimeout(() => {
-            infoPopup.style.opacity = 1;
-        }, 10);
-    });
-
-    backBtn.addEventListener('click', () => {
-        infoPopup.style.opacity = 0;
-        setTimeout(() => {
-            infoPopup.style.display = 'none';
-        }, 300);
-    });
-
-    function openDetailsModal(drinkName) {
-        selectedDrink = drinkName; // Store it globally for later use
-    
-        // Update the modal title
-        const drinkDetailsModal = document.getElementById('drink-details-modal');
-        const modalTitle = drinkDetailsModal.querySelector('h2');
-        modalTitle.textContent = `Enter Info for ${drinkName}`;
-
-    // Show the details modal
-    drinkDetailsModal.style.display = 'flex';
-
-    // Hide the drink picker modal
-    document.getElementById('drink-modal').style.display = 'none';
+/* Container with 9:16 aspect ratio (360x640) */
+.app-container {
+  aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+  width: 360px;
+  height: 640px;
+  background-color: #1d192e; /* Dark Blue Background */
+  position: relative; /* Make the container the reference point for absolute positioning */
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
 }
 
-whiskeyButton.addEventListener('click', () => {
-    openDetailsModal("Whiskey");
-});
-
-vodkaButton.addEventListener('click', () => {
-    openDetailsModal("Vodka");
-});
-
-rumButton.addEventListener('click', () => {
-    openDetailsModal("Rum");
-});
-
-ginButton.addEventListener('click', () => {
-    openDetailsModal("Gin");
-});
-
-tequilaButton.addEventListener('click', () => {
-    openDetailsModal("Tequila");
-});
-
-
-    // Start button (form submission)
-    const userForm = document.getElementById('user-info-form');
-    userForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent reload
-
-        const gender = document.getElementById('gender').value;
-        const weight = document.getElementById('weight').value;
-
-        if (!gender || !weight) {
-            alert('Please enter your gender and weight!');
-            return;
-        }
-
-        console.log("✅ Start button clicked");
-
-        document.getElementById('first-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'flex';
-         // Immediately show the neutral mood (0 units)
-    updateFerretMood(0);
-    });
-
-
-    // Function to transition to the second screen after drink details are submitted
-function goToSecondScreen() {
-    document.getElementById('first-screen').style.display = 'none'; // Hide the first screen
-    document.getElementById('second-screen').style.display = 'flex'; // Show the second screen
-}
-// Event listener for the "Submit Drink" button
-document.getElementById('submit-drink').addEventListener('click', () => {
-    console.log("OK button clicked!");
-
-    const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
-    const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
-
-    // Calculate alcohol unit using the updated formula
-    const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
-    totalUnits += units;
-    updateAlcoholUnitsDisplay();
-    updateFerretMood(totalUnits);
-
-    // Handle empty or invalid values
-    if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
-        alert("Please enter valid alcohol percentage and drink amount.");
-        return;
-    }
-
-    // Close the drink details modal before going to the second screen
-    document.getElementById('drink-details-modal').style.display = 'none'; // Close the second modal
-
-    // Close modals and switch screens (only this function is needed to do both!)
-    goToSecondScreen();
-});
-
-
-// calculator alcohol units
-function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
-    return (alcoholPercentage * drinkAmount) / 1000;
+/* Info Button inside 9:16 frame (below start button) */
+.info-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 500px;
+  right: 40px;
+  width: 40px;
+  height: 40px;
+  outline: none;         /* removes the dotted border on focus */
 }
 
-
-// Update the alcohol unit on the second screen
-function updateAlcoholUnitsDisplay() {
-    let unitsTextElement = document.getElementById('dynamic-units');
-    unitsTextElement.innerHTML = `${totalUnits.toFixed(1)}`;  // Display total units
+.info-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none; /* ensures image doesn't trigger hover style separately */
 }
 
-  // Transition to second screen after calculation
-  goToSecondScreen();
+/* Remove any orange-ish hover/focus styles */
+.info-btn:focus,
+.info-btn:hover {
+  outline: none;
+  background: none;
+  box-shadow: none;
+}
+ 
 
-  // Function to transition to the second screen after drink details are submitted
-function goToSecondScreen() {
-    document.getElementById('first-screen').style.display = 'none'; // Hide the first screen
-    document.getElementById('second-screen').style.display = 'flex'; // Show the second screen
+/* Info Popup */
+.info-popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth fade-in/out */
 }
 
-let selectedDrink = ""; // global
-let totalUnits = 0;      // global tracker for alcohol units
+/* Popup content styling */
+.info-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%; /* Adjusted to fit the 9:16 container */
+  max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
+  box-sizing: border-box;
+  opacity: 1; /* Keep the content visible when the pop-up shows */
+}
 
-document.querySelectorAll('.drink-option').forEach(button => {
-  button.addEventListener('click', () => {
-    selectedDrink = button.dataset.drinkName;
-    const drinkModal = document.getElementById('drink-modal');
-    if (drinkModal) {
-        // Do something with the modal if it exists
-    } else {
-        console.error("The modal element was not found!");
-    }
-    
-  });
+/* Title styling */
+.info-content h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+}
 
-  const settingsBtn = document.getElementById("settings-btn");
-  const secondScreen = document.getElementById("second-screen");
-  const settingsScreen = document.getElementById("settings-screen");
-  const backToSecondBtn = document.getElementById("back-to-second-btn");
-  
-  settingsBtn.addEventListener("click", () => {
-    secondScreen.style.display = "none";
-    settingsScreen.style.display = "flex";
-  });
-  
-  backToSecondBtn.addEventListener("click", () => {
-    settingsScreen.style.display = "none";
-    secondScreen.style.display = "flex";
-  });
-  
+/* Paragraph styling */
+.info-content p {
+  font-size: 16px;
+  line-height: 1.5;
+}
 
-});
+/* Image-style back button */
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 20px;
+  outline: none;
+}
+
+.back-icon {
+  width: 40px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+  animation:  0.4s ease-in-out;
+  background: none;
+  border: none;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+
+
+/* For Webkit browsers like Chrome/Safari */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Second Screen Layout */
+#second-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align elements to the top */
+  align-items: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background for second screen */
+  border-radius: 00px;
+  box-shadow: none;
+  height: 100%; /* Full height for the second screen */
+  box-sizing: border-box;
+}
+
+/* Title for Second Screen */
+#second-screen h1 {
+  font-size: 24px;
+  color: #f4f4f4;
+  margin-bottom: 20px;
+}
+
+
+/* Bottom Buttons (Menu & Settings) */
+.bottom-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-top: -15px;
+}
+
+/* Style for the bottom buttons */
+.bottom-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 20px; /* Adjust space between the buttons */
+}
+
+/* Style for the button images */
+.bottom-buttons img {
+  width: 50px;  /* Adjust the size of the button images */
+  height: 50px;
+}
+
+.bottom-buttons img {
+  width: 50px;  /* Adjust the size of the button images */
+  height: 50px;
+}
+
+/* Make the Menu button bigger */
+#menu-btn img {
+  width: 60px;  /* Increase the size of the Menu button */
+  height: 60px; /* Increase the size of the Menu button */
+}
+
+/* Specific style for the Settings button */
+#settings-btn img {
+  width: 50px;  /* Keep the Settings button size the same */
+  height: 50px; /* Keep the Settings button size the same */
+}
+
+/* Push the Menu button to the left */
+#menu-btn {
+  margin-left: 60px;  /* Pushes the menu button to the left */
+}
+
+/* Specific style for the Settings button */
+#settings-btn {
+  margin-left: -5px; /* Adds space between Menu and Settings */
+}
+
+/* WELCOME SCREEN */
+#welcome-screen {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center;
+  text-align: center;
+  background-color: #1d192e;
+  color: #f4f4f4;
+  height: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+#welcome-screen h2 {
+  font-size: 22px;
+  margin-bottom: 40px; /* Reduced margin for h2 */
+  margin-top: -50px; /* Added margin to push the header down */
+  line-height: 1.2; /* Tightened line height */
+}
+
+#welcome-screen p {
+  font-size: 14px;
+  line-height: 1.0; /* Reduced line height for paragraphs */
+  margin-bottom: 2px; /* Reduced margin between paragraphs */
+  margin-top: 30px; /* Add margin-top to move text down */
+  color: #f4f4f4;
+}
+
+#welcome-screen ul {
+  font-size: 14px;  /* Reduce font size of list items */
+  line-height: 1.2; /* Reduced line height */
+  margin-bottom: 10px; /* Reduced margin-bottom to give more space */
+  list-style-type: none !important; /* Force removal of bullets */
+  padding: 0 !important; /* Force removal of padding */
+  margin: 0 !important; /* Force removal of margin */
+}
+
+/* New Logo Styling */
+#welcome-logo {
+  width: 120px; /* Adjust logo size */
+  height: auto;
+  margin: -10px 0; /* Adjusted margin for spacing between text */
+  border-radius: 10px; /* Optional: round the edges of the logo */
+}
+
+/* Continue Button welcome screen */
+#continue-btn {
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  padding: 0; /* Remove any padding */
+  outline: none; /* Remove focus outline */
+  margin-left: 55px; /* Move the button 20px to the left */
+  margin-top: 30px; /* Moves it a little upwards */
+}
+
+#continue-btn img {
+  display: block; /* Ensure image is displayed as block */
+  width: 200px; /* Adjust the size if needed */
+  height: auto; /* Keep aspect ratio */
+  border: none; /* Remove any border if there is one around the image */
+}
+
+
+/* Hide spinner arrows in number input fields for Webkit browsers (Chrome/Safari) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spinner arrows in number input fields for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Style for the "Start" button first screen */
+#start-btn {
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  padding: 0; /* Remove padding */
+  cursor: pointer; /* Change cursor to pointer to indicate clickability */
+  display: block;
+  margin: 35px auto; /* This centers the button horizontally */
+  text-align: center;
+  transform: translateX(-25px); /* Moves it slightly left */
+  margin-top: 40px; /* Move the button 50px down */
+}
+
+/* Style the image inside the button */
+#start-btn img {
+  width: 150px; /* Adjust width of the button image as needed */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+margin: 0 auto;
+}
+
+/* Apply to ferret image */
+.ferret-mood {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: none;
+}
+
+.speech-bubble {
+  width: 200px;
+  height: 100px;
+  object-fit: contain;
+  display: none;
+}
+
+/* When they're active (shown) */
+.ferret-mood.active,
+.speech-bubble.active {
+  display: block;
+}
+
+/* Modal for Drink Selection (still targeting #drink-modal) */
+#drink-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110vw; /* Modal width is 110% of the viewport width */
+  height: 160vh; /* Set the height to 70% of the viewport height for a bigger modal */
+  max-width: 110vw;
+  max-height: 160vh; /* Limit the maximum height to 80% of the viewport height */
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90vh; /* Make the content fill the modal width */
+  max-height: 80vh; /* Limit the max height to 80% of the viewport height */
+  position: relative;
+  overflow: hidden;
+}
+
+#drink-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align buttons from the top */
+  align-items: center; /* Center buttons horizontally */
+  margin-top: 0; /* Removed negative margin to keep proper spacing */
+  gap: 10px; /* Space between buttons */
+}
+
+.drink-option {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0px;
+  color: red;
+  border-radius: 5px; /* Optional: gives a slight rounded edge */
+  outline: none !important;
+  box-shadow: none !important;
+  transition: transform 0.3s ease;
+  width: 250px; /* Set a fixed width to make it rectangular */
+  height: 50px; /* Set a fixed height to make it rectangular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drink-option:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.drink-option img {
+  width: 400px; /* Set the image width to make it rectangular */
+  height: 80px; /* Set the image height */
+  object-fit: cover; /* Ensures the image is cropped proportionally */
+  border-radius: 5px; /* Optional: gives the image rounded corners */
+}
+
+#close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+}
+
+#close-modal-btn:hover {
+  color: orange; /* Optional: Make the X button red when hovered */
+}
+
+.drink-option:focus,
+.drink-option:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.drink-option img {
+  width: 70px; /* make it bigger if you want */
+  height: 50px;
+  object-fit: cover;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.drink-option img {
+  width: 300px; /* Increase the width to make the image more rectangular */
+  height: 60px; /* Set height for a longer rectangular shape */
+  object-fit: cover; /* Ensure the image covers the button without distortion */
+  border-radius: 5px; /* Optional: rounded edges for the image */
+}
+
+.drink-option:hover {
+  transform: scale(1.1); /* Button scaling effect */
+}
+
+#choose-drink {
+  text-align: center; /* Centers the text horizontally */
+  margin-right: 80px;
+  margin-top: 2px; /* Moves it a little lower from the top */
+  font-size: 24px; /* You can adjust the size of the text */
+  color: white; /* Or whatever color you prefer */
+}
+
+.details-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); /* dark background */
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.details-content {
+  background: white;
+  padding: 25px 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  box-shadow: none;
+}
+
+.details-content input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.details-content button {
+  padding: 10px;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+}
+
+#second-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#bac-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+
+#alcohol-units-text {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  text-align: center;
+  color: #ffffff;
+}
+
+#back-to-second-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: -140px;  /* Make it a little higher */
+  margin-left: 200px;  /* Push it a bit to the right */
+  transition: transform 0.2s ease-in-out;
+}
+
+#back-to-second-btn img {
+  width: 60px;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add a little bounce on hover */
+#back-to-second-btn:hover img {
+  transform: scale(1.1) rotate(-5deg);
+}
+
