@@ -326,9 +326,9 @@ input::-webkit-inner-spin-button {
   font-size: 14px;  /* Reduce font size of list items */
   line-height: 1.2; /* Reduced line height */
   margin-bottom: 10px; /* Reduced margin-bottom to give more space */
-  list-style-type: none; /* Removes the default bullets */
-  padding: 0; /* Removes default padding */
-  margin: 0; /* Removes default margin */
+  list-style-type: none !important; /* Force removal of bullets */
+  padding: 0 !important; /* Force removal of padding */
+  margin: 0 !important; /* Force removal of margin */
 }
 
 /* New Logo Styling */
