@@ -5,7 +5,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #c2d0de;
+  background-color: #0f0f0f;
   display: flex;
   justify-content: center;
   align-items: flex-start; /* Aligns everything to the top */
@@ -17,7 +17,7 @@ body {
 /* Media Query for smaller screens (mobile) */
 @media (max-width: 480px) {
   body {
-      background-color: #1a2a6c; /* Dark Blue Background on mobile */
+      background-color: #1d192e; /* Dark Blue Background on mobile */
   }
 }
 
@@ -26,9 +26,9 @@ body {
   aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
   max-width: 100%;                       /* Base width for phone-sized view */
   max-height: 100vh;                  /* Prevent it from exceeding screen height */
-  background-color: #1a2a6c;          /* Dark blue frame */
+  background-color: #1d192e;          /* Dark blue frame */
   border-radius: 0px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   padding: 30px 20px;                 /* Consistent inner spacing */
   box-sizing: border-box;            /* Includes padding in size */
   display: flex;
@@ -58,7 +58,7 @@ h1 {
 /* Label styling */
 label {
   font-size: 16px;
-  color: #f4f4f4; /* Almost white text */
+  color: #1d192e;
   margin-top: 15px;
   display: block;
   text-align: left;
@@ -105,7 +105,7 @@ button {
   aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
   width: 360px;
   height: 640px;
-  background-color: #1a2a6c; /* Dark Blue Background */
+  background-color: #1d192e; /* Dark Blue Background */
   position: relative; /* Make the container the reference point for absolute positioning */
   padding: 30px 20px;
   box-sizing: border-box;
@@ -229,9 +229,9 @@ input::-webkit-inner-spin-button {
   justify-content: flex-start; /* Align elements to the top */
   align-items: center;
   padding: 20px;
-  background-color: #1a2a6c; /* Dark blue background for second screen */
+  background-color: #1d192e; /* Dark blue background for second screen */
   border-radius: 00px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   height: 100%; /* Full height for the second screen */
   box-sizing: border-box;
 }
@@ -300,7 +300,7 @@ input::-webkit-inner-spin-button {
   justify-content: center; /* Center content vertically */
   align-items: center;
   text-align: center;
-  background-color: #1a2a6c;
+  background-color: #1d192e;
   color: #f4f4f4;
   height: 100%;
   padding: 30px 20px;
@@ -326,6 +326,9 @@ input::-webkit-inner-spin-button {
   font-size: 14px;  /* Reduce font size of list items */
   line-height: 1.2; /* Reduced line height */
   margin-bottom: 10px; /* Reduced margin-bottom to give more space */
+  list-style-type: none; /* Removes the default bullets */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
 }
 
 /* New Logo Styling */
@@ -541,7 +544,7 @@ margin: 0 auto;
   flex-direction: column;
   gap: 15px;
   position: relative;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  box-shadow: none;
 }
 
 .details-content input {
