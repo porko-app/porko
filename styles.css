@@ -243,46 +243,6 @@ input::-webkit-inner-spin-button {
   margin-bottom: 20px;
 }
 
-.speech-bubble-img {
-  width: 90%;
-  max-width: 450px;
-  height: auto;
-  margin: 0 auto;
-  display: block;
-  margin-top: -20px; /* Try -30px or more for higher */
-}
-
-@media (max-width: 600px) {
-  .speech-bubble-img {
-    width: 100%;
-    max-width: 300px;
-  }
-}  
-
-.bubble-tail {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.bubble-tail span {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background-color: #FFCC00;
-  border-radius: 50%;
-  margin: 0 3px;
-}
-
-/* Ferret Image Styling */
-.ferret-mood img {
-  width: 190px; /* Adjust size as necessary */
-  height: auto;
-  margin-top: -30px;
-  border-radius: 10px;
-}
-
 
 /* Bottom Buttons (Menu & Settings) */
 .bottom-buttons {
@@ -427,100 +387,25 @@ input[type="number"] {
 margin: 0 auto;
 }
 
-@keyframes ferretTailShake {
-  0%   { transform: rotate(0deg); }
-  15%  { transform: rotate(15deg); }
-  30%  { transform: rotate(-15deg); }
-  45%  { transform: rotate(10deg); }
-  60%  { transform: rotate(-10deg); }
-  75%  { transform: rotate(5deg); }
-  90%  { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.info-btn:hover {
-  animation: ferretTailShake 0.6s ease-in-out;
-}
-
-/* Speech bubble animation */
-@keyframes floatBubble {
-  0% {
-    transform: translateY(0);  /* Start position */
-  }
-  50% {
-    transform: translateY(-10px); /* Move up */
-  }
-  100% {
-    transform: translateY(0);  /* Return to original position */
-  }
-}
-
-/* Apply the floating effect to the speech bubble */
-.speech-bubble-img {
-  width: 90%;
-  max-width: 450px;
-  height: auto;
-  margin: 0 auto;
-  display: block;
-
-  /* Position it a little higher */
-  margin-top: -20px;
-
-  /* Apply animation */
-  animation: floatBubble 3s ease-in-out infinite; /* Float forever */
-}
-
-/* Responsive design for mobile screens */
-@media (max-width: 600px) {
-  .speech-bubble-img {
-    width: 80%; /* Slightly smaller on mobile */
-    margin-top: -10px; /* Adjust position if necessary */
-  }
-}
-
-
-/* Subtle wobble (small BAC) */
-@keyframes subtle-wobble {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes moderate-wobble {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(10deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg); }
-}
-
-/* Strong wobble (high BAC) */
-@keyframes strong-wobble {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(15deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-15deg); }
-  100% { transform: rotate(0deg); }
-}
-
 /* Apply to ferret image */
-#ferret-image {
-  transition: transform 0.2s ease-in-out;
+.ferret-mood {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  display: none;
 }
 
-/* Wobble classes */
-.wobble-subtle {
-  animation: subtle-wobble 2s infinite ease-in-out;
+.speech-bubble {
+  width: 200px;
+  height: 100px;
+  object-fit: contain;
+  display: none;
 }
 
-.wobble-moderate {
-  animation: moderate-wobble 1.5s infinite ease-in-out;
-}
-
-.wobble-strong {
-  animation: strong-wobble 1s infinite ease-in-out;
+/* When they're active (shown) */
+.ferret-mood.active,
+.speech-bubble.active {
+  display: block;
 }
 
 /* Modal for Drink Selection (still targeting #drink-modal) */
@@ -701,55 +586,6 @@ margin: 0 auto;
   font-weight: bold;
 }
 
-#dynamic-bac {
-  font-weight: normal;
-  color: #7bff00;  /* Blue color for dynamic BAC number */
-}
-
-/* 🟢 Light wobble for neutral ferret */
-.wobble-neutral {
-  animation: neutralWobble 3s infinite ease-in-out;
-}
-
-@keyframes neutralWobble {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(1.5deg);
-  }
-}
-
-/* 🟡 Moderate wobble */
-.wobble-tipsy {
-  animation: tipsyWobble 1.5s infinite ease-in-out;
-}
-
-@keyframes tipsyWobble {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(5deg);
-  }
-}
-
-/* 🔴 Strong wobble */
-.wobble-drunk {
-  animation: drunkWobble 0.8s infinite ease-in-out;
-}
-
-@keyframes drunkWobble {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-6deg);
-  }
-  75% {
-    transform: rotate(6deg);
-  }
-}
 
 #alcohol-units-text {
   font-size: 1.2rem;
@@ -757,3 +593,25 @@ margin: 0 auto;
   text-align: center;
   color: #ffffff;
 }
+
+#back-to-second-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: -140px;  /* Make it a little higher */
+  margin-left: 200px;  /* Push it a bit to the right */
+  transition: transform 0.2s ease-in-out;
+}
+
+#back-to-second-btn img {
+  width: 60px;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add a little bounce on hover */
+#back-to-second-btn:hover img {
+  transform: scale(1.1) rotate(-5deg);
+}
+
