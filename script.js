@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAlcoholUnitsDisplay();
         updateFerretMood(totalUnits);
 
-    // Save to history
-    saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
+        // Save to history
+        saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
 
         // Close modals
         document.getElementById('drink-details-modal').style.display = 'none';
@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsBtn.addEventListener('click', () => {
             secondScreen.style.display = 'none';
             settingsScreen.style.display = 'flex';
+            updateStatistics(); // Update statistics when entering the settings screen
         });
     } else {
         console.error('Settings button not found.');
@@ -144,41 +145,34 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Back from settings button not found.');
     }
 
-// Function to calculate total alcohol units for a given date range
-function calculateTotalAlcohol(startDate, endDate) {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    const total = history.reduce((sum, entry) => {
-        const entryDate = new Date(entry.date);
-        if (entryDate >= startDate && entryDate <= endDate) {
-            return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
-        }
-        return sum;
-    }, 0);
-    return total.toFixed(1); // Return total rounded to 1 decimal place
-}
+    // Function to calculate total alcohol units for a given date range
+    function calculateTotalAlcohol(startDate, endDate) {
+        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+        const total = history.reduce((sum, entry) => {
+            const entryDate = new Date(entry.date);
+            if (entryDate >= startDate && entryDate <= endDate) {
+                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+            }
+            return sum;
+        }, 0);
+        return total.toFixed(1); // Return total rounded to 1 decimal place
+    }
 
-// Function to update statistics in the settings screen
-function updateStatistics() {
-    const now = new Date();
+    // Function to update statistics in the settings screen
+    function updateStatistics() {
+        const now = new Date();
 
-    // Calculate weekly total (last 7 days)
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(now.getDate() - 7);
-    const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
-    document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
+        // Calculate weekly total (last 7 days)
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(now.getDate() - 7);
+        const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+        document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
 
-    // Calculate monthly total (current month)
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
-    const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
-    document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
-}
-
-// Update statistics whenever the settings screen is opened
-settingsBtn.addEventListener('click', () => {
-    updateStatistics(); // Refresh the statistics
-    secondScreen.style.display = 'none';
-    settingsScreen.style.display = 'flex';
-});
+        // Calculate monthly total (current month)
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
+        const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+        document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
+    }
 
     // FAQ Alcohol Info Button Logic
     const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
@@ -253,11 +247,12 @@ settingsBtn.addEventListener('click', () => {
         });
     }
 
-    // History Log Logic
-const historyLogBtn = document.getElementById('history-log-btn');
+// History Log Logic
+const historyLogBtn = document.getElementById('history-log-btn'); // RESTORED
 const historyLogScreen = document.getElementById('history-log-screen');
 const backFromHistoryBtn = document.getElementById('back-from-history-btn');
 const historyList = document.getElementById('history-list');
+const clearHistoryBtn = document.getElementById('clear-history-btn'); // RESTORED
 
 // Function to load history from localStorage
 function loadHistory() {
@@ -292,23 +287,28 @@ function saveHistoryEntry(drinkName, amount, percentage) {
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
 
-// Event listener for the History Log button
-historyLogBtn.addEventListener('click', () => {
-    loadHistory(); // Load history before showing the screen
-    historyLogScreen.style.display = 'flex';
-    settingsScreen.style.display = 'none';
-});
+// Event listener for the History Log button (RESTORED)
+if (historyLogBtn) {
+    historyLogBtn.addEventListener('click', () => {
+        loadHistory(); // Load history before showing the screen
+        historyLogScreen.style.display = 'flex';
+        settingsScreen.style.display = 'none';
+    });
+}
 
 // Event listener for the Back button in history log screen
-backFromHistoryBtn.addEventListener('click', () => {
-    historyLogScreen.style.display = 'none';
-    settingsScreen.style.display = 'flex';
-});
+if (backFromHistoryBtn) {
+    backFromHistoryBtn.addEventListener('click', () => {
+        historyLogScreen.style.display = 'none';
+        settingsScreen.style.display = 'flex';
+    });
+}
 
-// Event listener for the Clear History button
-clearHistoryBtn.addEventListener('click', () => {
-    localStorage.removeItem('drinkHistory'); // Clear history from localStorage
-    loadHistory(); // Reload the history list
-});
-
+// Event listener for the Clear History button (RESTORED)
+if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+        localStorage.removeItem('drinkHistory'); // Clear history from localStorage
+        loadHistory(); // Reload the history list
+    });
+}
 });
