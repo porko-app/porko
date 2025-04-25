@@ -156,14 +156,22 @@
     История на логовете
   </button>
 
+    <!-- Statistics Section -->
+    <div id="statistics-section">
+      <h3>Статистика</h3>
+      <div id="weekly-statistics">
+        <h4>Общо за седмицата:</h4>
+        <p id="weekly-total">0.0 единици алкохол</p>
+      </div>
+      <div id="monthly-statistics">
+        <h4>Общо за месеца:</h4>
+        <p id="monthly-total">0.0 единици алкохол</p>
+      </div>
+    </div>
+
   <!-- Change Your Name Button -->
   <button id="change-name-btn" class="settings-btn">
     Смени името си
-  </button>
-
-  <!-- Reset All Data Button -->
-  <button id="reset-data-btn" class="settings-btn">
-    Нулиране на всички данни
   </button>
 
   <!-- Terms of Use Button -->
@@ -178,6 +186,26 @@
 
   <!-- Back Button -->
   <button id="back-from-settings-btn">← Back</button>
+</div>
+
+<!-- FAQ Alcohol Info Screen -->
+<div id="faq-screen" class="app-container" style="display: none;">
+  <button id="back-from-faq-btn" class="back-top-right-btn">← Назад</button>
+  <h2>ЧЗВ за алкохола</h2>
+  <p>
+    Тук ще се показва информация относно честите въпроси свързани с алкохола. 
+    Този текст може да бъде променен лесно след това.
+  </p>
+</div>
+
+<!-- History Log Screen -->
+<div id="history-log-screen" class="app-container" style="display: none;">
+  <button id="back-from-history-btn" class="back-top-right-btn">← Назад</button>
+  <h2>История на логовете</h2>
+  <ul id="history-list">
+    <!-- History entries will be dynamically added here -->
+  </ul>
+  <button id="clear-history-btn" class="settings-btn">Изчисти историята</button>
 </div>
 
   <script src="script.js"></script>
