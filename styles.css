@@ -288,9 +288,86 @@ input::-webkit-inner-spin-button {
   margin-left: 60px;  /* Pushes the menu button to the left */
 }
 
-/* Specific style for the Settings button */
-#settings-btn {
-  margin-left: -5px; /* Adds space between Menu and Settings */
+/* SETTINGS SCREEN BUTTON STYLES */
+
+/* General styling for all settings buttons */
+.settings-btn {
+  display: block; /* Each button on a new line */
+  width: 100%; /* Full width of the container */
+  padding: 12px 20px; /* Add some padding for better clickability */
+  margin: 10px 0; /* Space between buttons */
+  font-size: 16px; /* Make the text readable */
+  font-weight: bold; /* Bold text for emphasis */
+  color: #ffffff; /* White text color */
+  background-color: #3b3b3b; /* Dark background for contrast */
+  border: 1px solid #ffffff; /* Add a white border for better visibility */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  text-align: center; /* Center the text */
+  cursor: pointer; /* Pointer cursor for hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Hover and focus effects for buttons */
+.settings-btn:hover,
+.settings-btn:focus {
+  background-color: #575757; /* Slightly lighter background on hover */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Optional: Add active state for when the button is clicked */
+.settings-btn:active {
+  background-color: #2f2f2f; /* Darker background on click */
+  transform: scale(0.98); /* Slight shrinking effect */
+}
+
+/* FAQ Screen Styling */
+#faq-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background */
+  color: #f4f4f4; /* White text */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header text in FAQ screen */
+#faq-screen h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Paragraph text in FAQ screen */
+#faq-screen p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #cccccc; /* Light gray text for better readability */
+  margin-bottom: 20px;
+}
+
+/* Back Button in Top Right Corner */
+.back-top-right-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for back button */
+.back-top-right-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Light overlay on hover */
 }
 
 /* WELCOME SCREEN */
@@ -618,3 +695,95 @@ margin: 0 auto;
   transform: scale(1.1) rotate(-5deg);
 }
 
+/* History Log Screen Styling */
+#history-log-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background */
+  color: #f4f4f4; /* White text */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header in History Log Screen */
+#history-log-screen h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* History List Styling */
+#history-list {
+  list-style-type: none; /* Remove bullets */
+  padding: 0;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 300px;
+  overflow-y: auto; /* Scrollable if too many entries */
+  max-height: 300px; /* Limit height for scrolling */
+}
+
+/* History Entry Styling */
+#history-list li {
+  background-color: #2a292e;
+  color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Clear History Button */
+#clear-history-btn {
+  margin-top: 20px;
+  background-color: #ff4d4d; /* Red button for delete */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for Clear History Button */
+#clear-history-btn:hover {
+  background-color: #ff3333;
+}
+
+/* Statistics Section in Settings */
+#statistics-section {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #2a292e; /* Slightly darker background for distinction */
+  border-radius: 8px;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Header for Statistics Section */
+#statistics-section h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+/* Weekly and Monthly Statistics Text */
+#statistics-section h4 {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #cccccc;
+}
+
+#statistics-section p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
