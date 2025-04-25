@@ -141,6 +141,50 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Back from settings button not found.');
     }
 
+    // SETTINGS SCREEN BUTTON FUNCTIONALITY
+
+// FAQ Alcohol Info Button
+const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
+faqAlcoholInfoBtn.addEventListener('click', () => {
+    console.log('FAQ Alcohol Info button clicked');
+    // Add functionality for showing FAQ about alcohol info
+});
+
+// History Log Button
+const historyLogBtn = document.getElementById('history-log-btn');
+historyLogBtn.addEventListener('click', () => {
+    console.log('History Log button clicked');
+    // Add functionality for showing history logs
+});
+
+// Change Your Name Button
+const changeNameBtn = document.getElementById('change-name-btn');
+changeNameBtn.addEventListener('click', () => {
+    console.log('Change Your Name button clicked');
+    // Add functionality for changing the user's name
+});
+
+// Reset All Data Button
+const resetDataBtn = document.getElementById('reset-data-btn');
+resetDataBtn.addEventListener('click', () => {
+    console.log('Reset All Data button clicked');
+    // Add functionality for resetting all app data
+});
+
+// Terms of Use Button
+const termsOfUseBtn = document.getElementById('terms-of-use-btn');
+termsOfUseBtn.addEventListener('click', () => {
+    console.log('Terms of Use button clicked');
+    // Add functionality for showing terms of use
+});
+
+// QR Code Button
+const qrCodeBtn = document.getElementById('qr-code-btn');
+qrCodeBtn.addEventListener('click', () => {
+    console.log('QR Code button clicked');
+    // Add functionality for generating or displaying a QR code
+});
+
     // Welcome screen logic
     document.getElementById('welcome-screen').style.display = 'flex';
     document.getElementById('first-screen').style.display = 'none';
@@ -192,4 +236,22 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('drink-details-modal').style.display = 'none';
         });
     }
+
+// FAQ Alcohol Info Button Logic
+const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
+const faqScreen = document.getElementById('faq-screen');
+const backFromFaqBtn = document.getElementById('back-from-faq-btn');
+const settingsScreen = document.getElementById('settings-screen');
+
+// Show the FAQ screen when the FAQ button is clicked
+faqAlcoholInfoBtn.addEventListener('click', () => {
+    faqScreen.style.display = 'flex'; // Show the FAQ screen
+    settingsScreen.style.display = 'none'; // Hide the settings screen
+});
+
+// Navigate back to settings screen when the back button is clicked
+backFromFaqBtn.addEventListener('click', () => {
+    faqScreen.style.display = 'none'; // Hide the FAQ screen
+    settingsScreen.style.display = 'flex'; // Show the settings screen
+});
 });
