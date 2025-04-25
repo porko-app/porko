@@ -180,24 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             infoPopup.style.display = 'none';
         }, 300);
-
-         // Settings screen handling
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsScreen = document.getElementById('settings-screen');
-    const secondScreen = document.getElementById('second-screen');
-    const backToSecondBtn = document.getElementById('back-to-second-btn');
-
-    settingsBtn.addEventListener('click', () => {
-        secondScreen.style.display = 'none';
-        settingsScreen.style.display = 'flex';
-    });
-
-    backToSecondBtn.addEventListener('click', () => {
-        settingsScreen.style.display = 'none';
-        secondScreen.style.display = 'flex';
     });
 });
-    });
 
     // Event listener for the "Choose Drink" button to open the modal
     const menuButton = document.getElementById('menu-btn'); // Use the menu-btn for triggering the modal
