@@ -1,3 +1,8 @@
+let selectedDrink = ""; // Global variable for selected drink
+let totalUnits = 0; // Global tracker for alcohol units
+let userName = ""; // Global tracker for the user's name
+
+// Function to update the ferret's mood based on alcohol units
 function updateFerretMood(units) {
     const states = ['neutral', 'tipsy', 'drunk', 'wobbly']; // All mood states
 
@@ -41,48 +46,65 @@ function updateFerretMood(units) {
     }
 }
 
-    // Show the correct mood images and text based on the updated `mood`
-    const selectedFerret = document.getElementById(`ferret-${mood}`);
-    const selectedBubble = document.getElementById(`bubble-${mood}`);
-    const selectedBubbleText = document.getElementById(`bubble-text-${mood}`);
+// Function to calculate alcohol units
+function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
+    return (alcoholPercentage * drinkAmount) / 1000;
+}
 
-    if (selectedFerret) selectedFerret.style.display = 'block';
-    if (selectedBubble) selectedBubble.style.display = 'block';
-    if (selectedBubbleText) selectedBubbleText.style.display = 'block';
+// Function to update the alcohol units display
+function updateAlcoholUnitsDisplay() {
+    const unitsTextElement = document.getElementById('dynamic-units');
+    unitsTextElement.innerHTML = `${totalUnits.toFixed(1)}`; // Display total units
+}
 
-    // Replace "Friend" with the user's name in the text
-    const userNamePlaceholder = document.getElementById(`user-name-placeholder-${mood}`);
-    if (userNamePlaceholder) {
-        userNamePlaceholder.textContent = userName;  // Use the user's name dynamically
-    }
+// Function to open the drink details modal
+function openDetailsModal(drinkName) {
+    selectedDrink = drinkName; // Store selected drink globally
 
+    // Update the modal title
+    const drinkDetailsModal = document.getElementById('drink-details-modal');
+    const modalTitle = drinkDetailsModal.querySelector('h2');
+    modalTitle.textContent = `Въведи повече информация за ${drinkName}`;
+
+    // Show the details modal
+    drinkDetailsModal.style.display = 'flex';
+
+    // Hide the drink picker modal
+    document.getElementById('drink-modal').style.display = 'none';
+}
+
+// Function to transition to the second screen
+function goToSecondScreen() {
+    document.getElementById('first-screen').style.display = 'none'; // Hide the first screen
+    document.getElementById('second-screen').style.display = 'flex'; // Show the second screen
+}
+
+// Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
-        // Initially show the welcome screen
-        document.getElementById('welcome-screen').style.display = 'flex';
-        document.getElementById('first-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'none';
-    
-        // Continue button on welcome screen
-        document.getElementById('continue-btn').addEventListener('click', function () {
-            console.log("Continue button clicked");
-            document.getElementById('welcome-screen').style.display = 'none';
-            document.getElementById('first-screen').style.display = 'flex';
-        });
-    
-        // Start button (form submission)
-        const userForm = document.getElementById('user-info-form');
-        userForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent reload
-    
-            const usernameInput = document.getElementById('username');
-            userName = usernameInput.value.trim(); // Assign to global userName
-    
-            if (!userName) {
-                alert('Моля, напишете твоето име!');
-                return;
-            }
+    // Initially show the welcome screen
+    document.getElementById('welcome-screen').style.display = 'flex';
+    document.getElementById('first-screen').style.display = 'none';
+    document.getElementById('second-screen').style.display = 'none';
 
-        console.log("✅ Start button clicked");
+    // Continue button on welcome screen
+    document.getElementById('continue-btn').addEventListener('click', () => {
+        document.getElementById('welcome-screen').style.display = 'none';
+        document.getElementById('first-screen').style.display = 'flex';
+    });
+    
+
+    // Start button (form submission)
+    const userForm = document.getElementById('user-info-form');
+    userForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent reload
+
+        const usernameInput = document.getElementById('username');
+        userName = usernameInput.value.trim(); // Assign to global userName
+
+        if (!userName) {
+            alert('Моля, напишете твоето име!');
+            return;
+        }
 
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
@@ -90,29 +112,92 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFerretMood(0); // Show neutral ferret & speech bubble on second screen
     });
 
-     // Info button handling
-     const infoBtn = document.getElementById('info-btn');
-     const infoPopup = document.getElementById('info-popup');
-     const backBtn = document.getElementById('back-btn');
- 
-     if (infoBtn) {
-         infoBtn.addEventListener('click', () => {
-             infoPopup.style.display = 'flex';
-             setTimeout(() => {
-                 infoPopup.style.opacity = 1;
-             }, 10);
-         });
-     }
- 
-     if (backBtn) {
-         backBtn.addEventListener('click', () => {
-             infoPopup.style.opacity = 0;
-             setTimeout(() => {
-                 infoPopup.style.display = 'none';
-             }, 300);
-         });
-     }
- });
+    // Event listener for the "Choose Drink" button
+    const menuButton = document.getElementById('menu-btn');
+    const drinkModal = document.getElementById('drink-modal');
+    menuButton.addEventListener('click', () => {
+        drinkModal.style.display = 'flex'; // Show the modal
+    });
+
+    // Close modals
+    document.getElementById('close-modal-btn').addEventListener('click', () => {
+        drinkModal.style.display = 'none'; // Hide the drink modal
+    });
+
+    document.getElementById('close-details-btn').addEventListener('click', () => {
+        document.getElementById('drink-details-modal').style.display = 'none'; // Hide the details modal
+    });
+
+    // Event listener for drink submission
+    document.getElementById('submit-drink').addEventListener('click', () => {
+        const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
+        const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
+
+        if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
+            alert('Моля въведете процент на алкохола и милилитри.');
+            return;
+        }
+
+        const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
+        totalUnits += units;
+        updateAlcoholUnitsDisplay();
+        updateFerretMood(totalUnits);
+
+        // Close modals
+        document.getElementById('drink-details-modal').style.display = 'none';
+        drinkModal.style.display = 'none';
+    });
+
+    // Event listeners for drink options
+    const drinks = {
+        whiskey: 'Уиски',
+        vodka: 'Водка',
+        rum: 'Ром',
+        gin: 'Джин',
+        tequila: 'Текила',
+    };
+
+    Object.keys(drinks).forEach((drinkId) => {
+        document.getElementById(`${drinkId}-btn`).addEventListener('click', () => {
+            openDetailsModal(drinks[drinkId]);
+        });
+    });
+
+    // Info popup handling
+    const infoBtn = document.getElementById('info-btn');
+    const infoPopup = document.getElementById('info-popup');
+    const backBtn = document.getElementById('back-btn');
+
+    infoBtn.addEventListener('click', () => {
+        infoPopup.style.display = 'flex';
+        setTimeout(() => {
+            infoPopup.style.opacity = 1;
+        }, 10);
+    });
+
+    backBtn.addEventListener('click', () => {
+        infoPopup.style.opacity = 0;
+        setTimeout(() => {
+            infoPopup.style.display = 'none';
+        }, 300);
+
+         // Settings screen handling
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsScreen = document.getElementById('settings-screen');
+    const secondScreen = document.getElementById('second-screen');
+    const backToSecondBtn = document.getElementById('back-to-second-btn');
+
+    settingsBtn.addEventListener('click', () => {
+        secondScreen.style.display = 'none';
+        settingsScreen.style.display = 'flex';
+    });
+
+    backToSecondBtn.addEventListener('click', () => {
+        settingsScreen.style.display = 'none';
+        secondScreen.style.display = 'flex';
+    });
+});
+    });
 
     // Event listener for the "Choose Drink" button to open the modal
     const menuButton = document.getElementById('menu-btn'); // Use the menu-btn for triggering the modal
@@ -146,8 +231,7 @@ whiskeyButton.addEventListener('click', () => openDetailsModal('Уиски'));
 vodkaButton.addEventListener('click', () => openDetailsModal('Водка'));
 rumButton.addEventListener('click', () => openDetailsModal('Ром'));
 ginButton.addEventListener('click', () => openDetailsModal('Джин'));
-tequilaButton.addEventListener('click', () => openDetailsModal('Текила'));
-
+tequilaButton.addEventListener('click', () => openDetailsModal('Текила')); 
 
     // Debugging - Log to see if infoBtn exists
     if (infoBtn) {
@@ -246,18 +330,4 @@ function goToSecondScreen() {
     document.getElementById('first-screen').style.display = 'none'; // Hide the first screen
     document.getElementById('second-screen').style.display = 'flex'; // Show the second screen
 }
-
-let selectedDrink = ""; // global
-let totalUnits = 0;      // global tracker for alcohol units
-let userName = "";       // global tracker for user's name
-
-  const settingsBtn = document.getElementById("settings-btn");
-  const secondScreen = document.getElementById("second-screen");
-  const settingsScreen = document.getElementById("settings-screen");
-  const backToSecondBtn = document.getElementById("back-to-second-btn");
-  
-  settingsBtn.addEventListener("click", () => {
-    secondScreen.style.display = "none";
-    settingsScreen.style.display = "flex";
-  });
 
