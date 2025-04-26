@@ -757,87 +757,25 @@ margin: 0 auto;
   background-color: #ff3333;
 }
 
-/* Statistics Section in Settings */
-#statistics-section {
-  margin-top: 20px;
-  width: 100%;
-  padding: 10px 20px;
-  background-color: #2a292e; /* Slightly darker background for distinction */
-  border-radius: 8px;
-  color: #ffffff;
-  text-align: center;
-}
-
-/* Header for Statistics Section */
-#statistics-section h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #ffffff;
-}
-
-/* Weekly and Monthly Statistics Text */
-#statistics-section h4 {
-  font-size: 16px;
-  margin: 5px 0;
-  color: #cccccc;
-}
-
-#statistics-section p {
-  font-size: 18px;
-  font-weight: bold;
-  color: #ffffff;
-}
-
-/* Modal Background */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+#statistics-screen {
+  display: none; /* Hidden by default */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  width: 90%;
+  padding: 20px;
+  background-color: #ffffff; /* Add a background color if needed */
 }
 
-/* Modal Buttons */
-.modal-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 20px;
+#statistics-screen h2 {
+  margin-bottom: 20px;
 }
 
-.modal-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
+#statistics-screen div {
+  margin-bottom: 10px;
 }
 
-.modal-btn:hover {
-  opacity: 0.9;
-}
-
-#confirm-clear-btn {
-  background-color: #f44336;
-  color: white;
-}
-
-#cancel-clear-btn {
-  background-color: #ccc;
-  color: black;
+#statistics-screen p {
+  font-size: 18px;
+  color: #333333;
 }
