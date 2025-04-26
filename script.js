@@ -266,6 +266,92 @@ function loadHistory() {
         return;
     }
 
+    // Function to load history from localStorage
+function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = ''; // Clear existing list
+
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = 'Няма записана история.';
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
+    }
+
+    history.forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
+}
+
+// Clear History Button Logic
+const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+// Event listener for the "Clear History" button
+if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+        // Confirm with the user before clearing the history
+        const confirmClear = confirm("Сигурни ли сте, че искате да изчистите историята?");
+        if (confirmClear) {
+            // Clear history from localStorage
+            localStorage.removeItem('drinkHistory');
+
+            // Reload the history list (it will now show 'No history' message)
+            loadHistory();
+
+            alert("Историята беше изчистена успешно!");
+        }
+    });
+} else {
+    console.error('Clear History button not found.');
+}
+
+// Get references to the Clear History modal and buttons
+const clearHistoryModal = document.getElementById('clear-history-modal');
+const confirmClearBtn = document.getElementById('confirm-clear-btn');
+const cancelClearBtn = document.getElementById('cancel-clear-btn');
+
+// Event listener for the "Clear History" button
+if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+        // Show the modal when the button is clicked
+        clearHistoryModal.style.display = 'flex';
+    });
+} else {
+    console.error('Clear History button not found.');
+}
+
+// Event listener for the "Confirm Clear" button
+if (confirmClearBtn) {
+    confirmClearBtn.addEventListener('click', () => {
+        // Clear history from localStorage
+        localStorage.removeItem('drinkHistory');
+
+        // Reload the history list (it will now show 'No history' message)
+        loadHistory();
+
+        // Hide the modal
+        clearHistoryModal.style.display = 'none';
+
+        // Notify the user
+        alert("Историята беше изчистена успешно!");
+    });
+} else {
+    console.error('Confirm Clear button not found.');
+}
+
+// Event listener for the "Cancel Clear" button
+if (cancelClearBtn) {
+    cancelClearBtn.addEventListener('click', () => {
+        // Simply hide the modal when canceled
+        clearHistoryModal.style.display = 'none';
+    });
+} else {
+    console.error('Cancel Clear button not found.');
+}
+
     history.forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
