@@ -74,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateAlcoholUnitsDisplay();
         updateFerretMood(totalUnits);
 
+        // Save to history
+        saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
+
         // Close modals
         document.getElementById('drink-details-modal').style.display = 'none';
         document.getElementById('drink-modal').style.display = 'none';
@@ -127,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsBtn.addEventListener('click', () => {
             secondScreen.style.display = 'none';
             settingsScreen.style.display = 'flex';
+            updateStatistics(); // Update statistics when entering the settings screen
         });
     } else {
         console.error('Settings button not found.');
@@ -141,49 +145,55 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Back from settings button not found.');
     }
 
-    // SETTINGS SCREEN BUTTON FUNCTIONALITY
+    // Function to calculate total alcohol units for a given date range
+    function calculateTotalAlcohol(startDate, endDate) {
+        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+        const total = history.reduce((sum, entry) => {
+            const entryDate = new Date(entry.date);
+            if (entryDate >= startDate && entryDate <= endDate) {
+                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+            }
+            return sum;
+        }, 0);
+        return total.toFixed(1); // Return total rounded to 1 decimal place
+    }
 
-// FAQ Alcohol Info Button
-const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
-faqAlcoholInfoBtn.addEventListener('click', () => {
-    console.log('FAQ Alcohol Info button clicked');
-    // Add functionality for showing FAQ about alcohol info
-});
+    // Function to update statistics in the settings screen
+    function updateStatistics() {
+        const now = new Date();
 
-// History Log Button
-const historyLogBtn = document.getElementById('history-log-btn');
-historyLogBtn.addEventListener('click', () => {
-    console.log('History Log button clicked');
-    // Add functionality for showing history logs
-});
+        // Calculate weekly total (last 7 days)
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(now.getDate() - 7);
+        const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+        document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
 
-// Change Your Name Button
-const changeNameBtn = document.getElementById('change-name-btn');
-changeNameBtn.addEventListener('click', () => {
-    console.log('Change Your Name button clicked');
-    // Add functionality for changing the user's name
-});
+        // Calculate monthly total (current month)
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
+        const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+        document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
+    }
 
-// Reset All Data Button
-const resetDataBtn = document.getElementById('reset-data-btn');
-resetDataBtn.addEventListener('click', () => {
-    console.log('Reset All Data button clicked');
-    // Add functionality for resetting all app data
-});
+    // FAQ Alcohol Info Button Logic
+    const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
+    const faqScreen = document.getElementById('faq-screen');
+    const backFromFaqBtn = document.getElementById('back-from-faq-btn');
 
-// Terms of Use Button
-const termsOfUseBtn = document.getElementById('terms-of-use-btn');
-termsOfUseBtn.addEventListener('click', () => {
-    console.log('Terms of Use button clicked');
-    // Add functionality for showing terms of use
-});
+    if (faqAlcoholInfoBtn && faqScreen && backFromFaqBtn) {
+        // Show the FAQ screen when the FAQ button is clicked
+        faqAlcoholInfoBtn.addEventListener('click', () => {
+            faqScreen.style.display = 'flex'; // Show the FAQ screen
+            settingsScreen.style.display = 'none'; // Hide the settings screen
+        });
 
-// QR Code Button
-const qrCodeBtn = document.getElementById('qr-code-btn');
-qrCodeBtn.addEventListener('click', () => {
-    console.log('QR Code button clicked');
-    // Add functionality for generating or displaying a QR code
-});
+        // Navigate back to settings screen when the back button is clicked
+        backFromFaqBtn.addEventListener('click', () => {
+            faqScreen.style.display = 'none'; // Hide the FAQ screen
+            settingsScreen.style.display = 'flex'; // Show the settings screen
+        });
+    } else {
+        console.error('FAQ elements not found.');
+    }
 
     // Welcome screen logic
     document.getElementById('welcome-screen').style.display = 'flex';
@@ -237,21 +247,182 @@ qrCodeBtn.addEventListener('click', () => {
         });
     }
 
-// FAQ Alcohol Info Button Logic
-const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
-const faqScreen = document.getElementById('faq-screen');
-const backFromFaqBtn = document.getElementById('back-from-faq-btn');
-const settingsScreen = document.getElementById('settings-screen');
+// History Log Button Logic
+const historyLogBtn = document.getElementById('history-log-btn'); // Button for history log
+const historyLogScreen = document.getElementById('history-log-screen'); // History log screen
+const backFromHistoryBtn = document.getElementById('back-from-history-btn'); // Back button in history log screen
+const historyList = document.getElementById('history-list'); // History log list container
 
-// Show the FAQ screen when the FAQ button is clicked
-faqAlcoholInfoBtn.addEventListener('click', () => {
-    faqScreen.style.display = 'flex'; // Show the FAQ screen
-    settingsScreen.style.display = 'none'; // Hide the settings screen
-});
+// Function to load history from localStorage
+function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = ''; // Clear existing list
 
-// Navigate back to settings screen when the back button is clicked
-backFromFaqBtn.addEventListener('click', () => {
-    faqScreen.style.display = 'none'; // Hide the FAQ screen
-    settingsScreen.style.display = 'flex'; // Show the settings screen
-});
-});
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = 'Няма записана история.';
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
+    }
+
+    // Function to load history from localStorage
+function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = ''; // Clear existing list
+
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = 'Няма записана история.';
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
+    }
+
+    history.forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
+}
+
+// Clear History Button Logic
+const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+// Event listener for the "Clear History" button
+if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+        // Confirm with the user before clearing the history
+        const confirmClear = confirm("Сигурни ли сте, че искате да изчистите историята?");
+        if (confirmClear) {
+            // Clear history from localStorage
+            localStorage.removeItem('drinkHistory');
+
+            // Reload the history list (it will now show 'No history' message)
+            loadHistory();
+
+            alert("Историята беше изчистена успешно!");
+        }
+    });
+} else {
+    console.error('Clear History button not found.');
+}
+
+// Get references to the Clear History modal and buttons
+const clearHistoryModal = document.getElementById('clear-history-modal');
+const confirmClearBtn = document.getElementById('confirm-clear-btn');
+const cancelClearBtn = document.getElementById('cancel-clear-btn');
+
+// Event listener for the "Clear History" button
+if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+        // Show the modal when the button is clicked
+        clearHistoryModal.style.display = 'flex';
+    });
+} else {
+    console.error('Clear History button not found.');
+}
+
+// Event listener for the "Confirm Clear" button
+if (confirmClearBtn) {
+    confirmClearBtn.addEventListener('click', () => {
+        // Clear history from localStorage
+        localStorage.removeItem('drinkHistory');
+
+        // Reload the history list (it will now show 'No history' message)
+        loadHistory();
+
+        // Reset statistics in localStorage or memory
+        resetStatistics();
+
+        // Hide the modal
+        clearHistoryModal.style.display = 'none';
+
+        // Notify the user
+        alert("Историята и статистиката бяха изчистени успешно!");
+    });
+} else {
+    console.error('Confirm Clear button not found.');
+}
+
+function resetStatistics() {
+    // Set statistics to 0
+    document.getElementById('weekly-total').textContent = '0.0 единици алкохол';
+    document.getElementById('monthly-total').textContent = '0.0 единици алкохол';
+
+    // Optionally, you can also clear any saved statistics in localStorage if needed
+    // localStorage.removeItem('weeklyStatistics');
+    // localStorage.removeItem('monthlyStatistics');
+}
+
+// Event listener for the "Cancel Clear" button
+if (cancelClearBtn) {
+    cancelClearBtn.addEventListener('click', () => {
+        // Simply hide the modal when canceled
+        clearHistoryModal.style.display = 'none';
+    });
+} else {
+    console.error('Cancel Clear button not found.');
+}
+
+    history.forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
+}
+
+// Event listener for the "History Log" button
+if (historyLogBtn) {
+    historyLogBtn.addEventListener('click', () => {
+        loadHistory(); // Load history before showing the screen
+        historyLogScreen.style.display = 'flex'; // Show the history log screen
+        document.getElementById('settings-screen').style.display = 'none'; // Hide the settings screen
+    });
+} else {
+    console.error('History Log button not found.');
+}
+
+// Event listener for the Back button in the history log screen
+if (backFromHistoryBtn) {
+    backFromHistoryBtn.addEventListener('click', () => {
+        historyLogScreen.style.display = 'none'; // Hide the history log screen
+        document.getElementById('settings-screen').style.display = 'flex'; // Show the settings screen
+    });
+} else {
+    console.error('Back button in History Log screen not found.');
+}
+    });
+
+// Function to load history from localStorage
+function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = ''; // Clear existing list
+
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = 'Няма записана история.';
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
+    }
+
+    history.forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
+}
+
+// Function to save a new history entry
+function saveHistoryEntry(drinkName, amount, percentage) {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    const newEntry = {
+        date: new Date().toLocaleString(),
+        drinkName,
+        amount,
+        percentage
+    };
+    history.push(newEntry);
+    localStorage.setItem('drinkHistory', JSON.stringify(history));
+}
