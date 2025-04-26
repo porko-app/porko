@@ -30,6 +30,79 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userNamePlaceholder) userNamePlaceholder.textContent = userName;
     }
 
+     // Function to Update All User Name Placeholders
+  function updateAllUserNamePlaceholders(newName) {
+    const placeholders = document.querySelectorAll('[id^="user-name-placeholder"]');
+    placeholders.forEach((placeholder) => {
+      placeholder.textContent = newName;
+    });
+    console.log(`Updated user name to: ${newName}`);
+  }
+
+  // Event Listener for "Change Your Name" Button
+  if (changeNameBtn) {
+    changeNameBtn.addEventListener('click', () => {
+      // Hide the settings screen
+      settingsScreen.style.display = 'none';
+
+      // Show the first screen for entering the name
+      firstScreen.style.display = 'flex';
+    });
+  } else {
+    console.error('Change Your Name button not found.');
+  }
+
+  // Event Listener for User Form Submission (First Screen)
+  if (userForm) {
+    userForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Get the new user name from the input field
+      const usernameInput = document.getElementById('username');
+      userName = usernameInput.value.trim();
+
+      // Validate the input
+      if (!userName) {
+        alert('Моля, напишете своето име!');
+        return;
+      }
+
+      // Update all placeholders with the new name
+      updateAllUserNamePlaceholders(userName);
+
+      // Hide the first screen
+      firstScreen.style.display = 'none';
+
+      // Show the second screen (main UI)
+      secondScreen.style.display = 'flex';
+    });
+  } else {
+    console.error('User Info Form not found.');
+  }
+
+  // Function to Load User Name from Local Storage (if available)
+  function loadUserNameFromStorage() {
+    const savedUserName = localStorage.getItem('userName');
+    if (savedUserName) {
+      userName = savedUserName;
+      updateAllUserNamePlaceholders(userName);
+    }
+  }
+
+  // Save the User Name in Local Storage
+  function saveUserNameToStorage(newName) {
+    localStorage.setItem('userName', newName);
+  }
+
+  // Load the Saved User Name on Page Load
+  loadUserNameFromStorage();
+
+  // Save the User Name Whenever It Changes
+  userForm?.addEventListener('submit', () => {
+    saveUserNameToStorage(userName);
+  });
+});
+
     // Function to calculate alcohol units
     function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
         return (alcoholPercentage * drinkAmount) / 1000;
@@ -392,7 +465,6 @@ if (backFromHistoryBtn) {
 } else {
     console.error('Back button in History Log screen not found.');
 }
-    });
 
 // Function to load history from localStorage
 function loadHistory() {
