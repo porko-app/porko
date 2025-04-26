@@ -120,59 +120,51 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Back button not found.');
     }
 
-    // Settings button handling
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsScreen = document.getElementById('settings-screen');
-    const secondScreen = document.getElementById('second-screen');
-    const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
+// Settings button handling
+const settingsBtn = document.getElementById('settings-btn');
+const settingsScreen = document.getElementById('settings-screen');
+const secondScreen = document.getElementById('second-screen');
+const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
 
-    if (settingsBtn) {
-        settingsBtn.addEventListener('click', () => {
-            secondScreen.style.display = 'none';
-            settingsScreen.style.display = 'flex';
-            updateStatistics(); // Update statistics when entering the settings screen
-        });
-    } else {
-        console.error('Settings button not found.');
-    }
+statisticsBtn.addEventListener('click', () => {
+    settingsScreen.style.display = 'none';
+    statisticsScreen.style.display = 'flex';
+    updateStatistics();
+});
 
-    if (backFromSettingsBtn) {
-        backFromSettingsBtn.addEventListener('click', () => {
-            settingsScreen.style.display = 'none';
-            secondScreen.style.display = 'flex';
-        });
-    } else {
-        console.error('Back from settings button not found.');
-    }
+backFromStatisticsBtn.addEventListener('click', () => {
+    statisticsScreen.style.display = 'none';
+    settingsScreen.style.display = 'flex';
+});
 
-    // Function to calculate total alcohol units for a given date range
-    function calculateTotalAlcohol(startDate, endDate) {
-        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-        const total = history.reduce((sum, entry) => {
-            const entryDate = new Date(entry.date);
-            if (entryDate >= startDate && entryDate <= endDate) {
-                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
-            }
-            return sum;
-        }, 0);
-        return total.toFixed(1); // Return total rounded to 1 decimal place
-    }
+  // Function to calculate and update statistics
+  function updateStatistics() {
+    const now = new Date();
 
-    // Function to update statistics in the settings screen
-    function updateStatistics() {
-        const now = new Date();
+    // Weekly statistics
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(now.getDate() - 7);
+    const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+    document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
 
-        // Calculate weekly total (last 7 days)
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(now.getDate() - 7);
-        const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
-        document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
+    // Monthly statistics
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+    document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
+}
 
-        // Calculate monthly total (current month)
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
-        const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
-        document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
-    }
+ // Function to calculate alcohol for a date range
+ function calculateTotalAlcohol(startDate, endDate) {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    return history.reduce((total, entry) => {
+        const entryDate = new Date(entry.date);
+        if (entryDate >= startDate && entryDate <= endDate) {
+            return total + (entry.amount * entry.percentage) / 1000;
+        }
+        return total;
+    }, 0).toFixed(1);
+}
+});
 
     // FAQ Alcohol Info Button Logic
     const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
@@ -247,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// History Log Button 
+// History Log Button Logic
 const historyLogBtn = document.getElementById('history-log-btn'); // Button for history log
 const historyLogScreen = document.getElementById('history-log-screen'); // History log screen
 const backFromHistoryBtn = document.getElementById('back-from-history-btn'); // Back button in history log screen
@@ -392,41 +384,7 @@ if (backFromHistoryBtn) {
 } else {
     console.error('Back button in History Log screen not found.');
 }
-
-// Get references to the Statistics button and screen
-const statisticsBtn = document.getElementById('statistics-btn');
-const statisticsScreen = document.getElementById('statistics-screen');
-const backFromStatisticsBtn = document.getElementById('back-from-statistics-btn');
-
-// Event listener for the "Statistics" button
-if (statisticsBtn) {
-    statisticsBtn.addEventListener('click', () => {
-        // Show the statistics screen
-        statisticsScreen.style.display = 'flex';
-
-        // Hide the settings screen
-        document.getElementById('settings-screen').style.display = 'none';
-
-        // Update statistics display
-        updateStatistics();
     });
-} else {
-    console.error('Statistics button not found.');
-}
-
-// Event listener for the "Back" button in the statistics screen
-if (backFromStatisticsBtn) {
-    backFromStatisticsBtn.addEventListener('click', () => {
-        // Hide the statistics screen
-        statisticsScreen.style.display = 'none';
-
-        // Show the settings screen
-        document.getElementById('settings-screen').style.display = 'flex';
-    });
-} else {
-    console.error('Back button in Statistics screen not found.');
-}
-});
 
 // Function to load history from localStorage
 function loadHistory() {
