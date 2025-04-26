@@ -162,20 +162,6 @@
   Показване на статистика
 </button>
 
-<!-- Statistics Screen -->
-<div id="statistics-screen" class="app-container" style="display: none;">
-  <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
-  <h2>Статистика</h2>
-  <div id="weekly-statistics">
-    <h4>Общо за седмицата:</h4>
-    <p id="weekly-total">0.0 единици алкохол</p>
-  </div>
-  <div id="monthly-statistics">
-    <h4>Общо за месеца:</h4>
-    <p id="monthly-total">0.0 единици алкохол</p>
-  </div>
-</div>
-
   <!-- Change Your Name Button -->
   <button id="change-name-btn" class="settings-btn">
     Смени името си
@@ -193,6 +179,20 @@
 
   <!-- Back Button -->
   <button id="back-from-settings-btn">← Back</button>
+</div>
+
+<!-- Statistics Screen (Move outside Settings Screen) -->
+<div id="statistics-screen" class="app-container" style="display: none;">
+  <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
+  <h2>Статистика</h2>
+  <div id="weekly-statistics">
+    <h4>Общо за седмицата:</h4>
+    <p id="weekly-total">0.0 единици алкохол</p>
+  </div>
+  <div id="monthly-statistics">
+    <h4>Общо за месеца:</h4>
+    <p id="monthly-total">0.0 единици алкохол</p>
+  </div>
 </div>
 
 <!-- FAQ Alcohol Info Screen -->
@@ -224,6 +224,23 @@
       <button id="cancel-clear-btn" class="modal-btn">Не</button>
     </div>
   </div>
+</div>
+
+<!-- Terms of Use Screen -->
+<div id="terms-of-use-screen" class="app-container" style="display: none;">
+  <button id="back-from-terms-btn" class="back-top-right-btn">← Назад</button>
+  <h2>Условия за ползване</h2>
+  <p>
+    Добре дошли в приложението Порко! Тук ще намерите информация относно правилата и условията за ползване. 
+    Моля, използвайте приложението отговорно и се забавлявайте!
+  </p>
+</div>
+
+<!-- QR Code Screen -->
+<div id="qr-code-screen" class="app-container" style="display: none;">
+  <button id="back-from-qr-btn" class="back-top-right-btn">← Назад</button>
+  <h2>QR код за споделяне</h2>
+  <img id="qr-code-image" src="qr-code.png" alt="QR Code" />
 </div>
 
   <script src="script.js"></script>
