@@ -258,6 +258,64 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('FAQ elements not found.');
     }
 
+// Event Listener for "Terms of Use" Button
+const termsOfUseBtn = document.getElementById('terms-of-use-btn');
+const termsOfUseScreen = document.getElementById('terms-of-use-screen');
+if (termsOfUseBtn) {
+    termsOfUseBtn.addEventListener('click', () => {
+        // Hide the settings screen
+        settingsScreen.style.display = 'none';
+
+        // Show the Terms of Use screen
+        termsOfUseScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Terms of Use button not found.');
+}
+
+// Event Listener for "Back" Button in Terms of Use Screen
+const backFromTermsBtn = document.getElementById('back-from-terms-btn');
+if (backFromTermsBtn) {
+    backFromTermsBtn.addEventListener('click', () => {
+        // Hide the Terms of Use screen
+        termsOfUseScreen.style.display = 'none';
+
+        // Show the settings screen
+        settingsScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Back button in Terms of Use screen not found.');
+}
+
+// Event Listener for "QR Code" Button
+const qrCodeBtn = document.getElementById('qr-code-btn');
+const qrCodeScreen = document.getElementById('qr-code-screen');
+if (qrCodeBtn) {
+    qrCodeBtn.addEventListener('click', () => {
+        // Hide the settings screen
+        settingsScreen.style.display = 'none';
+
+        // Show the QR Code screen
+        qrCodeScreen.style.display = 'flex';
+    });
+} else {
+    console.error('QR Code button not found.');
+}
+
+// Event Listener for "Back" Button in QR Code Screen
+const backFromQrBtn = document.getElementById('back-from-qr-btn');
+if (backFromQrBtn) {
+    backFromQrBtn.addEventListener('click', () => {
+        // Hide the QR Code screen
+        qrCodeScreen.style.display = 'none';
+
+        // Show the settings screen
+        settingsScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Back button in QR Code screen not found.');
+}
+
     // Welcome screen logic
     document.getElementById('welcome-screen').style.display = 'flex';
     document.getElementById('first-screen').style.display = 'none';
