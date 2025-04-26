@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// History Log Button Logic
+// History Log Button 
 const historyLogBtn = document.getElementById('history-log-btn'); // Button for history log
 const historyLogScreen = document.getElementById('history-log-screen'); // History log screen
 const backFromHistoryBtn = document.getElementById('back-from-history-btn'); // Back button in history log screen
@@ -392,7 +392,41 @@ if (backFromHistoryBtn) {
 } else {
     console.error('Back button in History Log screen not found.');
 }
+
+// Get references to the Statistics button and screen
+const statisticsBtn = document.getElementById('statistics-btn');
+const statisticsScreen = document.getElementById('statistics-screen');
+const backFromStatisticsBtn = document.getElementById('back-from-statistics-btn');
+
+// Event listener for the "Statistics" button
+if (statisticsBtn) {
+    statisticsBtn.addEventListener('click', () => {
+        // Show the statistics screen
+        statisticsScreen.style.display = 'flex';
+
+        // Hide the settings screen
+        document.getElementById('settings-screen').style.display = 'none';
+
+        // Update statistics display
+        updateStatistics();
     });
+} else {
+    console.error('Statistics button not found.');
+}
+
+// Event listener for the "Back" button in the statistics screen
+if (backFromStatisticsBtn) {
+    backFromStatisticsBtn.addEventListener('click', () => {
+        // Hide the statistics screen
+        statisticsScreen.style.display = 'none';
+
+        // Show the settings screen
+        document.getElementById('settings-screen').style.display = 'flex';
+    });
+} else {
+    console.error('Back button in Statistics screen not found.');
+}
+});
 
 // Function to load history from localStorage
 function loadHistory() {
