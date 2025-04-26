@@ -248,10 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 // History Log Button Logic
-const historyLogBtn = document.getElementById('history-log-btn');
-const historyLogScreen = document.getElementById('history-log-screen');
-const backFromHistoryBtn = document.getElementById('back-from-history-btn');
-const historyList = document.getElementById('history-list');
+const historyLogBtn = document.getElementById('history-log-btn'); // Button for history log
+const historyLogScreen = document.getElementById('history-log-screen'); // History log screen
+const backFromHistoryBtn = document.getElementById('back-from-history-btn'); // Back button in history log screen
+const historyList = document.getElementById('history-list'); // History log list container
 
 // Function to load history from localStorage
 function loadHistory() {
@@ -273,22 +273,27 @@ function loadHistory() {
     });
 }
 
-// Event listener for the History Log button
+// Event listener for the "History Log" button
 if (historyLogBtn) {
     historyLogBtn.addEventListener('click', () => {
         loadHistory(); // Load history before showing the screen
-        historyLogScreen.style.display = 'flex';
-        settingsScreen.style.display = 'none';
+        historyLogScreen.style.display = 'flex'; // Show the history log screen
+        document.getElementById('settings-screen').style.display = 'none'; // Hide the settings screen
     });
+} else {
+    console.error('History Log button not found.');
 }
 
-// Event listener for the Back button in history log screen
+// Event listener for the Back button in the history log screen
 if (backFromHistoryBtn) {
     backFromHistoryBtn.addEventListener('click', () => {
-        historyLogScreen.style.display = 'none';
-        settingsScreen.style.display = 'flex';
+        historyLogScreen.style.display = 'none'; // Hide the history log screen
+        document.getElementById('settings-screen').style.display = 'flex'; // Show the settings screen
     });
+} else {
+    console.error('Back button in History Log screen not found.');
 }
+    });
 
 // Function to load history from localStorage
 function loadHistory() {
@@ -322,5 +327,3 @@ function saveHistoryEntry(drinkName, amount, percentage) {
     history.push(newEntry);
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
-
-});
