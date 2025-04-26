@@ -77,11 +77,77 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save to history
         saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
 
+    // Dynamically update statistics
+    updateStatistics(); // <-- Ensure statistics are updated immediately
+
         // Close modals
         document.getElementById('drink-details-modal').style.display = 'none';
         document.getElementById('drink-modal').style.display = 'none';
     });
 
+
+    // Event Listener for "Statistics" Button
+    const statisticsBtn = document.getElementById('statistics-btn');
+    const statisticsScreen = document.getElementById('statistics-screen');
+    if (statisticsBtn) {
+        statisticsBtn.addEventListener('click', () => {
+            // Hide the settings screen
+            settingsScreen.style.display = 'none';
+
+            // Show the statistics screen
+            statisticsScreen.style.display = 'flex';
+
+            // Update statistics dynamically
+            updateStatistics();
+        });
+    } else {
+        console.error('Statistics button not found.');
+    }
+
+    // Event Listener for "Back" Button in Statistics Screen
+    const backFromStatisticsBtn = document.getElementById('back-from-statistics-btn');
+    if (backFromStatisticsBtn) {
+        backFromStatisticsBtn.addEventListener('click', () => {
+            // Hide the statistics screen
+            statisticsScreen.style.display = 'none';
+
+            // Show the settings screen
+            settingsScreen.style.display = 'flex';
+        });
+    } else {
+        console.error('Back button in Statistics screen not found.');
+    }
+
+
+    // Function to calculate total alcohol units for a given date range
+    function calculateTotalAlcohol(startDate, endDate) {
+        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+        const total = history.reduce((sum, entry) => {
+            const entryDate = new Date(entry.date);
+            if (entryDate >= startDate && entryDate <= endDate) {
+                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+            }
+            return sum;
+        }, 0);
+        return total.toFixed(1); // Return total rounded to 1 decimal place
+    }
+
+        // Function to update statistics in the statistics screen
+        function updateStatistics() {
+            const now = new Date();
+    
+            // Calculate weekly total (last 7 days)
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(now.getDate() - 7);
+            const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+            document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
+    
+            // Calculate monthly total (current month)
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
+            const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+            document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
+        }
+    
     // Event listeners for drink options
     const drinks = {
         whiskey: 'Уиски',
@@ -194,6 +260,64 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('FAQ elements not found.');
     }
+
+// Event Listener for "Terms of Use" Button
+const termsOfUseBtn = document.getElementById('terms-of-use-btn');
+const termsOfUseScreen = document.getElementById('terms-of-use-screen');
+if (termsOfUseBtn) {
+    termsOfUseBtn.addEventListener('click', () => {
+        // Hide the settings screen
+        settingsScreen.style.display = 'none';
+
+        // Show the Terms of Use screen
+        termsOfUseScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Terms of Use button not found.');
+}
+
+// Event Listener for "Back" Button in Terms of Use Screen
+const backFromTermsBtn = document.getElementById('back-from-terms-btn');
+if (backFromTermsBtn) {
+    backFromTermsBtn.addEventListener('click', () => {
+        // Hide the Terms of Use screen
+        termsOfUseScreen.style.display = 'none';
+
+        // Show the settings screen
+        settingsScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Back button in Terms of Use screen not found.');
+}
+
+// Event Listener for "QR Code" Button
+const qrCodeBtn = document.getElementById('qr-code-btn');
+const qrCodeScreen = document.getElementById('qr-code-screen');
+if (qrCodeBtn) {
+    qrCodeBtn.addEventListener('click', () => {
+        // Hide the settings screen
+        settingsScreen.style.display = 'none';
+
+        // Show the QR Code screen
+        qrCodeScreen.style.display = 'flex';
+    });
+} else {
+    console.error('QR Code button not found.');
+}
+
+// Event Listener for "Back" Button in QR Code Screen
+const backFromQrBtn = document.getElementById('back-from-qr-btn');
+if (backFromQrBtn) {
+    backFromQrBtn.addEventListener('click', () => {
+        // Hide the QR Code screen
+        qrCodeScreen.style.display = 'none';
+
+        // Show the settings screen
+        settingsScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Back button in QR Code screen not found.');
+}
 
     // Welcome screen logic
     document.getElementById('welcome-screen').style.display = 'flex';
