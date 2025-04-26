@@ -426,3 +426,66 @@ function saveHistoryEntry(drinkName, amount, percentage) {
     history.push(newEntry);
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
+
+// Get references to the screens and buttons
+const statisticsBtn = document.getElementById('statistics-btn');
+const statisticsScreen = document.getElementById('statistics-screen');
+const backFromStatisticsBtn = document.getElementById('back-from-statistics-btn');
+const settingsScreen = document.getElementById('settings-screen');
+
+// Event listener for the "Statistics" button
+if (statisticsBtn) {
+    statisticsBtn.addEventListener('click', () => {
+        // Hide the settings screen
+        settingsScreen.style.display = 'none';
+
+        // Show the statistics screen
+        statisticsScreen.style.display = 'flex';
+
+        // Update statistics dynamically
+        updateStatistics();
+    });
+} else {
+    console.error('Statistics button not found.');
+}
+
+// Event listener for the "Back" button in the statistics screen
+if (backFromStatisticsBtn) {
+    backFromStatisticsBtn.addEventListener('click', () => {
+        // Hide the statistics screen
+        statisticsScreen.style.display = 'none';
+
+        // Show the settings screen
+        settingsScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Back button in Statistics screen not found.');
+}
+
+// Function to update statistics dynamically
+function updateStatistics() {
+    const now = new Date();
+
+    // Calculate weekly total (last 7 days)
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(now.getDate() - 7);
+    const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+    document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
+
+    // Calculate monthly total (current month)
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
+    const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+    document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
+}
+
+// Function to calculate total alcohol units for a given date range
+function calculateTotalAlcohol(startDate, endDate) {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    return history.reduce((sum, entry) => {
+        const entryDate = new Date(entry.date);
+        if (entryDate >= startDate && entryDate <= endDate) {
+            return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+        }
+        return sum;
+    }, 0).toFixed(1); // Return total rounded to 1 decimal place
+}
