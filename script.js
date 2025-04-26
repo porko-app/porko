@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedDrink = ""; // Global variable for selected drink
     let totalUnits = 0; // Global tracker for alcohol units
     let userName = ""; // Global tracker for the user's name
-    const historyList = document.getElementById('history-list');
 
     // Function to update the ferret's mood based on alcohol units
     function updateFerretMood(units) {
@@ -121,40 +120,45 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Back button not found.');
     }
 
-// Settings button handling
-const settingsBtn = document.getElementById('settings-btn');
-const settingsScreen = document.getElementById('settings-screen');
-const secondScreen = document.getElementById('second-screen');
-const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
+    // Settings button handling
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsScreen = document.getElementById('settings-screen');
+    const secondScreen = document.getElementById('second-screen');
+    const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
 
-statisticsBtn.addEventListener('click', () => {
-    settingsScreen.style.display = 'none';
-    statisticsScreen.style.display = 'flex';
-    updateStatistics();
-});
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+            secondScreen.style.display = 'none';
+            settingsScreen.style.display = 'flex';
+            updateStatistics(); // Update statistics when entering the settings screen
+        });
+    } else {
+        console.error('Settings button not found.');
+    }
 
-backFromStatisticsBtn.addEventListener('click', () => {
-    statisticsScreen.style.display = 'none';
-    settingsScreen.style.display = 'flex';
-});
+    if (backFromSettingsBtn) {
+        backFromSettingsBtn.addEventListener('click', () => {
+            settingsScreen.style.display = 'none';
+            secondScreen.style.display = 'flex';
+        });
+    } else {
+        console.error('Back from settings button not found.');
+    }
 
-// Statistics button logic
-const statisticsBtn = document.getElementById('statistics-btn');
-const statisticsScreen = document.getElementById('statistics-screen');
-const backFromStatisticsBtn = document.getElementById('back-from-statistics-btn');
+    // Function to calculate total alcohol units for a given date range
+    function calculateTotalAlcohol(startDate, endDate) {
+        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+        const total = history.reduce((sum, entry) => {
+            const entryDate = new Date(entry.date);
+            if (entryDate >= startDate && entryDate <= endDate) {
+                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+            }
+            return sum;
+        }, 0);
+        return total.toFixed(1); // Return total rounded to 1 decimal place
+    }
 
-statisticsBtn.addEventListener('click', () => {
-    settingsScreen.style.display = 'none';
-    statisticsScreen.style.display = 'flex';
-    updateStatistics();
-});
-
-backFromStatisticsBtn.addEventListener('click', () => {
-    statisticsScreen.style.display = 'none';
-    settingsScreen.style.display = 'flex';
-});
-
-    // Function to update statistics
+    // Function to update statistics in the settings screen
     function updateStatistics() {
         const now = new Date();
 
@@ -165,72 +169,10 @@ backFromStatisticsBtn.addEventListener('click', () => {
         document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
 
         // Calculate monthly total (current month)
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
         const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
         document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
     }
-
-    // Function to calculate total alcohol units for a given date range
-    function calculateTotalAlcohol(startDate, endDate) {
-        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-        return history.reduce((sum, entry) => {
-            const entryDate = new Date(entry.date);
-            if (entryDate >= startDate && entryDate <= endDate) {
-                return sum + (entry.amount * entry.percentage) / 1000;
-            }
-            return sum;
-        }, 0).toFixed(1);
-    }
-
-    // Function to load history from localStorage
-    function loadHistory() {
-        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-        historyList.innerHTML = ''; // Clear existing list
-
-        if (history.length === 0) {
-            const noHistoryMessage = document.createElement('li');
-            noHistoryMessage.textContent = 'Няма записана история.';
-            noHistoryMessage.style.color = '#cccccc';
-            historyList.appendChild(noHistoryMessage);
-            return;
-        }
-
-        history.forEach(entry => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-            historyList.appendChild(listItem);
-        });
-    }
-
-    // Function to save a new history entry
-    function saveHistoryEntry(drinkName, amount, percentage) {
-        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-        const newEntry = {
-            date: new Date().toLocaleString(),
-            drinkName,
-            amount,
-            percentage,
-        };
-        history.push(newEntry);
-        localStorage.setItem('drinkHistory', JSON.stringify(history));
-    }
-
-      // History log button logic
-      const historyLogBtn = document.getElementById('history-log-btn');
-      const historyLogScreen = document.getElementById('history-log-screen');
-      const backFromHistoryBtn = document.getElementById('back-from-history-btn');
-  
-      historyLogBtn.addEventListener('click', () => {
-          loadHistory();
-          historyLogScreen.style.display = 'flex';
-          settingsScreen.style.display = 'none';
-      });
-  
-      backFromHistoryBtn.addEventListener('click', () => {
-          historyLogScreen.style.display = 'none';
-          settingsScreen.style.display = 'flex';
-      });
-  });
 
     // FAQ Alcohol Info Button Logic
     const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
@@ -305,7 +247,11 @@ backFromStatisticsBtn.addEventListener('click', () => {
         });
     }
 
-
+// History Log Button Logic
+const historyLogBtn = document.getElementById('history-log-btn'); // Button for history log
+const historyLogScreen = document.getElementById('history-log-screen'); // History log screen
+const backFromHistoryBtn = document.getElementById('back-from-history-btn'); // Back button in history log screen
+const historyList = document.getElementById('history-list'); // History log list container
 
 // Function to load history from localStorage
 function loadHistory() {
@@ -426,6 +372,27 @@ if (cancelClearBtn) {
     });
 }
 
+// Event listener for the "History Log" button
+if (historyLogBtn) {
+    historyLogBtn.addEventListener('click', () => {
+        loadHistory(); // Load history before showing the screen
+        historyLogScreen.style.display = 'flex'; // Show the history log screen
+        document.getElementById('settings-screen').style.display = 'none'; // Hide the settings screen
+    });
+} else {
+    console.error('History Log button not found.');
+}
+
+// Event listener for the Back button in the history log screen
+if (backFromHistoryBtn) {
+    backFromHistoryBtn.addEventListener('click', () => {
+        historyLogScreen.style.display = 'none'; // Hide the history log screen
+        document.getElementById('settings-screen').style.display = 'flex'; // Show the settings screen
+    });
+} else {
+    console.error('Back button in History Log screen not found.');
+}
+    });
 
 // Function to load history from localStorage
 function loadHistory() {
