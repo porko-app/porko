@@ -4,8 +4,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #c2d0de;
+  font-family: 'Montserrat', sans-serif; /* Use Montserrat as the primary font */
+  background-color: #0f0f0f;
   display: flex;
   justify-content: center;
   align-items: flex-start; /* Aligns everything to the top */
@@ -17,7 +17,7 @@ body {
 /* Media Query for smaller screens (mobile) */
 @media (max-width: 480px) {
   body {
-      background-color: #1a2a6c; /* Dark Blue Background on mobile */
+      background-color: #1d192e; /* Dark Blue Background on mobile */
   }
 }
 
@@ -26,9 +26,9 @@ body {
   aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
   max-width: 100%;                       /* Base width for phone-sized view */
   max-height: 100vh;                  /* Prevent it from exceeding screen height */
-  background-color: #1a2a6c;          /* Dark blue frame */
+  background-color: #1d192e;          /* Dark blue frame */
   border-radius: 0px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   padding: 30px 20px;                 /* Consistent inner spacing */
   box-sizing: border-box;            /* Includes padding in size */
   display: flex;
@@ -58,7 +58,7 @@ h1 {
 /* Label styling */
 label {
   font-size: 16px;
-  color: #f4f4f4; /* Almost white text */
+  color: #fcfcfc; /* This is the current text color */
   margin-top: 15px;
   display: block;
   text-align: left;
@@ -105,7 +105,7 @@ button {
   aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
   width: 360px;
   height: 640px;
-  background-color: #1a2a6c; /* Dark Blue Background */
+  background-color: #1d192e; /* Dark Blue Background */
   position: relative; /* Make the container the reference point for absolute positioning */
   padding: 30px 20px;
   box-sizing: border-box;
@@ -229,9 +229,9 @@ input::-webkit-inner-spin-button {
   justify-content: flex-start; /* Align elements to the top */
   align-items: center;
   padding: 20px;
-  background-color: #1a2a6c; /* Dark blue background for second screen */
+  background-color: #1d192e; /* Dark blue background for second screen */
   border-radius: 00px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   height: 100%; /* Full height for the second screen */
   box-sizing: border-box;
 }
@@ -288,9 +288,86 @@ input::-webkit-inner-spin-button {
   margin-left: 60px;  /* Pushes the menu button to the left */
 }
 
-/* Specific style for the Settings button */
-#settings-btn {
-  margin-left: -5px; /* Adds space between Menu and Settings */
+/* SETTINGS SCREEN BUTTON STYLES */
+
+/* General styling for all settings buttons */
+.settings-btn {
+  display: block; /* Each button on a new line */
+  width: 100%; /* Full width of the container */
+  padding: 12px 20px; /* Add some padding for better clickability */
+  margin: 10px 0; /* Space between buttons */
+  font-size: 16px; /* Make the text readable */
+  font-weight: bold; /* Bold text for emphasis */
+  color: #ffffff; /* White text color */
+  background-color: #3b3b3b; /* Dark background for contrast */
+  border: 1px solid #ffffff; /* Add a white border for better visibility */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  text-align: center; /* Center the text */
+  cursor: pointer; /* Pointer cursor for hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Hover and focus effects for buttons */
+.settings-btn:hover,
+.settings-btn:focus {
+  background-color: #575757; /* Slightly lighter background on hover */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Optional: Add active state for when the button is clicked */
+.settings-btn:active {
+  background-color: #2f2f2f; /* Darker background on click */
+  transform: scale(0.98); /* Slight shrinking effect */
+}
+
+/* FAQ Screen Styling */
+#faq-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background */
+  color: #f4f4f4; /* White text */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header text in FAQ screen */
+#faq-screen h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Paragraph text in FAQ screen */
+#faq-screen p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #cccccc; /* Light gray text for better readability */
+  margin-bottom: 20px;
+}
+
+/* Back Button in Top Right Corner */
+.back-top-right-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for back button */
+.back-top-right-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Light overlay on hover */
 }
 
 /* WELCOME SCREEN */
@@ -300,11 +377,26 @@ input::-webkit-inner-spin-button {
   justify-content: center; /* Center content vertically */
   align-items: center;
   text-align: center;
-  background-color: #1a2a6c;
+  background-color: #1d192e;
   color: #f4f4f4;
   height: 100%;
   padding: 30px 20px;
   box-sizing: border-box;
+}
+
+/* Header Styling */
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffffff; /* Bright white for visibility */
+  text-align: center;
+  margin-bottom: 25px; /* Space below the header */
+}
+
+/* Specific styling for welcome screen header */
+#welcome-screen h1 {
+  margin-top: 2px; /* Add some space above the header */
+  margin-bottom: 5px; /* Reduce space below the header */
 }
 
 #welcome-screen h2 {
@@ -326,13 +418,22 @@ input::-webkit-inner-spin-button {
   font-size: 14px;  /* Reduce font size of list items */
   line-height: 1.2; /* Reduced line height */
   margin-bottom: 10px; /* Reduced margin-bottom to give more space */
+  list-style-type: none !important; /* Force removal of bullets */
+  padding: 0 !important; /* Force removal of padding */
+  margin: 0 !important; /* Force removal of margin */
+}
+
+/* Welcome Screen Paragraph Styling */
+#welcome-screen p:first-of-type {
+  font-weight: 600; /* Make the first paragraph slightly bolder */
+  
 }
 
 /* New Logo Styling */
 #welcome-logo {
   width: 120px; /* Adjust logo size */
   height: auto;
-  margin: -10px 0; /* Adjusted margin for spacing between text */
+  margin: 0 0 10px 0; /* Add more space below the logo */
   border-radius: 10px; /* Optional: round the edges of the logo */
 }
 
@@ -343,7 +444,7 @@ input::-webkit-inner-spin-button {
   padding: 0; /* Remove any padding */
   outline: none; /* Remove focus outline */
   margin-left: 55px; /* Move the button 20px to the left */
-  margin-top: 30px; /* Moves it a little upwards */
+  margin-top: 40px; /* Moves it a little upwards */
 }
 
 #continue-btn img {
@@ -541,7 +642,7 @@ margin: 0 auto;
   flex-direction: column;
   gap: 15px;
   position: relative;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  box-shadow: none;
 }
 
 .details-content input {
@@ -577,6 +678,12 @@ margin: 0 auto;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+}
+
+/* Adjust Logo Position on Second Screen */
+#first-screen .logo {
+  margin-top: 60px; /* Add space above the logo */
+  margin-bottom: 40px; /* Add space below the logo */
 }
 
 #bac-text {
@@ -615,3 +722,160 @@ margin: 0 auto;
   transform: scale(1.1) rotate(-5deg);
 }
 
+/* History Log Screen Styling */
+#history-log-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background */
+  color: #f4f4f4; /* White text */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header in History Log Screen */
+#history-log-screen h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* History List Styling */
+#history-list {
+  list-style-type: none; /* Remove bullets */
+  padding: 0;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 300px;
+  overflow-y: auto; /* Scrollable if too many entries */
+  max-height: 300px; /* Limit height for scrolling */
+}
+
+/* History Entry Styling */
+#history-list li {
+  background-color: #2a292e;
+  color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Clear History Button */
+#clear-history-btn {
+  margin-top: 20px;
+  background-color: #ff4d4d; /* Red button for delete */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for Clear History Button */
+#clear-history-btn:hover {
+  background-color: #ff3333;
+}
+
+#statistics-screen {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #361768; /* White background for contrast */
+  color: #ffffff; /* Dark text color for visibility */
+}
+
+#statistics-screen h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #ff9900; /* Ensure text is visible */
+}
+
+#statistics-screen div {
+  margin-bottom: 15px;
+}
+
+#statistics-screen p {
+  font-size: 18px;
+  color: #ffffff; /* Ensure text is visible */
+}
+
+/* Terms of Use Screen Styling */
+#terms-of-use-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Matches app container background */
+  color: #f4f4f4; /* Light text color for readability */
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Scroll for long content */
+}
+
+#terms-of-use-screen h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffffff; /* Bright text for header */
+}
+
+#terms-of-use-screen p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #cccccc; /* Slightly dimmed text for body */
+  margin-bottom: 20px;
+}
+
+#terms-of-use-screen button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: orange; /* Bright button for visibility */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#terms-of-use-screen button:hover {
+  background-color: #e69500; /* Slightly darker orange on hover */
+}
+
+/* QR Code Screen Styling */
+#qr-code-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Matches app container background */
+  color: #f4f4f4; /* Light text color for readability */
+  height: 100%; /* Full height */
+}
+
+#qr-code-screen h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffffff; /* Bright text for header */
+}
+
+#qr-code-screen img {
+  width: 200px; /* Adjust size to fit the screen */
+  height: auto;
+  margin-top: 20px;
+  border-radius: 10px; /* Optional: Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a polished look */
+}

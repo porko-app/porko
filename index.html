@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Porko</title>
+  <title>Порко приложение</title>
+  
+  <!-- Import Montserrat Bulgarian Cyrillic Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" rel="stylesheet">
+  
+  <!-- Link to your CSS file -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <!-- First Screen (Main UI) -->
   <div class="app-container" id="first-screen">
-    <h1>Porko</h1>
-    <img src="logohelikon.png" alt="FerretFeels Logo" class="logo" />
+    <img src="logoporko.png" alt="FerretFeels Logo" class="logo" />
 
     <form id="user-info-form">
-      <label for="gender">Gender</label>
-      <select id="gender" required>
-        <option value="" disabled selected>Select your gender</option>
-        <option value="female">Female</option>
-        <option value="male">Male</option>
-      </select>
-
-      <label for="weight">Weight (kg)</label>
-      <input type="number" id="weight" min="1" step="1" placeholder="Your weight" />
+      <label for="username">Напиши твоето име</label>
+      <input type="text" id="username" placeholder="пример: Порко" required />
+      
 
        <!-- Change "Start" button to image -->
        <button type="submit" id="start-btn">
@@ -39,8 +38,8 @@
   <!-- Info Popup -->
   <div id="info-popup" class="info-popup">
     <div class="info-content">
-      <h2>Important Info</h2>
-      <p>This app is just for fun! It helps estimate your Blood Alcohol Content (BAC) based on your gender and weight. Always drink responsibly and never drink and drive!</p>
+      <h2>Важна информация</h2>
+      <p>Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол.</p>
       <button id="back-btn" class="back-btn">
         <img src="back-button.png" alt="Back" class="back-icon" />
       </button>      
@@ -49,19 +48,18 @@
 
   <!-- ✅ NEW Welcome Screen -->
   <div class="app-container" id="welcome-screen" style="display: none;">
-    <h2>Welcome to FerretFeels! 🐾</h2>
-
+    <h2> </h2>
+    
      <!-- Add Logo here -->
-  <img src="logohelikon.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
+  <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
 
-    <p>This is your friendly BAC buddy! 💬</p>
-    <p>Here's how it works:</p>
+    <p>Тук ще се запознаеш с твоето ново порче!</p>
+    <p>Как работи?</p>
     <ul>
-      <li>Enter your gender and weight to get started</li>
-      <li>Log drinks to see how your BAC changes</li>
-      <li>Watch your ferret react in fun and silly ways!</li>
+      <li>• Напиши твоето име за да стартираш приложението</li>
+      <li>• Въвеждай твоите напитки и разбери алкохолните ти единици</li>
+      <li>• Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
     </ul>
-    <p>Always drink responsibly. This app is for fun and education only!</p>
     <button id="continue-btn">
       <img src="lets-go-button.png" alt="Let's Go" />
     </button>
@@ -76,6 +74,12 @@
 <img id="bubble-drunk" class="speech-bubble" src="speech-bubble-drunk.png" style="display: none;">
 <img id="bubble-wobbly" class="speech-bubble" src="speech-bubble-wobbly.png" style="display: none;">
 
+<!-- Text within the bubbles -->
+<div id="bubble-text-neutral" class="bubble-text" style="display: none;">Хей, <span id="user-name-placeholder-neutral">Friend</span>! В момента сме сууупер!</div>
+<div id="bubble-text-tipsy" class="bubble-text" style="display: none;">Юхуу, <span id="user-name-placeholder-tipsy">Friend</span>! Малко ми е замаяно, но ми е добре!</div>
+<div id="bubble-text-drunk" class="bubble-text" style="display: none;">Уха, <span id="user-name-placeholder-drunk">Friend</span>! Всичко е малко.. размито!</div>
+<div id="bubble-text-wobbly" class="bubble-text" style="display: none;">О, не, <span id="user-name-placeholder-wobbly">Friend</span>! Твърде много!</div>
+
 <!-- Ferret images -->
 <img id="ferret-neutral" class="ferret-mood" src="ferret-neutral.png" style="display: none;">
 <img id="ferret-tipsy" class="ferret-mood" src="ferret-tipsy.png" style="display: none;">
@@ -84,7 +88,7 @@
 
   
     <div id="alcohol-units-text">
-      You've had: <span id="dynamic-units">0.0</span> alcohol units 🍹
+      Досега сте изпили  <span id="dynamic-units">0.0</span> единици алкохол
     </div>
     
 
@@ -106,7 +110,7 @@
 <div id="drink-modal" style="display: none;">
   <div id="modal-content">
       <span id="close-modal-btn">X</span>
-      <h2>Choose Your Drink</h2>
+      <h2>Избери напитка</h2>
       <div id="drink-options">
           <button class="drink-option" id="whiskey-btn">
               <img src="whiskey-icon.png" alt="Whiskey" />
@@ -131,31 +135,117 @@
 <div id="drink-details-modal" class="details-modal">
   <div class="details-content">
     <span id="close-details-btn" class="close-btn">×</span>
-    <h2>Enter Drink Info</h2>
+    <h2>Напиши информация за</h2>
     
-    <label for="alcohol-percentage">Alcohol %</label>
-    <input type="number" id="alcohol-percentage" placeholder="e.g. 5" min="0" max="100" />
+    <label for="alcohol-percentage">% Алкохол</label>
+    <input type="number" id="alcohol-percentage" placeholder="процент на алкохол" min="0" max="100" />
     
-    <label for="drink-amount">Amount (ml)</label>
-    <input type="number" id="drink-amount" placeholder="e.g. 330" min="0" />
+    <label for="drink-amount">Количество в милилитри</label>
+    <input type="number" id="drink-amount" placeholder="милилитри" min="0" />
     <button id="submit-drink" type="button">OK</button>
   </div>
 </div>
 
 <!-- THIRD SCREEN: Settings -->
 <div id="settings-screen" class="app-container" style="display: none;">
-  <h2>Settings ⚙️</h2>
+  <h2>Настройки</h2>
 
-  <!-- Add anything you want in the settings screen here -->
-  <p>Settings will go here... Maybe a timer later? ⏳</p>
-
-  <!-- Back button image -->
-  <button id="back-to-second-btn">
-    <img src="back-button-settings.png" alt="Back to Main" style="width: 60px;" />
+  <!-- FAQ Alcohol Info Button -->
+  <button id="faq-alcohol-info-btn" class="settings-btn">
+    ЧЗВ за алкохола
   </button>
+
+
+<!-- History Log Button -->
+<button id="history-log-btn" class="settings-btn">
+  История на логовете
+</button>
+
+<!-- Statistics Button -->
+<button id="statistics-btn" class="settings-btn">
+  Показване на статистика
+</button>
+
+  <!-- Change Your Name Button -->
+  <button id="change-name-btn" class="settings-btn">
+    Смени името си
+  </button>
+
+  <!-- Terms of Use Button -->
+  <button id="terms-of-use-btn" class="settings-btn">
+    Условия за ползване
+  </button>
+
+  <!-- QR Code Button -->
+  <button id="qr-code-btn" class="settings-btn">
+    QR код за споделяне
+  </button>
+
+  <!-- Back Button -->
+  <button id="back-from-settings-btn">← Back</button>
 </div>
 
+<!-- Statistics Screen (Move outside Settings Screen) -->
+<div id="statistics-screen" class="app-container" style="display: none;">
+  <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
+  <h2>Статистика</h2>
+  <div id="weekly-statistics">
+    <h4>Общо за седмицата:</h4>
+    <p id="weekly-total">0.0 единици алкохол</p>
+  </div>
+  <div id="monthly-statistics">
+    <h4>Общо за месеца:</h4>
+    <p id="monthly-total">0.0 единици алкохол</p>
+  </div>
+</div>
 
+<!-- FAQ Alcohol Info Screen -->
+<div id="faq-screen" class="app-container" style="display: none;">
+  <button id="back-from-faq-btn" class="back-top-right-btn">← Назад</button>
+  <h2>ЧЗВ за алкохола</h2>
+  <p>
+    Тук ще се показва информация относно честите въпроси свързани с алкохола. 
+    Този текст може да бъде променен лесно след това.
+  </p>
+</div>
+
+<!-- History Log Screen -->
+<div id="history-log-screen" class="app-container" style="display: none;">
+  <button id="back-from-history-btn" class="back-top-right-btn">← Назад</button>
+  <h2>История на логовете</h2>
+  <ul id="history-list">
+    <!-- History entries will be dynamically added here -->
+  </ul>
+  <button id="clear-history-btn" class="settings-btn">Изчисти историята</button>
+</div>
+
+<!-- Clear History Confirmation Modal -->
+<div id="clear-history-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3>Сигурни ли сте, че искате да изчистите историята?</h3>
+    <div class="modal-buttons">
+      <button id="confirm-clear-btn" class="modal-btn">Да</button>
+      <button id="cancel-clear-btn" class="modal-btn">Не</button>
+    </div>
+  </div>
+</div>
+
+<!-- Terms of Use Screen -->
+<div id="terms-of-use-screen" class="app-container" style="display: none;">
+  <button id="back-from-terms-btn" class="back-top-right-btn">← Назад</button>
+  <h2>Условия за ползване</h2>
+  <p>
+    Добре дошли в приложението Порко! Тук ще намерите информация относно правилата и условията за ползване. 
+    Моля, използвайте приложението отговорно и се забавлявайте!
+  </p>
+</div>
+
+<!-- QR Code Screen -->
+<div id="qr-code-screen" class="app-container" style="display: none;">
+  <button id="back-from-qr-btn" class="back-top-right-btn">← Назад</button>
+  <h2>QR код за споделяне</h2>
+  <img id="qr-code-image" src="qr-code.png" alt="QR Code" />
+</div>
 
   <script src="script.js"></script>
 </body>
