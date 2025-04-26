@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save to history
         saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
 
+    // Dynamically update statistics
+    updateStatistics(); // <-- Ensure statistics are updated immediately
+
         // Close modals
         document.getElementById('drink-details-modal').style.display = 'none';
         document.getElementById('drink-modal').style.display = 'none';
