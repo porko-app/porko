@@ -82,6 +82,69 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('drink-modal').style.display = 'none';
     });
 
+
+    // Event Listener for "Statistics" Button
+    const statisticsBtn = document.getElementById('statistics-btn');
+    const statisticsScreen = document.getElementById('statistics-screen');
+    if (statisticsBtn) {
+        statisticsBtn.addEventListener('click', () => {
+            // Hide the settings screen
+            settingsScreen.style.display = 'none';
+
+            // Show the statistics screen
+            statisticsScreen.style.display = 'flex';
+
+            // Update statistics dynamically
+            updateStatistics();
+        });
+    } else {
+        console.error('Statistics button not found.');
+    }
+
+    // Event Listener for "Back" Button in Statistics Screen
+    const backFromStatisticsBtn = document.getElementById('back-from-statistics-btn');
+    if (backFromStatisticsBtn) {
+        backFromStatisticsBtn.addEventListener('click', () => {
+            // Hide the statistics screen
+            statisticsScreen.style.display = 'none';
+
+            // Show the settings screen
+            settingsScreen.style.display = 'flex';
+        });
+    } else {
+        console.error('Back button in Statistics screen not found.');
+    }
+
+
+    // Function to calculate total alcohol units for a given date range
+    function calculateTotalAlcohol(startDate, endDate) {
+        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+        const total = history.reduce((sum, entry) => {
+            const entryDate = new Date(entry.date);
+            if (entryDate >= startDate && entryDate <= endDate) {
+                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+            }
+            return sum;
+        }, 0);
+        return total.toFixed(1); // Return total rounded to 1 decimal place
+    }
+
+        // Function to update statistics in the statistics screen
+        function updateStatistics() {
+            const now = new Date();
+    
+            // Calculate weekly total (last 7 days)
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(now.getDate() - 7);
+            const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+            document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
+    
+            // Calculate monthly total (current month)
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
+            const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+            document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
+        }
+    
     // Event listeners for drink options
     const drinks = {
         whiskey: 'Уиски',
