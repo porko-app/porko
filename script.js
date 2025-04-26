@@ -247,12 +247,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// History Log Logic
-const historyLogBtn = document.getElementById('history-log-btn'); // RESTORED
+// History Log Button Logic
+const historyLogBtn = document.getElementById('history-log-btn');
 const historyLogScreen = document.getElementById('history-log-screen');
 const backFromHistoryBtn = document.getElementById('back-from-history-btn');
 const historyList = document.getElementById('history-list');
-const clearHistoryBtn = document.getElementById('clear-history-btn'); // RESTORED
+
+// Function to load history from localStorage
+function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = ''; // Clear existing list
+
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = 'Няма записана история.';
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
+    }
+
+    history.forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
+}
+
+// Event listener for the History Log button
+if (historyLogBtn) {
+    historyLogBtn.addEventListener('click', () => {
+        loadHistory(); // Load history before showing the screen
+        historyLogScreen.style.display = 'flex';
+        settingsScreen.style.display = 'none';
+    });
+}
+
+// Event listener for the Back button in history log screen
+if (backFromHistoryBtn) {
+    backFromHistoryBtn.addEventListener('click', () => {
+        historyLogScreen.style.display = 'none';
+        settingsScreen.style.display = 'flex';
+    });
+}
 
 // Function to load history from localStorage
 function loadHistory() {
@@ -287,28 +323,4 @@ function saveHistoryEntry(drinkName, amount, percentage) {
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
 
-// Event listener for the History Log button (RESTORED)
-if (historyLogBtn) {
-    historyLogBtn.addEventListener('click', () => {
-        loadHistory(); // Load history before showing the screen
-        historyLogScreen.style.display = 'flex';
-        settingsScreen.style.display = 'none';
-    });
-}
-
-// Event listener for the Back button in history log screen
-if (backFromHistoryBtn) {
-    backFromHistoryBtn.addEventListener('click', () => {
-        historyLogScreen.style.display = 'none';
-        settingsScreen.style.display = 'flex';
-    });
-}
-
-// Event listener for the Clear History button (RESTORED)
-if (clearHistoryBtn) {
-    clearHistoryBtn.addEventListener('click', () => {
-        localStorage.removeItem('drinkHistory'); // Clear history from localStorage
-        loadHistory(); // Reload the history list
-    });
-}
 });
