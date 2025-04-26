@@ -5,6 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Порко приложение</title>
+  
+  <!-- Import Montserrat Bulgarian Cyrillic Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" rel="stylesheet">
+  
+  <!-- Link to your CSS file -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -14,8 +19,8 @@
     <img src="logoporko.png" alt="FerretFeels Logo" class="logo" />
 
     <form id="user-info-form">
-      <label for="username">Your Name</label>
-      <input type="text" id="username" placeholder="Напиши твоето име" required />
+      <label for="username">Напиши твоето име</label>
+      <input type="text" id="username" placeholder="пример: Порко" required />
       
 
        <!-- Change "Start" button to image -->
@@ -44,16 +49,16 @@
   <!-- ✅ NEW Welcome Screen -->
   <div class="app-container" id="welcome-screen" style="display: none;">
     <h2> </h2>
-    <h1>Порко</h1>
+    
      <!-- Add Logo here -->
   <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
 
     <p>Тук ще се запознаеш с твоето ново порче!</p>
     <p>Как работи?</p>
     <ul>
-      <li>Напиши твоето име за да стартираш приложението</li>
-      <li>Въвеждай твоите напитки и разбери алкохолните ти единици</li>
-      <li>Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
+      <li>• Напиши твоето име за да стартираш приложението</li>
+      <li>• Въвеждай твоите напитки и разбери алкохолните ти единици</li>
+      <li>• Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
     </ul>
     <button id="continue-btn">
       <img src="lets-go-button.png" alt="Let's Go" />
