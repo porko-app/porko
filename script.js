@@ -332,14 +332,27 @@ if (confirmClearBtn) {
         // Reload the history list (it will now show 'No history' message)
         loadHistory();
 
+        // Reset statistics in localStorage or memory
+        resetStatistics();
+
         // Hide the modal
         clearHistoryModal.style.display = 'none';
 
         // Notify the user
-        alert("Историята беше изчистена успешно!");
+        alert("Историята и статистиката бяха изчистени успешно!");
     });
 } else {
     console.error('Confirm Clear button not found.');
+}
+
+function resetStatistics() {
+    // Set statistics to 0
+    document.getElementById('weekly-total').textContent = '0.0 единици алкохол';
+    document.getElementById('monthly-total').textContent = '0.0 единици алкохол';
+
+    // Optionally, you can also clear any saved statistics in localStorage if needed
+    // localStorage.removeItem('weeklyStatistics');
+    // localStorage.removeItem('monthlyStatistics');
 }
 
 // Event listener for the "Cancel Clear" button
