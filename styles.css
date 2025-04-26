@@ -764,18 +764,91 @@ margin: 0 auto;
   align-items: center;
   text-align: center;
   padding: 20px;
-  background-color: #ffffff; /* Add a background color if needed */
+  background-color: #361768; /* White background for contrast */
+  color: #ffffff; /* Dark text color for visibility */
 }
 
 #statistics-screen h2 {
+  font-size: 24px;
   margin-bottom: 20px;
+  color: #ff9900; /* Ensure text is visible */
 }
 
 #statistics-screen div {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 #statistics-screen p {
   font-size: 18px;
-  color: #333333;
+  color: #ffffff; /* Ensure text is visible */
+}
+
+/* Terms of Use Screen Styling */
+#terms-of-use-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Matches app container background */
+  color: #f4f4f4; /* Light text color for readability */
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Scroll for long content */
+}
+
+#terms-of-use-screen h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffffff; /* Bright text for header */
+}
+
+#terms-of-use-screen p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #cccccc; /* Slightly dimmed text for body */
+  margin-bottom: 20px;
+}
+
+#terms-of-use-screen button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: orange; /* Bright button for visibility */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#terms-of-use-screen button:hover {
+  background-color: #e69500; /* Slightly darker orange on hover */
+}
+
+/* QR Code Screen Styling */
+#qr-code-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Matches app container background */
+  color: #f4f4f4; /* Light text color for readability */
+  height: 100%; /* Full height */
+}
+
+#qr-code-screen h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffffff; /* Bright text for header */
+}
+
+#qr-code-screen img {
+  width: 200px; /* Adjust size to fit the screen */
+  height: auto;
+  margin-top: 20px;
+  border-radius: 10px; /* Optional: Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a polished look */
 }
