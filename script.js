@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save to history
         saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
 
+
     // Dynamically update statistics
     updateStatistics(); // <-- Ensure statistics are updated immediately
 
@@ -416,20 +417,40 @@ const clearHistoryBtn = document.getElementById('clear-history-btn');
 // Event listener for the "Clear History" button
 if (clearHistoryBtn) {
     clearHistoryBtn.addEventListener('click', () => {
-        // Confirm with the user before clearing the history
-        const confirmClear = confirm("Сигурни ли сте, че искате да изчистите историята?");
-        if (confirmClear) {
-            // Clear history from localStorage
-            localStorage.removeItem('drinkHistory');
-
-            // Reload the history list (it will now show 'No history' message)
-            loadHistory();
-
-            alert("Историята беше изчистена успешно!");
-        }
+        // Show the custom modal when the "Clear History" button is clicked
+        clearHistoryModal.style.display = 'flex';
     });
 } else {
     console.error('Clear History button not found.');
+}
+
+// Event listener for the "Confirm Clear" button
+if (confirmClearBtn) {
+    confirmClearBtn.addEventListener('click', () => {
+        // Clear history from localStorage
+        localStorage.removeItem('drinkHistory');
+
+        // Reload the history list (it will now show 'No history' message)
+        loadHistory();
+
+        // Hide the custom modal
+        clearHistoryModal.style.display = 'none';
+
+        // Notify the user of success
+        alert("Историята беше изчистена успешно!");
+    });
+} else {
+    console.error('Confirm Clear button not found.');
+}
+
+// Event listener for the "Cancel Clear" button
+if (cancelClearBtn) {
+    cancelClearBtn.addEventListener('click', () => {
+        // Simply hide the custom modal when canceled
+        clearHistoryModal.style.display = 'none';
+    });
+} else {
+    console.error('Cancel Clear button not found.');
 }
 
 // Get references to the Clear History modal and buttons
