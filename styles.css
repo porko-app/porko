@@ -4,7 +4,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Montserrat', sans-serif; /* Use Montserrat as the primary font */
   background-color: #0f0f0f;
   display: flex;
   justify-content: center;
@@ -58,7 +58,7 @@ h1 {
 /* Label styling */
 label {
   font-size: 16px;
-  color: #1d192e;
+  color: #fcfcfc; /* This is the current text color */
   margin-top: 15px;
   display: block;
   text-align: left;
@@ -390,12 +390,13 @@ h1 {
   font-weight: bold;
   color: #ffffff; /* Bright white for visibility */
   text-align: center;
-  margin-bottom: 15px; /* Space below the header */
+  margin-bottom: 25px; /* Space below the header */
 }
 
 /* Specific styling for welcome screen header */
 #welcome-screen h1 {
-  margin-top: 10px; /* Add some space above the header */
+  margin-top: 2px; /* Add some space above the header */
+  margin-bottom: 5px; /* Reduce space below the header */
 }
 
 #welcome-screen h2 {
@@ -422,11 +423,17 @@ h1 {
   margin: 0 !important; /* Force removal of margin */
 }
 
+/* Welcome Screen Paragraph Styling */
+#welcome-screen p:first-of-type {
+  font-weight: 600; /* Make the first paragraph slightly bolder */
+  
+}
+
 /* New Logo Styling */
 #welcome-logo {
   width: 120px; /* Adjust logo size */
   height: auto;
-  margin: -10px 0; /* Adjusted margin for spacing between text */
+  margin: 0 0 10px 0; /* Add more space below the logo */
   border-radius: 10px; /* Optional: round the edges of the logo */
 }
 
@@ -437,7 +444,7 @@ h1 {
   padding: 0; /* Remove any padding */
   outline: none; /* Remove focus outline */
   margin-left: 55px; /* Move the button 20px to the left */
-  margin-top: 30px; /* Moves it a little upwards */
+  margin-top: 40px; /* Moves it a little upwards */
 }
 
 #continue-btn img {
@@ -671,6 +678,12 @@ margin: 0 auto;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+}
+
+/* Adjust Logo Position on Second Screen */
+#first-screen .logo {
+  margin-top: 60px; /* Add space above the logo */
+  margin-bottom: 40px; /* Add space below the logo */
 }
 
 #bac-text {
