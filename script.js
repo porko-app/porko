@@ -489,3 +489,71 @@ function calculateTotalAlcohol(startDate, endDate) {
         return sum;
     }, 0).toFixed(1); // Return total rounded to 1 decimal place
 }
+
+// Get references to the screens and buttons
+const changeNameBtn = document.getElementById('change-name-btn');
+const firstScreen = document.getElementById('first-screen');
+const settingsScreen = document.getElementById('settings-screen');
+const userForm = document.getElementById('user-info-form');
+
+// Event listener for "Change Your Name" button
+if (changeNameBtn) {
+    changeNameBtn.addEventListener('click', () => {
+        // Hide the settings screen
+        settingsScreen.style.display = 'none';
+
+        // Show the first screen for entering the name
+        firstScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Change Your Name button not found.');
+}
+
+// Event listener for the user form submission (first screen)
+if (userForm) {
+    userForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // Get the new user name from the input field
+        const usernameInput = document.getElementById('username');
+        userName = usernameInput.value.trim();
+
+        // Validate the input
+        if (!userName) {
+            alert('Моля, напишете своето име!');
+            return;
+        }
+
+        // Update all placeholders with the new name
+        updateAllUserNamePlaceholders(userName);
+
+        // Hide the first screen
+        firstScreen.style.display = 'none';
+
+        // Show the second screen (main UI)
+        document.getElementById('second-screen').style.display = 'flex';
+    });
+} else {
+    console.error('User Info Form not found.');
+}
+
+// Function to update all username placeholders
+function updateAllUserNamePlaceholders(newName) {
+    // Update all placeholders matching the class or ID
+    const placeholders = document.querySelectorAll('[id^="user-name-placeholder"]');
+    placeholders.forEach(placeholder => {
+        placeholder.textContent = newName;
+    });
+
+    console.log(`Updated user name to: ${newName}`);
+}
+
+// Save the name in localStorage
+localStorage.setItem('userName', userName);
+
+// Load the name from localStorage when the app starts
+const savedUserName = localStorage.getItem('userName');
+if (savedUserName) {
+    userName = savedUserName;
+    updateAllUserNamePlaceholders(userName);
+}
