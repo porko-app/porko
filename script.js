@@ -177,6 +177,13 @@ const messages = {
         function updateStatistics() {
             const now = new Date();
     
+             // Calculate 24-hour total (last 24 hours)
+    const oneDayAgo = new Date();
+    oneDayAgo.setDate(now.getDate() - 1);
+    const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
+    document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
+
+
             // Calculate weekly total (last 7 days)
             const oneWeekAgo = new Date();
             oneWeekAgo.setDate(now.getDate() - 7);
@@ -603,4 +610,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(0); // Reset ferret's mood for the new user
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const changeNameBtn = document.getElementById('change-name-btn');
+    const firstScreen = document.getElementById('first-screen');
+    const settingsScreen = document.getElementById('settings-screen');
+
+    if (changeNameBtn) {
+        changeNameBtn.addEventListener('click', () => {
+            // Hide the settings screen
+            settingsScreen.style.display = 'none';
+
+            // Show the first screen
+            firstScreen.style.display = 'flex';
+        });
+    }
 });

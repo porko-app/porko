@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 
+  <!-- Firebase Core SDK -->
+<script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+<!-- Firebase Realtime Database SDK -->
+<script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
+</head>
+
 <body>
   <!-- First Screen (Main UI) -->
   <div class="app-container" id="first-screen">
@@ -193,6 +199,10 @@
 <div id="statistics-screen" class="app-container" style="display: none;">
   <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
   <h2>Статистика</h2>
+  <div id="daily-statistics">
+    <h4>Общо за последните 24 часа:</h4>
+    <p id="daily-total">0.0 единици алкохол</p>
+  </div>
   <div id="weekly-statistics">
     <h4>Общо за седмицата:</h4>
     <p id="weekly-total">0.0 единици алкохол</p>
@@ -243,17 +253,8 @@
   <button id="back-from-terms-btn" class="back-top-right-btn">← Назад</button>
   <h2>Условия за ползване</h2>
   <p>
-    3. Alternative - "Terms of Use" or "App Disclaimer":
-If you don’t want to add full legal info, you could include a simple "Terms of Use" page with the following points:
-
-
-Purpose of the App: Clearly state that the app is for tracking alcohol consumption and providing information, not for promoting or encouraging alcohol consumption.
-
-
-Age Restriction: Note that the app is intended for users over the legal drinking age in their location (or a disclaimer about responsible drinking).
-
-
-Privacy: A very short note about how user data is handled (if it's being stored at all), or that no personal information is collected.
+    Добре дошли в приложението Порко! Тук ще намерите информация относно правилата и условията за ползване. 
+    Моля, използвайте приложението отговорно и се забавлявайте!
   </p>
 </div>
 
@@ -264,6 +265,6 @@ Privacy: A very short note about how user data is handled (if it's being stored 
   <img id="qr-code-image" src="qr-code.png" alt="QR Code" />
 </div>
 
-  <script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
