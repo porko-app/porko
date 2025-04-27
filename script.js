@@ -478,6 +478,13 @@ function loadHistory() {
         return;
     }
 
+    // Reverse the history array to display the newest drink at the top
+    history.reverse().forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
+
     // Function to load history from localStorage
 function loadHistory() {
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
@@ -490,6 +497,13 @@ function loadHistory() {
         historyList.appendChild(noHistoryMessage);
         return;
     }
+
+        // Reverse the history array to display the newest drink at the top
+        history.reverse().forEach(entry => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+            historyList.appendChild(listItem);
+        });
 
     history.forEach(entry => {
         const listItem = document.createElement('li');
@@ -572,7 +586,7 @@ if (backFromHistoryBtn) {
 }
     });
 
-// Function to load history from localStorage
+// Function to load history from localStorage tuk
 function loadHistory() {
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
     historyList.innerHTML = ''; // Clear existing list
@@ -584,6 +598,13 @@ function loadHistory() {
         historyList.appendChild(noHistoryMessage);
         return;
     }
+
+    // Reverse the history array to display the newest drink at the top
+    history.reverse().forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
+    });
 
 }
 
