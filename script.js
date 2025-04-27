@@ -741,7 +741,8 @@ const incrementVisitorCount = () => {
         // Proceed with the usual logic for starting the app
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
-        updateFerretMood(0); // Reset ferret's mood for the new user
+            // Preserve the current ferret mood based on totalUnits
+            updateFerretMood(totalUnits); // Update ferret mood without resetting it
     });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -758,6 +759,17 @@ document.addEventListener('DOMContentLoaded', () => {
             firstScreen.style.display = 'flex';
         });
     }
+
+if (changeNameBtn) {
+    changeNameBtn.addEventListener('click', () => {
+        // Hide the settings screen and show the first screen
+        settingsScreen.style.display = 'none';
+        firstScreen.style.display = 'flex';
+
+        // Preserve the current ferret mood and prevent resetting it to "neutral"
+        const currentUnits = totalUnits; // Save the current alcohol units
+    });
+}
 });
 
 // Call this function when capturing the username
