@@ -71,9 +71,6 @@ const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
         localStorage.setItem('visitorCount', visitorCount.toString());
         updateVisitorCountDisplay();
     }
-
-    // Call the function to display the current visitor count on the welcome screen
-    updateVisitorCountDisplay();
     
     // Show History Log Screen
     if (historyLogBtn) {
@@ -126,9 +123,6 @@ const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
             updateFerretMood(0); // Reset ferret's mood for the new user
         });
     }
-
-    // Initialize Visitor Counter on Load
-    updateVisitorCountDisplay();
 
 // Predefined messages for each mood (some include placeholders for the username)
 function getRandomMoodMessages(mood) {}
@@ -456,23 +450,6 @@ if (backFromHistoryBtn) {
     console.error('Back button in History Log screen not found.');
 }
 
-// Function to load history from localStorage
-function loadHistory() {
-    // Retrieve the history from localStorage or initialize as an empty array
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    
-    // Clear the existing history list in the DOM
-    historyList.innerHTML = '';
-
-    // Handle the case where there is no history
-    if (history.length === 0) {
-        const noHistoryMessage = document.createElement('li');
-        noHistoryMessage.textContent = 'Няма записана история.'; // Display message for no history
-        noHistoryMessage.style.color = '#cccccc'; // Set light gray color for better visibility
-        historyList.appendChild(noHistoryMessage);
-        return; // Exit the function since there's no history to display
-    }
-
     // Reverse the history array to display the newest entries first
     const reversedHistory = [...history].reverse();
 
@@ -482,7 +459,6 @@ function loadHistory() {
         listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
         historyList.appendChild(listItem); // Add the list item to the history list in the DOM
     });
-}
 
 // Function to save a new history entry
 function saveHistoryEntry(drinkName, amount, percentage) {
