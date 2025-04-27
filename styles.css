@@ -236,6 +236,26 @@ input::-webkit-inner-spin-button {
   box-sizing: border-box;
 }
 
+/* Adjust the text position inside the speech bubbles */
+.bubble-text {
+  margin-top: -90px; /* Add space above the text to move it down (adjust as needed) */
+  text-align: center; /* Ensure the text stays centered in the bubble */
+  line-height: 1.5; /* Improve readability of the text */
+  font-size: 14px;
+}
+
+/* Adjust speech bubble positioning */
+#second-screen .speech-bubble {
+  margin-top: 10px; /* Move the speech bubble higher (adjust value as needed) */
+}
+
+/* Ensure alignment for all elements */
+#second-screen h1,
+#second-screen .bubble-text,
+#second-screen .speech-bubble {
+  margin-bottom: 0px; /* Add consistent spacing between elements */
+}
+
 /* Title for Second Screen */
 #second-screen h1 {
   font-size: 24px;
@@ -249,7 +269,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin-top: -15px;
+  margin-top: -45px;
 }
 
 /* Style for the bottom buttons */
@@ -273,19 +293,19 @@ input::-webkit-inner-spin-button {
 
 /* Make the Menu button bigger */
 #menu-btn img {
-  width: 60px;  /* Increase the size of the Menu button */
+  width: 100px;  /* Increase the size of the Menu button */
   height: 60px; /* Increase the size of the Menu button */
 }
 
 /* Specific style for the Settings button */
 #settings-btn img {
-  width: 50px;  /* Keep the Settings button size the same */
+  width: 70px;  /* Keep the Settings button size the same */
   height: 50px; /* Keep the Settings button size the same */
 }
 
 /* Push the Menu button to the left */
 #menu-btn {
-  margin-left: 60px;  /* Pushes the menu button to the left */
+  margin-left: 35px;  /* Pushes the menu button to the left */
 }
 
 /* SETTINGS SCREEN BUTTON STYLES */
@@ -509,18 +529,25 @@ margin: 0 auto;
 }
 
 /* Apply to ferret image */
-.ferret-mood {
-  width: 100px;
-  height: 100px;
+#second-screen .ferret-mood {
+  width: 350px; /* Increase the width of the ferret image */
+  height: 350px; /* Increase the height of the ferret image */
+  object-fit: contain; /* Maintain aspect ratio */
+  display: block; /* Ensure the image is displayed */
+  margin: 10px 0; /* Add spacing around the ferret image */
+}
+
+.speech-bubble {
+  width: 400px;
+  height: 85px;
   object-fit: contain;
   display: none;
 }
 
-.speech-bubble {
-  width: 200px;
-  height: 100px;
-  object-fit: contain;
-  display: none;
+/* Style for the dynamic number in the alcohol units text */
+.orange-text {
+  color: orange; /* Set the text color to orange */
+  font-weight: bold; /* Optionally make it bold for visibility */
 }
 
 /* When they're active (shown) */
@@ -636,7 +663,7 @@ margin: 0 auto;
   margin-right: 80px;
   margin-top: 2px; /* Moves it a little lower from the top */
   font-size: 24px; /* You can adjust the size of the text */
-  color: white; /* Or whatever color you prefer */
+  color: rgb(183, 46, 46); /* Or whatever color you prefer */
 }
 
 .details-modal {
@@ -715,8 +742,8 @@ margin: 0 auto;
 
 
 #alcohol-units-text {
-  font-size: 1.2rem;
-  margin-top: 10px;
+  font-size: 14px;
+  margin-top: -20px;
   text-align: center;
   color: #ffffff;
 }
