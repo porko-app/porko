@@ -382,6 +382,7 @@ input::-webkit-inner-spin-button {
   height: 100%;
   padding: 30px 20px;
   box-sizing: border-box;
+  font-family: 'Montserrat'
 }
 
 /* Header Styling */
@@ -421,6 +422,7 @@ h1 {
   list-style-type: none !important; /* Force removal of bullets */
   padding: 0 !important; /* Force removal of padding */
   margin: 0 !important; /* Force removal of margin */
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Welcome Screen Paragraph Styling */
@@ -454,6 +456,24 @@ h1 {
   border: none; /* Remove any border if there is one around the image */
 }
 
+.visitor-counter {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #1d1531;
+  padding: 10px;
+  border-radius: 8px;
+  width: 90%; /* Slightly narrower than the screen */
+  max-width: 300px; /* Limit maximum width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#visitor-count {
+  font-weight: bold;
+  color: orange;
+}
 
 /* Hide spinner arrows in number input fields for Webkit browsers (Chrome/Safari) */
 input[type="number"]::-webkit-outer-spin-button,
