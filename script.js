@@ -200,7 +200,7 @@ function updateStatistics() {
 // Function to reset the ferret's mood to neutral
 function resetFerretMoodToNeutral() {
     console.log("Resetting ferret's mood to neutral...");
-    updateFerretMood(0); // Set the ferret's mood to neutral
+    updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
     localStorage.setItem('lastMoodReset', new Date().toISOString()); // Update the last reset time
 }
 
@@ -445,7 +445,7 @@ userForm.addEventListener('submit', async event => {
 
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
-        updateFerretMood(0);
+        updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
     });
 
     // Event listener for the "Choose Drink" button
@@ -700,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Proceed with the usual logic for starting the app
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
-        updateFerretMood(0); // Reset ferret's mood for the new user
+        updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
     });
 });
 
@@ -741,8 +741,7 @@ const incrementVisitorCount = () => {
         // Proceed with the usual logic for starting the app
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
-            // Preserve the current ferret mood based on totalUnits
-            updateFerretMood(totalUnits); // Update ferret mood without resetting it
+        updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
     });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -768,6 +767,7 @@ if (changeNameBtn) {
 
         // Preserve the current ferret mood and prevent resetting it to "neutral"
         const currentUnits = totalUnits; // Save the current alcohol units
+        updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
     });
 }
 });
@@ -790,5 +790,5 @@ const userForm = document.getElementById('user-info-form');
     // Proceed with the usual logic
     document.getElementById('first-screen').style.display = 'none';
     document.getElementById('second-screen').style.display = 'flex';
-    updateFerretMood(0);
+    updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
 });
