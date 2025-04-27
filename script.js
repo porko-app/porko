@@ -47,19 +47,32 @@ const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
     }
 }
 
- // FUNCTION: Load History
- function loadHistory() {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    historyList.innerHTML = ''; // Clear existing list
+function loadHistory() {
+    // Retrieve the history from localStorage or initialize as an empty array
+    let history = localStorage.getItem('drinkHistory');
+    try {
+        history = JSON.parse(history);
+        if (!Array.isArray(history)) {
+            throw new Error('Invalid history format'); // Force fallback to empty array
+        }
+    } catch (error) {
+        console.error('Error parsing history from localStorage:', error);
+        history = []; // Default to an empty array if parsing fails
+    }
 
+    // Clear the existing history list in the DOM
+    historyList.innerHTML = '';
+
+    // Handle the case where there is no history
     if (history.length === 0) {
         const noHistoryMessage = document.createElement('li');
-        noHistoryMessage.textContent = 'Няма записана история.';
-        noHistoryMessage.style.color = '#cccccc';
+        noHistoryMessage.textContent = 'Няма записана история.'; // Display message for no history
+        noHistoryMessage.style.color = '#cccccc'; // Set light gray color for better visibility
         historyList.appendChild(noHistoryMessage);
         return;
     }
 
+    // Iterate over the history array and create list items for each entry
     history.reverse().forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
@@ -435,13 +448,6 @@ function resetStatistics() {
     // localStorage.removeItem('weeklyStatistics');
     // localStorage.removeItem('monthlyStatistics');
 }
-
-    history.forEach(entry => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem);
-    });
-
 
 // Event listener for the Back button in the history log screen
 if (backFromHistoryBtn) {
