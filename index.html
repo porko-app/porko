@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Порко приложение</title>
   
-  <!-- Import Montserrat Bulgarian Cyrillic Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" rel="stylesheet">
   
   <!-- Link to your CSS file -->
@@ -63,6 +62,11 @@
     <button id="continue-btn">
       <img src="lets-go-button.png" alt="Let's Go" />
     </button>
+
+    <!-- Visitor Counter on Welcome Screen -->
+<div id="visitor-counter" class="visitor-counter">
+  <span id="visitor-count">0</span> порчета са станали приятели с човека
+</div>
   </div>
 
   <!-- Second Screen -->
@@ -75,10 +79,10 @@
 <img id="bubble-wobbly" class="speech-bubble" src="speech-bubble-wobbly.png" style="display: none;">
 
 <!-- Text within the bubbles -->
-<div id="bubble-text-neutral" class="bubble-text" style="display: none;">Хей, <span id="user-name-placeholder-neutral">Friend</span>! В момента сме сууупер!</div>
-<div id="bubble-text-tipsy" class="bubble-text" style="display: none;">Юхуу, <span id="user-name-placeholder-tipsy">Friend</span>! Малко ми е замаяно, но ми е добре!</div>
-<div id="bubble-text-drunk" class="bubble-text" style="display: none;">Уха, <span id="user-name-placeholder-drunk">Friend</span>! Всичко е малко.. размито!</div>
-<div id="bubble-text-wobbly" class="bubble-text" style="display: none;">О, не, <span id="user-name-placeholder-wobbly">Friend</span>! Твърде много!</div>
+<div id="bubble-text-neutral" class="bubble-text" style="display: none;"></div>
+<div id="bubble-text-tipsy" class="bubble-text" style="display: none;"></div>
+<div id="bubble-text-drunk" class="bubble-text" style="display: none;"></div>
+<div id="bubble-text-wobbly" class="bubble-text" style="display: none;"></div>
 
 <!-- Ferret images -->
 <img id="ferret-neutral" class="ferret-mood" src="ferret-neutral.png" style="display: none;">
@@ -87,9 +91,9 @@
 <img id="ferret-wobbly" class="ferret-mood" src="ferret-wobbly.png" style="display: none;">
 
   
-    <div id="alcohol-units-text">
-      Досега сте изпили  <span id="dynamic-units">0.0</span> единици алкохол
-    </div>
+<div id="alcohol-units-text">
+  Досега сте изпили <span id="dynamic-units" class="orange-text">0.0</span> единици алкохол
+</div>
     
 
     <!-- Bottom Buttons -->
@@ -182,7 +186,7 @@
   </button>
 
   <!-- Back Button -->
-  <button id="back-from-settings-btn">← Back</button>
+  <button id="back-from-settings-btn">Назад</button>
 </div>
 
 <!-- Statistics Screen (Move outside Settings Screen) -->
@@ -204,8 +208,12 @@
   <button id="back-from-faq-btn" class="back-top-right-btn">← Назад</button>
   <h2>ЧЗВ за алкохола</h2>
   <p>
-    Тук ще се показва информация относно честите въпроси свързани с алкохола. 
-    Този текст може да бъде променен лесно след това.
+    Какво е алкохолна единица и как се измерва?
+   За колко време се усвоява 1 алкохолна единица в тялото ни?
+Какви са препоръчителните алкохолни единици?
+Как алкохолът напуска тялото ни?
+Какви съвети може да приемем за отговорна консумация?
+О, не! Утрешният ден след дълга вечер дойде. А, сега какво и как?
   </p>
 </div>
 
@@ -235,8 +243,17 @@
   <button id="back-from-terms-btn" class="back-top-right-btn">← Назад</button>
   <h2>Условия за ползване</h2>
   <p>
-    Добре дошли в приложението Порко! Тук ще намерите информация относно правилата и условията за ползване. 
-    Моля, използвайте приложението отговорно и се забавлявайте!
+    3. Alternative - "Terms of Use" or "App Disclaimer":
+If you don’t want to add full legal info, you could include a simple "Terms of Use" page with the following points:
+
+
+Purpose of the App: Clearly state that the app is for tracking alcohol consumption and providing information, not for promoting or encouraging alcohol consumption.
+
+
+Age Restriction: Note that the app is intended for users over the legal drinking age in their location (or a disclaimer about responsible drinking).
+
+
+Privacy: A very short note about how user data is handled (if it's being stored at all), or that no personal information is collected.
   </p>
 </div>
 
