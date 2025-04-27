@@ -1,3 +1,23 @@
+// Import Firebase modules at the top of the file
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
+  authDomain: "porko-bdad4.firebaseapp.com",
+  databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "porko-bdad4",
+  storageBucket: "porko-bdad4.appspot.com",
+  messagingSenderId: "903004439010",
+  appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
+  measurementId: "G-PPTSVS7Z1R"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
 document.addEventListener('DOMContentLoaded', () => {
     let selectedDrink = ""; // Global variable for selected drink
     let totalUnits = 0; // Global tracker for alcohol units
@@ -9,9 +29,9 @@ function updateFerretMood(units) {
     let mood = 'neutral';
 
     // Determine the mood based on alcohol units
-    if (units <= 3.5) mood = 'neutral';
-    else if (units <= 5.5) mood = 'tipsy';
-    else if (units <= 8.0) mood = 'drunk';
+    if (units <= 4.0) mood = 'neutral';
+    else if (units <= 7.0) mood = 'tipsy';
+    else if (units <= 10.0) mood = 'drunk';
     else mood = 'wobbly';
 
     console.log('Updating ferret mood to:', mood);
@@ -189,8 +209,8 @@ function checkAndResetFerretMood() {
     const lastResetTime = localStorage.getItem('lastMoodReset'); // Get the last reset time from storage
     const now = new Date();
 
-    if (!lastResetTime || new Date(lastResetTime).getTime() < now.getTime() - 15 * 60 * 60 * 1000) {
-        // If no reset time exists OR the last reset was more than 15 hours ago:
+    if (!lastResetTime || new Date(lastResetTime).getTime() < now.getTime() - 10 * 60 * 60 * 1000) {
+        // If no reset time exists OR the last reset was more than 10 hours ago:
         resetFerretMoodToNeutral(); // Reset the ferret's mood to neutral
     }
 }
@@ -198,8 +218,8 @@ function checkAndResetFerretMood() {
     // Check and reset ferret's mood if needed
     checkAndResetFerretMood();
 
-// Calculate 15-hour total (exact last 15 hours)
-const oneDayAgo = new Date(now.getTime() - 15 * 60 * 60 * 1000); // Subtract 15 hours
+// Calculate 10-hour total (exact last 10 hours)
+const oneDayAgo = new Date(now.getTime() - 10 * 60 * 60 * 1000); // Subtract 10 hours
 const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
 document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
 
@@ -647,40 +667,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-
-// Your Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
-  authDomain: "porko-bdad4.firebaseapp.com",
-  databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "porko-bdad4",
-  storageBucket: "porko-bdad4.firebasestorage.app",
-  messagingSenderId: "903004439010",
-  appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
-  measurementId: "G-PPTSVS7Z1R"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-
-// Save user info to Firebase
-function saveUserInfo(userName) {
-    const userRef = ref(database, 'users/' + userName);
-    set(userRef, {
-        username: userName,
-        createdAt: new Date().toISOString()
-    }).then(() => {
-        console.log("User info saved to Firebase:", userName);
-    }).catch((error) => {
-        console.error("Error saving user info to Firebase:", error);
-    });
-}
 
 // Call this function when capturing the username
+const userForm = document.getElementById('user-info-form');
 userForm.addEventListener('submit', event => {
     event.preventDefault();
     const usernameInput = document.getElementById('username');
