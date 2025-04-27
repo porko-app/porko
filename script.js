@@ -1,34 +1,134 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let selectedDrink = ""; // Global variable for selected drink
-    let totalUnits = 0; // Global tracker for alcohol units
-    let userName = ""; // Global tracker for the user's name
+    // DOM ELEMENTS
+    const clearHistoryBtn = document.getElementById('clear-history-btn');
+    const clearHistoryModal = document.getElementById('clear-history-modal');
+    const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
+    const confirmClearBtn = document.getElementById('confirm-clear-btn');
+    const cancelClearBtn = document.getElementById('cancel-clear-btn');
+    const historyLogBtn = document.getElementById('history-log-btn');
+    const historyLogScreen = document.getElementById('history-log-screen');
+    const backFromHistoryBtn = document.getElementById('back-from-history-btn');
+    const historyList = document.getElementById('history-list');
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsScreen = document.getElementById('settings-screen');
+    const secondScreen = document.getElementById('second-screen');
+    const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
+    const visitorCounterElement = document.getElementById('visitor-count');
+    const userForm = document.getElementById('user-info-form');
 
-// Function to update the ferret's mood based on alcohol units
-function updateFerretMood(units) {
-    const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
-    let mood = 'neutral';
 
- // Determine the mood based on alcohol units
- if (units <= 1.5) mood = 'neutral';
- else if (units <= 3.5) mood = 'tipsy';
- else if (units <= 6.0) mood = 'drunk';
- else mood = 'wobbly';
+    // FUNCTION: Update Ferret Mood
+    function updateFerretMood(units) {
+        const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
+        let mood = 'neutral';
 
-    console.log('Updating ferret mood to:', mood);
+        if (units <= 1.5) mood = 'neutral';
+        else if (units <= 3.5) mood = 'tipsy';
+        else if (units <= 6.0) mood = 'drunk';
+        else mood = 'wobbly';
 
-       // Hide all mood-related elements (images and speech bubbles)
-       states.forEach(state => {
-        const ferretElement = document.getElementById(`ferret-${state}`);
-        const bubbleElement = document.getElementById(`bubble-${state}`);
-        const bubbleTextElement = document.getElementById(`bubble-text-${state}`);
+        console.log('Updating ferret mood to:', mood);
 
-        // Safely hide elements if they exist
-        if (ferretElement) ferretElement.style.display = 'none';
-        if (bubbleElement) bubbleElement.style.display = 'none';
-        if (bubbleTextElement) bubbleTextElement.style.display = 'none';
+// Show the correct mood's image and speech bubble
+const ferretElement = document.getElementById(`ferret-${mood}`);
+const bubbleElement = document.getElementById(`bubble-${mood}`);
+const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
+
+    // Randomly select a message for the current mood
+    const randomMessage = messages[mood][Math.floor(Math.random() * messages[mood].length)];
+
+    if (ferretElement) ferretElement.style.display = 'block';
+    if (bubbleElement) bubbleElement.style.display = 'block';
+    if (bubbleTextElement) {
+        bubbleTextElement.textContent = randomMessage;
+        bubbleTextElement.style.display = 'block';
+    }
+}
+
+ // FUNCTION: Load History
+ function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = ''; // Clear existing list
+
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = 'Няма записана история.';
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
+    }
+
+    history.reverse().forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        historyList.appendChild(listItem);
     });
+}
 
+    // FUNCTION: Increment Visitor Counter
+    function incrementVisitorCount() {
+        let visitorCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
+        visitorCount += 1;
+        localStorage.setItem('visitorCount', visitorCount.toString());
+        updateVisitorCountDisplay();
+    }
+
+    // Call the function to display the current visitor count on the welcome screen
+    updateVisitorCountDisplay();
     
+    // Show History Log Screen
+    if (historyLogBtn) {
+        historyLogBtn.addEventListener('click', () => {
+            loadHistory();
+            historyLogScreen.style.display = 'flex';
+            settingsScreen.style.display = 'none';
+        });
+    }
+
+    // Back from History Log Screen
+    if (backFromHistoryBtn) {
+        backFromHistoryBtn.addEventListener('click', () => {
+            historyLogScreen.style.display = 'none';
+            settingsScreen.style.display = 'flex';
+        });
+    }
+
+        // Settings Button
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                secondScreen.style.display = 'none';
+                settingsScreen.style.display = 'flex';
+            });
+        }
+
+   // Back from Settings Screen
+   if (backFromSettingsBtn) {
+    backFromSettingsBtn.addEventListener('click', () => {
+        settingsScreen.style.display = 'none';
+        secondScreen.style.display = 'flex';
+    });
+}
+
+    // Form Submission - Capture Username
+    if (userForm) {
+        userForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const usernameInput = document.getElementById('username');
+            userName = usernameInput.value.trim();
+
+            if (!userName) {
+                alert('Моля, напишете твоето име!');
+                return;
+            }
+
+            incrementVisitorCount();
+            document.getElementById('first-screen').style.display = 'none';
+            document.getElementById('second-screen').style.display = 'flex';
+            updateFerretMood(0); // Reset ferret's mood for the new user
+        });
+    }
+
+    // Initialize Visitor Counter on Load
+    updateVisitorCountDisplay();
 
 // Predefined messages for each mood (some include placeholders for the username)
 function getRandomMoodMessages(mood) {}
@@ -58,33 +158,6 @@ const messages = {
         `${userName}, имам нужда от вода...`
     ]
 };
-
-    // Hide all mood-related elements (images and speech bubbles)
-    states.forEach(state => {
-        const ferretElement = document.getElementById(`ferret-${state}`);
-        const bubbleElement = document.getElementById(`bubble-${state}`);
-        const bubbleTextElement = document.getElementById(`bubble-text-${state}`);
-
-        if (ferretElement) ferretElement.style.display = 'none';
-        if (bubbleElement) bubbleElement.style.display = 'none';
-        if (bubbleTextElement) bubbleTextElement.style.display = 'none';
-    });
-
-    // Randomly select a message for the current mood
-    const randomMessage = messages[mood][Math.floor(Math.random() * messages[mood].length)];
-
-    // Show the correct mood's image and speech bubble with the selected message
-    const ferretElement = document.getElementById(`ferret-${mood}`);
-    const bubbleElement = document.getElementById(`bubble-${mood}`);
-    const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
-
-    if (ferretElement) ferretElement.style.display = 'block';
-    if (bubbleElement) bubbleElement.style.display = 'block';
-    if (bubbleTextElement) {
-        bubbleTextElement.textContent = randomMessage;
-        bubbleTextElement.style.display = 'block';
-    }
-}
 
     // Function to calculate alcohol units
     function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
@@ -242,31 +315,6 @@ const messages = {
         console.error('Back button not found.');
     }
 
-    // Settings button handling
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsScreen = document.getElementById('settings-screen');
-    const secondScreen = document.getElementById('second-screen');
-    const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
-
-    if (settingsBtn) {
-        settingsBtn.addEventListener('click', () => {
-            secondScreen.style.display = 'none';
-            settingsScreen.style.display = 'flex';
-            updateStatistics(); // Update statistics when entering the settings screen
-        });
-    } else {
-        console.error('Settings button not found.');
-    }
-
-    if (backFromSettingsBtn) {
-        backFromSettingsBtn.addEventListener('click', () => {
-            settingsScreen.style.display = 'none';
-            secondScreen.style.display = 'flex';
-        });
-    } else {
-        console.error('Back from settings button not found.');
-    }
-
     // Function to calculate total alcohol units for a given date range
     function calculateTotalAlcohol(startDate, endDate) {
         const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
@@ -387,23 +435,6 @@ if (backFromQrBtn) {
         document.getElementById('first-screen').style.display = 'flex';
     });
 
-// Event listener for the "Start" button to capture the username
-const userForm = document.getElementById('user-info-form');
-userForm.addEventListener('submit', event => {
-    event.preventDefault(); // Prevent form from refreshing the page
-    const usernameInput = document.getElementById('username');
-    userName = usernameInput.value.trim(); // Capture the username
-
-        if (!userName) {
-            alert('Моля, напишете твоето име!');
-            return;
-        }
-
-        document.getElementById('first-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'flex';
-        updateFerretMood(0);
-    });
-
     // Event listener for the "Choose Drink" button
     const menuButton = document.getElementById('menu-btn');
     const drinkModal = document.getElementById('drink-modal');
@@ -427,49 +458,6 @@ userForm.addEventListener('submit', event => {
         });
     }
 
-// History Log Button Logic
-const historyLogBtn = document.getElementById('history-log-btn'); // Button for history log
-const historyLogScreen = document.getElementById('history-log-screen'); // History log screen
-const backFromHistoryBtn = document.getElementById('back-from-history-btn'); // Back button in history log screen
-const historyList = document.getElementById('history-list'); // History log list container
-
-// Function to load history from localStorage
-function loadHistory() {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    historyList.innerHTML = ''; // Clear existing list
-
-    if (history.length === 0) {
-        const noHistoryMessage = document.createElement('li');
-        noHistoryMessage.textContent = 'Няма записана история.';
-        noHistoryMessage.style.color = '#cccccc';
-        historyList.appendChild(noHistoryMessage);
-        return;
-    }
-
-// Get references to the modal and overlay
-const clearHistoryModal = document.getElementById('clear-history-modal');
-const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
-
-// Show the modal
-clearHistoryBtn.addEventListener('click', () => {
-    clearHistoryModal.style.display = 'block';
-    clearHistoryModalOverlay.style.display = 'block';
-});
-
-// Hide the modal when "Cancel" is clicked
-cancelClearBtn.addEventListener('click', () => {
-    clearHistoryModal.style.display = 'none';
-    clearHistoryModalOverlay.style.display = 'none';
-});
-
-// Confirm clearing history
-confirmClearBtn.addEventListener('click', () => {
-    localStorage.removeItem('drinkHistory'); // Clear history
-    alert('History cleared successfully!');
-    clearHistoryModal.style.display = 'none';
-    clearHistoryModalOverlay.style.display = 'none';
-});
-
 function resetStatistics() {
     // Set statistics to 0
     document.getElementById('weekly-total').textContent = '0.0 единици алкохол';
@@ -480,33 +468,12 @@ function resetStatistics() {
     // localStorage.removeItem('monthlyStatistics');
 }
 
-// Event listener for the "Cancel Clear" button
-if (cancelClearBtn) {
-    cancelClearBtn.addEventListener('click', () => {
-        // Simply hide the modal when canceled
-        clearHistoryModal.style.display = 'none';
-    });
-} else {
-    console.error('Cancel Clear button not found.');
-}
-
     history.forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
         historyList.appendChild(listItem);
     });
-}
 
-// Event listener for the "History Log" button
-if (historyLogBtn) {
-    historyLogBtn.addEventListener('click', () => {
-        loadHistory(); // Load history before showing the screen
-        historyLogScreen.style.display = 'flex'; // Show the history log screen
-        document.getElementById('settings-screen').style.display = 'none'; // Hide the settings screen
-    });
-} else {
-    console.error('History Log button not found.');
-}
 
 // Event listener for the Back button in the history log screen
 if (backFromHistoryBtn) {
@@ -517,7 +484,6 @@ if (backFromHistoryBtn) {
 } else {
     console.error('Back button in History Log screen not found.');
 }
-    });
 
 // Function to load history from localStorage
 function loadHistory() {
@@ -560,88 +526,10 @@ function saveHistoryEntry(drinkName, amount, percentage) {
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    let selectedDrink = ""; // Global variable for selected drink
-    let totalUnits = 0; // Global tracker for alcohol units
-    let userName = ""; // Global tracker for the user's name
-
-    // Initialize Visitor Counter
-    const visitorCounterElement = document.getElementById('visitor-count');
-
-    // Function to update the visitor counter display
-    const updateVisitorCountDisplay = () => {
-        const visitorCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
-        visitorCounterElement.textContent = visitorCount;
-    };
-
-    // Function to increment the visitor counter
-    const incrementVisitorCount = () => {
-        let visitorCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
-        visitorCount += 1;
-        localStorage.setItem('visitorCount', visitorCount.toString());
-        updateVisitorCountDisplay();
-    };
-
-    // Call the function to display the current visitor count on the welcome screen
-    updateVisitorCountDisplay();
-
-    // Start button (form submission)
-    const userForm = document.getElementById('user-info-form');
-    userForm.addEventListener('submit', event => {
-        event.preventDefault(); // Prevent form from refreshing the page
-        const usernameInput = document.getElementById('username');
-        userName = usernameInput.value.trim();
-
-        if (!userName) {
-            alert('Моля, напишете твоето име!');
-            return;
-        }
-
-        // Increment the visitor counter when the user clicks "Start"
-        incrementVisitorCount();
-
         // Proceed with the usual logic for starting the app
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(0); // Reset ferret's mood for the new user
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const clearHistoryBtn = document.getElementById('clear-history-btn');
-    const clearHistoryModal = document.getElementById('clear-history-modal');
-    const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
-    const confirmClearBtn = document.getElementById('confirm-clear-btn');
-    const cancelClearBtn = document.getElementById('cancel-clear-btn');
-
-    // Show the modal when "Clear History" is clicked
-    if (clearHistoryBtn) {
-        clearHistoryBtn.addEventListener('click', () => {
-            clearHistoryModal.style.display = 'block';
-            clearHistoryModalOverlay.style.display = 'block';
-        });
-    } else {
-        console.error('Clear History button not found in the DOM.');
-    }
-
-    // Hide the modal when "Cancel" is clicked
-    if (cancelClearBtn) {
-        cancelClearBtn.addEventListener('click', () => {
-            clearHistoryModal.style.display = 'none';
-            clearHistoryModalOverlay.style.display = 'none';
-        });
-    }
-
-    // Clear history and hide the modal when "Confirm" is clicked
-    if (confirmClearBtn) {
-        confirmClearBtn.addEventListener('click', () => {
-            localStorage.removeItem('drinkHistory'); // Clear history
-            alert('History cleared successfully!');
-            clearHistoryModal.style.display = 'none';
-            clearHistoryModalOverlay.style.display = 'none';
-        });
-    }
-});
 
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
