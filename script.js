@@ -622,22 +622,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const visitorCounterElement = document.getElementById('visitor-count');
     const visitorRef = ref(database, "visitorCounter");
 
-    // Function to update the visitor counter display
-    const updateVisitorCountDisplay = () => {
-        get(visitorRef)
-            .then((snapshot) => {
-                if (snapshot.exists()) {
-                    const visitorCount = snapshot.val().count || 0;
-                    visitorCounterElement.textContent = visitorCount;
-                } else {
-                    console.warn("Visitor counter not found in Firebase.");
-                    visitorCounterElement.textContent = 0; // Default to 0 if not found
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching visitor counter:", error);
-                visitorCounterElement.textContent = "Error";
-            });
+    const updateVisitorCountDisplay = async () => {
+        try {
+            const snapshot = await get(visitorRef);
+            if (snapshot.exists()) {
+                const visitorCount = snapshot.val().count || 0;
+                visitorCounterElement.textContent = visitorCount;
+            } else {
+                console.log("Visitor counter not found in Firebase. Initializing...");
+                visitorCounterElement.textContent = 0; // Display 0 while initializing
+                await initializeVisitorCounter(); // Initialize the counter
+            }
+        } catch (error) {
+            console.error("Error fetching visitor counter:", error);
+            visitorCounterElement.textContent = "Error";
+        }
     };
 
     // Function to increment the visitor counter
