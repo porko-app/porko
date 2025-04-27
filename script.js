@@ -585,11 +585,6 @@ function loadHistory() {
         return;
     }
 
-    history.forEach(entry => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem);
-    });
 }
 
 // Function to save a new history entry
