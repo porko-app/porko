@@ -13,9 +13,9 @@
 </head>
 
   <!-- Firebase Core SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-  <!-- Firebase Realtime Database SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+<!-- Firebase Realtime Database SDK -->
+<script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
 </head>
 
 <body>
@@ -74,38 +74,6 @@
   <span id="visitor-count">0</span> порчета са станали приятели с човека
 </div>
   </div>
-
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
-      authDomain: "porko-bdad4.firebaseapp.com",
-      databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "porko-bdad4",
-      storageBucket: "porko-bdad4.appspot.com",
-      messagingSenderId: "903004439010",
-      appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
-      measurementId: "G-PPTSVS7Z1R"
-    };
-
-      // Initialize Firebase
-      const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // Reference to the visitor count
-    const visitorCountRef = database.ref('visitorCount');
-
-    // Increment the visitor count
-    visitorCountRef.transaction((currentCount) => {
-      return (currentCount || 0) + 1; // Increment by 1
-    });
-
-        // Display the visitor count
-        visitorCountRef.on('value', (snapshot) => {
-      const count = snapshot.val();
-      document.getElementById('visitor-count').textContent = count || 0;
-    });
-  </script>
 
   <!-- Second Screen -->
   <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
@@ -293,6 +261,6 @@
   <img id="qr-code-image" src="qr-code.png" alt="QR Code" />
 </div>
 
-  <script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>

@@ -649,13 +649,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
     authDomain: "porko-bdad4.firebaseapp.com",
-    databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app", // Your database URL
+    databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "porko-bdad4",
     storageBucket: "porko-bdad4.appspot.com",
     messagingSenderId: "903004439010",
     appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
     measurementId: "G-PPTSVS7Z1R"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// Reference to the visitor count
+const visitorCountRef = ref(database, 'visitorCount');
+
+// Increment the visitor count
+runTransaction(visitorCountRef, currentCount => {
+    return (currentCount || 0) + 1; // Increment by 1
+});
+
+// Display the visitor count
+onValue(visitorCountRef, snapshot => {
+    const count = snapshot.val();
+    document.getElementById('visitor-count').textContent = count || 0;
+});
