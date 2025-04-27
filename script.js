@@ -638,29 +638,71 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalUnits = 0; // Global tracker for alcohol units
     let userName = ""; // Global tracker for the user's name
 
-// Initialize Visitor Counter
-const visitorCounterElement = document.getElementById('visitor-count');
+    // Initialize Visitor Counter
+    const visitorCounterElement = document.getElementById('visitor-count');
+    const visitorRef = ref(database, "visitorCounter");
 
-// Reference to the visitor counter in Firebase
-const visitorRef = ref(database, "visitorCounter");
+    // Function to update the visitor counter display
+    const updateVisitorCountDisplay = () => {
+        get(visitorRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const visitorCount = snapshot.val().count || 0;
+                    visitorCounterElement.textContent = visitorCount;
+                } else {
+                    console.warn("Visitor counter not found in Firebase.");
+                    visitorCounterElement.textContent = 0; // Default to 0 if not found
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching visitor counter:", error);
+                visitorCounterElement.textContent = "Error";
+            });
+    };
 
-// Function to update the visitor counter display
-const updateVisitorCountDisplay = () => {
-    get(visitorRef)
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                const visitorCount = snapshot.val().count || 0;
-                visitorCounterElement.textContent = visitorCount;
-            } else {
-                console.warn("Visitor counter not found in Firebase.");
-                visitorCounterElement.textContent = 0; // Default to 0 if not found
-            }
-        })
-        .catch((error) => {
-            console.error("Error fetching visitor counter:", error);
-            visitorCounterElement.textContent = "Error";
-        });
-};
+    // Function to increment the visitor counter
+    const incrementVisitorCount = () => {
+        get(visitorRef)
+            .then((snapshot) => {
+                const currentCount = snapshot.exists() ? snapshot.val().count : 0;
+                const newCount = currentCount + 1;
+
+                // Update the counter in Firebase
+                return set(visitorRef, { count: newCount });
+            })
+            .then(() => {
+                console.log("Visitor counter updated successfully!");
+                updateVisitorCountDisplay(); // Refresh the display after updating
+            })
+            .catch((error) => {
+                console.error("Error updating visitor counter:", error);
+            });
+    };
+
+    // Call the function to display the current visitor count on the welcome screen
+    updateVisitorCountDisplay();
+
+    // Start button (form submission)
+    const userForm = document.getElementById('user-info-form');
+    userForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent form from refreshing the page
+        const usernameInput = document.getElementById('username');
+        userName = usernameInput.value.trim();
+
+        if (!userName) {
+            alert('Моля, напишете твоето име!');
+            return;
+        }
+
+        // Increment the visitor counter when the user clicks "Start"
+        incrementVisitorCount();
+
+        // Proceed with the usual logic for starting the app
+        document.getElementById('first-screen').style.display = 'none';
+        document.getElementById('second-screen').style.display = 'flex';
+        updateFerretMood(0); // Reset ferret's mood for the new user
+    });
+});
 
 // Function to increment the visitor counter
 const incrementVisitorCount = () => {
@@ -681,13 +723,9 @@ const incrementVisitorCount = () => {
         });
 };
 
-// Call the function to display the current visitor count on the welcome screen
-updateVisitorCountDisplay();
-
 
     // Start button (form submission)
-    const userForm = document.getElementById('user-info-form');
-    userForm.addEventListener('submit', event => {
+    (document.getElementById('user-info-form')).addEventListener('submit', event => {
         event.preventDefault(); // Prevent form from refreshing the page
         const usernameInput = document.getElementById('username');
         userName = usernameInput.value.trim();
@@ -705,7 +743,6 @@ updateVisitorCountDisplay();
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(0); // Reset ferret's mood for the new user
     });
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     const changeNameBtn = document.getElementById('change-name-btn');
@@ -725,7 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Call this function when capturing the username
 const userForm = document.getElementById('user-info-form');
-userForm.addEventListener('submit', event => {
+(document.getElementById('user-info-form')).addEventListener('submit', event => {
     event.preventDefault();
     const usernameInput = document.getElementById('username');
     userName = usernameInput.value.trim();
