@@ -541,6 +541,17 @@ margin: 0 auto;
   object-fit: contain; /* Maintain aspect ratio */
   display: block; /* Ensure the image is displayed */
   margin: 10px 0; /* Add spacing around the ferret image */
+  animation: float 2s infinite ease-in-out; /* Apply the animation */
+}
+
+/* Define the up and down animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0); /* Default position */
+  }
+  50% {
+    transform: translateY(-15px); /* Move up by 15px */
+  }
 }
 
 /* Stretch the speech bubble to the left and right */
@@ -569,20 +580,24 @@ margin: 0 auto;
   display: block;
 }
 
-/* Modal for Drink Selection (still targeting #drink-modal) */
+/* Modal for Drink Selection (adjusted to fit within the 9:16 frame) */
 #drink-modal {
-  display: none;
+  display: none; /* Hidden by default */
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 110vw; /* Modal width is 110% of the viewport width */
-  height: 160vh; /* Set the height to 70% of the viewport height for a bigger modal */
-  max-width: 110vw;
-  max-height: 160vh; /* Limit the maximum height to 80% of the viewport height */
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Ensure proper centering */
+  width: 80%; /* Set to 80% of the dark blue frame's width */
+  max-width: 300px; /* Limit maximum width to fit the frame */
+  height: auto; /* Allow height to adjust dynamically */
+  max-height: 80%; /* Ensure it doesn't exceed 80% of the frame height */
+  background-color: white; /* Background color for contrast */
+  border-radius: 10px; /* Rounded corners for a polished look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  overflow-y: auto; /* Enable scrolling for taller content */
+  padding: 20px; /* Add padding for inner spacing */
+  box-sizing: border-box; /* Include padding in size calculations */
+  z-index: 10; /* Ensure it appears above other elements */
 }
 
 #modal-content {
@@ -604,32 +619,40 @@ margin: 0 auto;
   gap: 10px; /* Space between buttons */
 }
 
+/* Style for drink buttons */
 .drink-option {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0px;
-  color: red;
-  border-radius: 5px; /* Optional: gives a slight rounded edge */
+  padding: 5px 10px; /* Adjust padding to make the buttons smaller */
+  color: #333; /* Use a neutral text color for better readability */
+  border-radius: 8px; /* Rounded corners for a polished look */
   outline: none !important;
   box-shadow: none !important;
-  transition: transform 0.3s ease;
-  width: 250px; /* Set a fixed width to make it rectangular */
-  height: 50px; /* Set a fixed height to make it rectangular */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Add smooth hover effect */
+  width: 80%; /* Make the buttons narrower and centered */
+  max-width: 200px; /* Set a maximum width for consistency */
+  height: 40px; /* Adjust the height to make the buttons smaller */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  margin: 10px auto; /* Add spacing between buttons and center them */
 }
 
+/* Hover effect for drink buttons */
 .drink-option:hover {
-  transform: scale(1.1); /* Scale up on hover */
+  transform: scale(1.05); /* Slightly scale up on hover */
+  background-color: #f4f4f4; /* Add a light background color on hover */
+  color: #000; /* Change the text color on hover */
 }
 
+
+/* Style for drink button images (if any) */
 .drink-option img {
-  width: 400px; /* Set the image width to make it rectangular */
-  height: 80px; /* Set the image height */
-  object-fit: cover; /* Ensures the image is cropped proportionally */
-  border-radius: 5px; /* Optional: gives the image rounded corners */
+  width: 24px; /* Reduce image size */
+  height: 24px; /* Maintain aspect ratio */
+  margin-right: 8px; /* Add spacing between the image and text */
+  object-fit: contain; /* Ensure the image doesn't distort */
 }
 
 #close-modal-btn {
@@ -720,6 +743,14 @@ margin: 0 auto;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+/* Style for labels in the drink details modal */
+.details-content label {
+  color: #333333; /* Set a dark color for visibility */
+  font-size: 16px; /* Ensure the text is readable */
+  font-weight: bold; /* Make the text stand out */
+  margin-bottom: 5px; /* Add spacing below the labels */
 }
 
 .close-btn {
