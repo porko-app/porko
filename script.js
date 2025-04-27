@@ -157,14 +157,14 @@ const messages = {
         });
     } else {
         console.error('Back button in Statistics screen not found.');
-    }
+    } 
 
 
 // Function to calculate total alcohol units for a given date range
 function calculateTotalAlcohol(startDate, endDate) {
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
     const total = history.reduce((sum, entry) => {
-        const entryDate = new Date(entry.date);
+        const entryDate = new Date(entry.date); // Parse entry date
         if (entryDate >= startDate && entryDate <= endDate) {
             return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
         }
@@ -173,37 +173,14 @@ function calculateTotalAlcohol(startDate, endDate) {
     return total.toFixed(1); // Return total rounded to 1 decimal place
 }
 
-// Function to reset the 24-hour total if 24 hours have passed
-function resetDailyTotalIfNeeded() {
-    const lastResetTime = localStorage.getItem('lastDailyReset'); // Get the last reset time
-    const now = new Date();
-
-    if (!lastResetTime || new Date(lastResetTime).getTime() < now.getTime() - 24 * 60 * 60 * 1000) {
-        // If no reset time exists OR the last reset was more than 24 hours ago:
-        localStorage.setItem('lastDailyReset', now.toISOString()); // Update the reset time
-        resetDailyTotal(); // Reset the daily total
-    }
-}
-
-// Function to reset the 24-hour total
-function resetDailyTotal() {
-    // Clear 24-hour specific entries from the history if needed
-    console.log("Resetting daily total...");
-    // No specific clearing needed for this app since we calculate dynamically
-    // (but here is a placeholder if you wanted to do something specific).
-}
-
 // Function to update statistics in the statistics screen
 function updateStatistics() {
     const now = new Date();
 
-    // Ensure daily total resets if needed
-    resetDailyTotalIfNeeded();
-
-    // Calculate 24-hour total (exact last 24 hours)
-    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-    const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
-    document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
+// Calculate 15-hour total (exact last 15 hours)
+const oneDayAgo = new Date(now.getTime() - 15 * 60 * 60 * 1000); // Subtract 15 hours
+const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
+document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
 
 
             // Calculate weekly total (last 7 days)
