@@ -129,6 +129,24 @@ button {
   outline: none;         /* removes the dotted border on focus */
 }
 
+/* Wiggle animation on hover */
+.info-btn:hover {
+  animation: wiggle 0.5s ease-in-out infinite; /* Apply the wiggle animation */
+}
+
+/* Define the wiggle animation */
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0); /* Default position */
+  }
+  25% {
+    transform: rotate(-20deg); /* Rotate slightly counter-clockwise */
+  }
+  75% {
+    transform: rotate(20deg); /* Rotate slightly clockwise */
+  }
+}
+
 .info-btn img {
   width: 100%;
   height: auto;
@@ -305,7 +323,7 @@ input::-webkit-inner-spin-button {
 
 /* Specific style for the Settings button */
 #settings-btn img {
-  width: 70px;  /* Keep the Settings button size the same */
+  width: 60px;  /* Keep the Settings button size the same */
   height: 50px; /* Keep the Settings button size the same */
 }
 
@@ -324,9 +342,9 @@ input::-webkit-inner-spin-button {
   margin: 10px 0; /* Space between buttons */
   font-size: 16px; /* Make the text readable */
   font-weight: bold; /* Bold text for emphasis */
-  color: #ffffff; /* White text color */
-  background-color: #3b3b3b; /* Dark background for contrast */
-  border: 1px solid #ffffff; /* Add a white border for better visibility */
+  color: #f4f4f4; /* White text color */
+  background-color: #1d192e; /* Dark background for contrast */
+  border: 1px solid #f68305; /* Add a white border for better visibility */
   border-radius: 8px; /* Rounded corners for a modern look */
   text-align: center; /* Center the text */
   cursor: pointer; /* Pointer cursor for hover */
@@ -336,16 +354,15 @@ input::-webkit-inner-spin-button {
 /* Hover and focus effects for buttons */
 .settings-btn:hover,
 .settings-btn:focus {
-  background-color: #575757; /* Slightly lighter background on hover */
+  background-color: #4c82c9; /* Slightly lighter background on hover */
   transform: scale(1.05); /* Slight scaling effect */
 }
 
 /* Optional: Add active state for when the button is clicked */
 .settings-btn:active {
-  background-color: #2f2f2f; /* Darker background on click */
+  background-color: #a7a7a7; /* Darker background on click */
   transform: scale(0.98); /* Slight shrinking effect */
 }
-
 /* FAQ Screen Styling */
 #faq-screen {
   display: flex;
@@ -542,6 +559,7 @@ margin: 0 auto;
   display: block; /* Ensure the image is displayed */
   margin: 10px 0; /* Add spacing around the ferret image */
   animation: float 2s infinite ease-in-out; /* Apply the animation */
+  margin-top: 20px;
 }
 
 /* Define the up and down animation */
@@ -882,7 +900,7 @@ margin: 0 auto;
   align-items: center;
   text-align: center;
   padding: 20px;
-  background-color: #361768; /* White background for contrast */
+  background-color: #1d192e; /* White background for contrast */
   color: #ffffff; /* Dark text color for visibility */
 }
 
@@ -969,4 +987,13 @@ margin: 0 auto;
   margin-top: 20px;
   border-radius: 10px; /* Optional: Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a polished look */
+}
+
+/* Header styling for the settings screen */
+#settings-screen h1, 
+#settings-screen h2 {
+  color: #ffffff; /* Set the text color to white */
+  font-size: 24px; /* Ensure the font size is consistent */
+  text-align: center; /* Center-align the header text */
+  margin-bottom: 20px; /* Add space below the header */
 }
