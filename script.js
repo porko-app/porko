@@ -160,26 +160,48 @@ const messages = {
     }
 
 
-    // Function to calculate total alcohol units for a given date range
-    function calculateTotalAlcohol(startDate, endDate) {
-        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-        const total = history.reduce((sum, entry) => {
-            const entryDate = new Date(entry.date);
-            if (entryDate >= startDate && entryDate <= endDate) {
-                return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
-            }
-            return sum;
-        }, 0);
-        return total.toFixed(1); // Return total rounded to 1 decimal place
-    }
+// Function to calculate total alcohol units for a given date range
+function calculateTotalAlcohol(startDate, endDate) {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    const total = history.reduce((sum, entry) => {
+        const entryDate = new Date(entry.date);
+        if (entryDate >= startDate && entryDate <= endDate) {
+            return sum + (entry.amount * entry.percentage) / 1000; // Calculate alcohol units
+        }
+        return sum;
+    }, 0);
+    return total.toFixed(1); // Return total rounded to 1 decimal place
+}
 
-        // Function to update statistics in the statistics screen
-        function updateStatistics() {
-            const now = new Date();
-    
-             // Calculate 24-hour total (last 24 hours)
-    const oneDayAgo = new Date();
-    oneDayAgo.setDate(now.getDate() - 1);
+// Function to reset the 24-hour total if 24 hours have passed
+function resetDailyTotalIfNeeded() {
+    const lastResetTime = localStorage.getItem('lastDailyReset'); // Get the last reset time
+    const now = new Date();
+
+    if (!lastResetTime || new Date(lastResetTime).getTime() < now.getTime() - 24 * 60 * 60 * 1000) {
+        // If no reset time exists OR the last reset was more than 24 hours ago:
+        localStorage.setItem('lastDailyReset', now.toISOString()); // Update the reset time
+        resetDailyTotal(); // Reset the daily total
+    }
+}
+
+// Function to reset the 24-hour total
+function resetDailyTotal() {
+    // Clear 24-hour specific entries from the history if needed
+    console.log("Resetting daily total...");
+    // No specific clearing needed for this app since we calculate dynamically
+    // (but here is a placeholder if you wanted to do something specific).
+}
+
+// Function to update statistics in the statistics screen
+function updateStatistics() {
+    const now = new Date();
+
+    // Ensure daily total resets if needed
+    resetDailyTotalIfNeeded();
+
+    // Calculate 24-hour total (exact last 24 hours)
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
     document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
 
@@ -627,3 +649,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// Import the Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
+  authDomain: "porko-bdad4.firebaseapp.com",
+  databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "porko-bdad4",
+  storageBucket: "porko-bdad4.firebasestorage.app",
+  messagingSenderId: "903004439010",
+  appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
+  measurementId: "G-PPTSVS7Z1R"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Realtime Database
+const database = getDatabase(app);
