@@ -237,16 +237,22 @@ input::-webkit-inner-spin-button {
 }
 
 /* Adjust the text position inside the speech bubbles */
+/* Ensure speech bubble text wraps properly and fits */
 .bubble-text {
-  margin-top: -90px; /* Add space above the text to move it down (adjust as needed) */
-  text-align: center; /* Ensure the text stays centered in the bubble */
-  line-height: 1.5; /* Improve readability of the text */
-  font-size: 14px;
+  word-wrap: break-word; /* Ensure long words break to the next line */
+  white-space: normal; /* Allow text to wrap onto multiple lines */
+  line-height: 1.5; /* Improve readability between lines */
+  font-size: 16px; /* Adjust font size for better visibility */
+  text-align: center; /* Center align the text in the bubble */
+  padding: 10px; /* Add padding for spacing around the text */
+  width: 90%; /* Ensure the text fits within the bubble */
+  margin: 0 auto; /* Center the text block horizontally */
+  margin-top: -100px;
 }
 
 /* Adjust speech bubble positioning */
 #second-screen .speech-bubble {
-  margin-top: 10px; /* Move the speech bubble higher (adjust value as needed) */
+  margin-top: -15px; /* Move the speech bubble higher (adjust value as needed) */
 }
 
 /* Ensure alignment for all elements */
@@ -269,7 +275,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin-top: -45px;
+  margin-top: -10px;
 }
 
 /* Style for the bottom buttons */
@@ -537,11 +543,18 @@ margin: 0 auto;
   margin: 10px 0; /* Add spacing around the ferret image */
 }
 
+/* Stretch the speech bubble to the left and right */
 .speech-bubble {
-  width: 400px;
-  height: 85px;
+  width: 450px; /* Increase width to make it stretchier */
+  max-width: 90%; /* Ensure it remains responsive on smaller screens */
+  height: auto; /* Allow height to adjust dynamically based on content */
+  padding: 15px; /* Add padding for better spacing inside the bubble */
   object-fit: contain;
-  display: none;
+  display: none; /* Keep it hidden by default */
+  border-radius: 15px; /* Maintain rounded corners for a polished look */
+  text-align: center; /* Center the text inside the bubble */
+  margin: 0 auto; /* Center the bubble horizontally */
+  margin-top: 40px;
 }
 
 /* Style for the dynamic number in the alcohol units text */
@@ -663,7 +676,7 @@ margin: 0 auto;
   margin-right: 80px;
   margin-top: 2px; /* Moves it a little lower from the top */
   font-size: 24px; /* You can adjust the size of the text */
-  color: rgb(183, 46, 46); /* Or whatever color you prefer */
+  color: white; /* Or whatever color you prefer */
 }
 
 .details-modal {
@@ -743,7 +756,7 @@ margin: 0 auto;
 
 #alcohol-units-text {
   font-size: 14px;
-  margin-top: -20px;
+  margin-top: 10px;
   text-align: center;
   color: #ffffff;
 }
