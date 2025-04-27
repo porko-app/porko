@@ -480,9 +480,9 @@ h1 {
 
 /* New Logo Styling */
 #welcome-logo {
-  width: 120px; /* Adjust logo size */
+  width: 160px; /* Adjust logo size */
   height: auto;
-  margin: 0 0 10px 0; /* Add more space below the logo */
+  margin: 0 0 0px 0; /* Add more space below the logo */
   border-radius: 10px; /* Optional: round the edges of the logo */
 }
 
@@ -508,7 +508,7 @@ h1 {
   font-size: 14px;
   color: #ffffff;
   text-align: center;
-  background-color: #1d1531;
+  background-color: #1d192e;
   padding: 10px;
   border-radius: 8px;
   width: 90%; /* Slightly narrower than the screen */
@@ -795,8 +795,10 @@ margin: 0 auto;
 
 /* Adjust Logo Position on Second Screen */
 #first-screen .logo {
+  width: 160px; /* Adjust logo size */
+  height: auto;
   margin-top: 60px; /* Add space above the logo */
-  margin-bottom: 40px; /* Add space below the logo */
+  margin-bottom: 30px; /* Add space below the logo */
 }
 
 #bac-text {

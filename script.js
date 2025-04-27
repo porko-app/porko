@@ -9,9 +9,9 @@ function updateFerretMood(units) {
     let mood = 'neutral';
 
     // Determine the mood based on alcohol units
-    if (units <= 1.5) mood = 'neutral';
-    else if (units <= 3.5) mood = 'tipsy';
-    else if (units <= 6.0) mood = 'drunk';
+    if (units <= 3.5) mood = 'neutral';
+    else if (units <= 5.5) mood = 'tipsy';
+    else if (units <= 8.0) mood = 'drunk';
     else mood = 'wobbly';
 
     console.log('Updating ferret mood to:', mood);
@@ -177,6 +177,27 @@ function calculateTotalAlcohol(startDate, endDate) {
 function updateStatistics() {
     const now = new Date();
 
+// Function to reset the ferret's mood to neutral
+function resetFerretMoodToNeutral() {
+    console.log("Resetting ferret's mood to neutral...");
+    updateFerretMood(0); // Set the ferret's mood to neutral
+    localStorage.setItem('lastMoodReset', new Date().toISOString()); // Update the last reset time
+}
+
+// Function to check if the ferret's mood needs to be reset
+function checkAndResetFerretMood() {
+    const lastResetTime = localStorage.getItem('lastMoodReset'); // Get the last reset time from storage
+    const now = new Date();
+
+    if (!lastResetTime || new Date(lastResetTime).getTime() < now.getTime() - 15 * 60 * 60 * 1000) {
+        // If no reset time exists OR the last reset was more than 15 hours ago:
+        resetFerretMoodToNeutral(); // Reset the ferret's mood to neutral
+    }
+}
+
+    // Check and reset ferret's mood if needed
+    checkAndResetFerretMood();
+
 // Calculate 15-hour total (exact last 15 hours)
 const oneDayAgo = new Date(now.getTime() - 15 * 60 * 60 * 1000); // Subtract 15 hours
 const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
@@ -197,11 +218,11 @@ document.getElementById('daily-total').textContent = `${dailyTotal} единиц
     
     // Event listeners for drink options
     const drinks = {
-        whiskey: 'Уиски',
-        vodka: 'Водка',
-        rum: 'Ром',
-        gin: 'Джин',
-        tequila: 'Текила',
+        whiskey: 'Уиски (прибл.6-50%)',
+        vodka: 'Водка (прибл. 40%)',
+        rum: 'Ром (прибл. 40%)',
+        gin: 'Джин (прибл. 36-50%)',
+        tequila: 'Текила (прибл. 35-50%)',
     };
 
     Object.keys(drinks).forEach(drinkId => {
@@ -626,9 +647,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-// Import the Firebase modules
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -644,6 +665,37 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Realtime Database
 const database = getDatabase(app);
+
+// Save user info to Firebase
+function saveUserInfo(userName) {
+    const userRef = ref(database, 'users/' + userName);
+    set(userRef, {
+        username: userName,
+        createdAt: new Date().toISOString()
+    }).then(() => {
+        console.log("User info saved to Firebase:", userName);
+    }).catch((error) => {
+        console.error("Error saving user info to Firebase:", error);
+    });
+}
+
+// Call this function when capturing the username
+userForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const usernameInput = document.getElementById('username');
+    userName = usernameInput.value.trim();
+
+    if (!userName) {
+        alert('Моля, напишете твоето име!');
+        return;
+    }
+
+    // Save user info to Firebase
+    saveUserInfo(userName);
+
+    // Proceed with the usual logic
+    document.getElementById('first-screen').style.display = 'none';
+    document.getElementById('second-screen').style.display = 'flex';
+    updateFerretMood(0);
+});
