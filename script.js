@@ -446,9 +446,6 @@ function loadHistory() {
         return;
     }
 
-// Clear History Button Logic
-const clearHistoryBtn = document.getElementById('clear-history-btn');
-
 // Get references to the modal and overlay
 const clearHistoryModal = document.getElementById('clear-history-modal');
 const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
@@ -611,40 +608,37 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Get references to the modal and buttons
     const clearHistoryBtn = document.getElementById('clear-history-btn');
     const clearHistoryModal = document.getElementById('clear-history-modal');
     const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
     const confirmClearBtn = document.getElementById('confirm-clear-btn');
     const cancelClearBtn = document.getElementById('cancel-clear-btn');
 
-    // Check if the modal and buttons exist
-    if (!clearHistoryBtn || !clearHistoryModal || !clearHistoryModalOverlay) {
-        console.error('Clear History elements not found in the DOM.');
-        return;
+    // Show the modal when "Clear History" is clicked
+    if (clearHistoryBtn) {
+        clearHistoryBtn.addEventListener('click', () => {
+            clearHistoryModal.style.display = 'block';
+            clearHistoryModalOverlay.style.display = 'block';
+        });
+    } else {
+        console.error('Clear History button not found in the DOM.');
     }
-
-    // Show the modal when the "Clear History" button is clicked
-    clearHistoryBtn.addEventListener('click', () => {
-        clearHistoryModal.style.display = 'block'; // Show the modal
-        clearHistoryModalOverlay.style.display = 'block'; // Show the overlay
-    });
 
     // Hide the modal when "Cancel" is clicked
     if (cancelClearBtn) {
         cancelClearBtn.addEventListener('click', () => {
-            clearHistoryModal.style.display = 'none'; // Hide the modal
-            clearHistoryModalOverlay.style.display = 'none'; // Hide the overlay
+            clearHistoryModal.style.display = 'none';
+            clearHistoryModalOverlay.style.display = 'none';
         });
     }
 
     // Clear history and hide the modal when "Confirm" is clicked
     if (confirmClearBtn) {
         confirmClearBtn.addEventListener('click', () => {
-            localStorage.removeItem('drinkHistory'); // Clear the history
-            alert('History cleared successfully!'); // Notify the user
-            clearHistoryModal.style.display = 'none'; // Hide the modal
-            clearHistoryModalOverlay.style.display = 'none'; // Hide the overlay
+            localStorage.removeItem('drinkHistory'); // Clear history
+            alert('History cleared successfully!');
+            clearHistoryModal.style.display = 'none';
+            clearHistoryModalOverlay.style.display = 'none';
         });
     }
 });
