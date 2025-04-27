@@ -127,6 +127,15 @@ function loadHistory() {
     firstScreen.style.display = 'flex';  // Show the first screen
 });
 
+
+// Function to increment the visitor counter
+const incrementVisitorCount = () => {
+    const currentCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
+    const newCount = currentCount + 1;
+    localStorage.setItem('visitorCount', newCount.toString());
+    updateVisitorCountDisplay(); // Update the display with the new count
+};
+
 // Handle "Start" button click on the first screen
 userForm.addEventListener('submit', event => {
     event.preventDefault(); // Prevent form submission from refreshing the page
