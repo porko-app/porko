@@ -198,8 +198,8 @@ function checkAndResetFerretMood() {
     // Check and reset ferret's mood if needed
     checkAndResetFerretMood();
 
-// Calculate 10-hour total (exact last 10 hours)
-const oneDayAgo = new Date(now.getTime() - 10 * 60 * 60 * 1000); // Subtract 10 hours
+// Calculate 24-hour total (exact last 24 hours)
+const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // Subtract 24 hours
 const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
 document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
 
@@ -218,7 +218,7 @@ document.getElementById('daily-total').textContent = `${dailyTotal} единиц
     
     // Event listeners for drink options
     const drinks = {
-        whiskey: 'Уиски (прибл.6-50%)',
+        whiskey: 'Уиски (прибл.40-50%)',
         vodka: 'Водка (прибл. 40%)',
         rum: 'Ром (прибл. 40%)',
         gin: 'Джин (прибл. 36-50%)',
