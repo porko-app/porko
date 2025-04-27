@@ -1,5 +1,5 @@
   // Declare userName globally so it is accessible everywhere in the script
-let userName = ""; // Global tracker for the user's name
+  let userName = ""; // Global tracker for the user's name
   
   // DOM ELEMENTS
     const clearHistoryBtn = document.getElementById('clear-history-btn');
@@ -48,7 +48,7 @@ const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
 }
 
 function loadHistory() {
-    // Retrieve the history from localStorage or initialize as an empty array
+    // Retrieve and validate the history from localStorage
     let history = localStorage.getItem('drinkHistory');
     try {
         history = JSON.parse(history);
@@ -61,6 +61,7 @@ function loadHistory() {
     }
 
     // Clear the existing history list in the DOM
+    const historyList = document.getElementById('history-list');
     historyList.innerHTML = '';
 
     // Handle the case where there is no history
@@ -72,12 +73,12 @@ function loadHistory() {
         return;
     }
 
-    // Iterate over the history array and create list items for each entry
-    history.reverse().forEach(entry => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem);
-    });
+   // Iterate over the history array and create list items for each entry
+   history.reverse().forEach(entry => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+    historyList.appendChild(listItem);
+});
 }
 
     // FUNCTION: Increment Visitor Counter
@@ -458,9 +459,6 @@ if (backFromHistoryBtn) {
 } else {
     console.error('Back button in History Log screen not found.');
 }
-
-    // Reverse the history array to display the newest entries first
-    const reversedHistory = [...history].reverse();
 
 // Function to save a new history entry
 function saveHistoryEntry(drinkName, amount, percentage) {
