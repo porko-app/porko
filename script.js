@@ -2,16 +2,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
 import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 
-// Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
-  authDomain: "porko-bdad4.firebaseapp.com",
-  databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "porko-bdad4",
-  storageBucket: "porko-bdad4.appspot.com",
-  messagingSenderId: "903004439010",
-  appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
-  measurementId: "G-PPTSVS7Z1R"
+    apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
+    authDomain: "porko-bdad4.firebaseapp.com",
+    databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "porko-bdad4",
+    storageBucket: "porko-bdad4.firebasestorage.app",
+    messagingSenderId: "903004439010",
+    appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
+    measurementId: "G-PPTSVS7Z1R"
 };
 
 // Initialize Firebase
@@ -421,7 +421,7 @@ if (backFromQrBtn) {
 
 // Event listener for the "Start" button to capture the username
 const userForm = document.getElementById('user-info-form');
-userForm.addEventListener('submit', event => {
+userForm.addEventListener('submit', async event => {
     event.preventDefault(); // Prevent form from refreshing the page
     const usernameInput = document.getElementById('username');
     userName = usernameInput.value.trim(); // Capture the username
@@ -430,6 +430,18 @@ userForm.addEventListener('submit', event => {
             alert('Моля, напишете твоето име!');
             return;
         }
+
+   // Save user info to Firebase
+   try {
+    const userRef = ref(database, `users/${userName}`);
+    await set(userRef, {
+        username: userName,
+        createdAt: new Date().toISOString()
+    });
+    console.log('User info saved to Firebase:', userName);
+} catch (error) {
+    console.error('Error saving user info to Firebase:', error);
+}
 
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
@@ -626,25 +638,52 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalUnits = 0; // Global tracker for alcohol units
     let userName = ""; // Global tracker for the user's name
 
-    // Initialize Visitor Counter
-    const visitorCounterElement = document.getElementById('visitor-count');
+// Initialize Visitor Counter
+const visitorCounterElement = document.getElementById('visitor-count');
 
-    // Function to update the visitor counter display
-    const updateVisitorCountDisplay = () => {
-        const visitorCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
-        visitorCounterElement.textContent = visitorCount;
-    };
+// Reference to the visitor counter in Firebase
+const visitorRef = ref(database, "visitorCounter");
 
-    // Function to increment the visitor counter
-    const incrementVisitorCount = () => {
-        let visitorCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
-        visitorCount += 1;
-        localStorage.setItem('visitorCount', visitorCount.toString());
-        updateVisitorCountDisplay();
-    };
+// Function to update the visitor counter display
+const updateVisitorCountDisplay = () => {
+    get(visitorRef)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const visitorCount = snapshot.val().count || 0;
+                visitorCounterElement.textContent = visitorCount;
+            } else {
+                console.warn("Visitor counter not found in Firebase.");
+                visitorCounterElement.textContent = 0; // Default to 0 if not found
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching visitor counter:", error);
+            visitorCounterElement.textContent = "Error";
+        });
+};
 
-    // Call the function to display the current visitor count on the welcome screen
-    updateVisitorCountDisplay();
+// Function to increment the visitor counter
+const incrementVisitorCount = () => {
+    get(visitorRef)
+        .then((snapshot) => {
+            const currentCount = snapshot.exists() ? snapshot.val().count : 0;
+            const newCount = currentCount + 1;
+
+            // Update the counter in Firebase
+            return set(visitorRef, { count: newCount });
+        })
+        .then(() => {
+            console.log("Visitor counter updated successfully!");
+            updateVisitorCountDisplay(); // Refresh the display after updating
+        })
+        .catch((error) => {
+            console.error("Error updating visitor counter:", error);
+        });
+};
+
+// Call the function to display the current visitor count on the welcome screen
+updateVisitorCountDisplay();
+
 
     // Start button (form submission)
     const userForm = document.getElementById('user-info-form');
