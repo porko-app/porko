@@ -753,7 +753,6 @@ if (changeNameBtn) {
 });
 
 // Call this function when capturing the username
-const userForm = document.getElementById('user-info-form');
 (document.getElementById('user-info-form')).addEventListener('submit', event => {
     event.preventDefault();
     const usernameInput = document.getElementById('username');
@@ -771,4 +770,67 @@ const userForm = document.getElementById('user-info-form');
     document.getElementById('first-screen').style.display = 'none';
     document.getElementById('second-screen').style.display = 'flex';
     updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
+});
+
+import { database } from "./firebase.js";
+import { ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+
+// Visitor Counter
+const visitorCounterElement = document.getElementById("visitor-count");
+const visitorRef = ref(database, "visitorCounter");
+
+// Initialize the visitor counter if it doesn't exist
+const initializeVisitorCounter = async () => {
+    try {
+        const snapshot = await get(visitorRef);
+        if (!snapshot.exists()) {
+            await set(visitorRef, { count: 0 });
+            console.log("Visitor counter initialized to 0.");
+        }
+    } catch (error) {
+        console.error("Error initializing visitor counter:", error);
+    }
+};
+
+// Update the visitor counter display
+const updateVisitorCountDisplay = async () => {
+    try {
+        const snapshot = await get(visitorRef);
+        if (snapshot.exists()) {
+            const visitorCount = snapshot.val().count || 0;
+            visitorCounterElement.textContent = visitorCount;
+        } else {
+            console.warn("Visitor counter not found in Firebase.");
+            visitorCounterElement.textContent = 0; // Default to 0
+        }
+    } catch (error) {
+        console.error("Error fetching visitor counter:", error);
+        visitorCounterElement.textContent = "Error";
+    }
+};
+
+// Initialize and display the visitor counter on page load
+document.addEventListener("DOMContentLoaded", async () => {
+    await initializeVisitorCounter();
+    await updateVisitorCountDisplay();
+});
+
+// Event listener for the "Start" button to capture the username
+const userForm = document.getElementById("user-info-form");
+(document.getElementById('user-info-form')).addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent form from refreshing the page
+    const usernameInput = document.getElementById("username");
+    const userName = usernameInput.value.trim();
+
+    if (!userName) {
+        alert("Моля, напишете твоето име!");
+        return;
+    }
+
+    // Increment the visitor counter when the user clicks "Start"
+    await incrementVisitorCount();
+
+    // Proceed with the usual logic for starting the app
+    document.getElementById("first-screen").style.display = "none";
+    document.getElementById("second-screen").style.display = "flex";
 });
