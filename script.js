@@ -13,6 +13,8 @@
     const historyList = document.getElementById('history-list');
     const settingsBtn = document.getElementById('settings-btn');
     const settingsScreen = document.getElementById('settings-screen');
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const firstScreen = document.getElementById('first-screen');
     const secondScreen = document.getElementById('second-screen');
     const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
     const visitorCounterElement = document.getElementById('visitor-count');
@@ -121,6 +123,17 @@ function loadHistory() {
         secondScreen.style.display = 'flex';
     });
 }
+
+    // Show only the welcome screen initially
+    welcomeScreen.style.display = 'flex';
+    firstScreen.style.display = 'none';
+    secondScreen.style.display = 'none';
+
+    // Continue button on the welcome screen
+    document.getElementById('continue-btn').addEventListener('click', () => {
+        welcomeScreen.style.display = 'none'; // Hide the welcome screen
+        firstScreen.style.display = 'flex';  // Show the first screen
+    });
 
     // Form Submission - Capture Username
     if (userForm) {
@@ -404,18 +417,6 @@ if (backFromQrBtn) {
 } else {
     console.error('Back button in QR Code screen not found.');
 }
-
-    // Welcome screen logic
-    document.getElementById('welcome-screen').style.display = 'flex';
-    document.getElementById('first-screen').style.display = 'none';
-    document.getElementById('second-screen').style.display = 'none';
-    document.getElementById('settings-screen').style.display = 'none';
-
-    // Continue button on welcome screen
-    document.getElementById('continue-btn').addEventListener('click', () => {
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('first-screen').style.display = 'flex';
-    });
 
     // Event listener for the "Choose Drink" button
     const menuButton = document.getElementById('menu-btn');
