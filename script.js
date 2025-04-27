@@ -82,14 +82,6 @@ function loadHistory() {
     historyList.appendChild(listItem);
 });
 }
-
-    // FUNCTION: Increment Visitor Counter
-    function incrementVisitorCount() {
-        let visitorCount = parseInt(localStorage.getItem('visitorCount'), 10) || 0;
-        visitorCount += 1;
-        localStorage.setItem('visitorCount', visitorCount.toString());
-        updateVisitorCountDisplay();
-    }
     
     // Show History Log Screen
     if (historyLogBtn) {
@@ -129,30 +121,32 @@ function loadHistory() {
     firstScreen.style.display = 'none';
     secondScreen.style.display = 'none';
 
-    // Continue button on the welcome screen
-    document.getElementById('continue-btn').addEventListener('click', () => {
-        welcomeScreen.style.display = 'none'; // Hide the welcome screen
-        firstScreen.style.display = 'flex';  // Show the first screen
+ // Handle "Let's Go" button click on the welcome screen
+ document.getElementById('continue-btn').addEventListener('click', () => {
+    welcomeScreen.style.display = 'none'; // Hide the welcome screen
+    firstScreen.style.display = 'flex';  // Show the first screen
+});
+
+// Handle "Start" button click on the first screen
+userForm.addEventListener('submit', event => {
+    event.preventDefault(); // Prevent form submission from refreshing the page
+    const usernameInput = document.getElementById('username');
+    const userName = usernameInput.value.trim(); // Capture the username
+
+    if (!userName) {
+        alert('Моля, напишете твоето име!'); // Prompt the user to enter a name
+        return;
+    }
+    firstScreen.style.display = 'none';  // Hide the first screen
+        secondScreen.style.display = 'flex'; // Show the second screen
+        updateFerretMood(0); // Reset the ferret's mood for the new user
     });
-
-    // Form Submission - Capture Username
-    if (userForm) {
-        userForm.addEventListener('submit', event => {
-            event.preventDefault();
-            const usernameInput = document.getElementById('username');
-            userName = usernameInput.value.trim();
-
-            if (!userName) {
-                alert('Моля, напишете твоето име!');
-                return;
-            }
 
             incrementVisitorCount();
             document.getElementById('first-screen').style.display = 'none';
             document.getElementById('second-screen').style.display = 'flex';
             updateFerretMood(0); // Reset ferret's mood for the new user
-        });
-    }
+        
 
 // Predefined messages for each mood (some include placeholders for the username)
 function getRandomMoodMessages(mood) {}
