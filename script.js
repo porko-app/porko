@@ -1,4 +1,7 @@
-    // DOM ELEMENTS
+  // Declare userName globally so it is accessible everywhere in the script
+let userName = ""; // Global tracker for the user's name
+  
+  // DOM ELEMENTS
     const clearHistoryBtn = document.getElementById('clear-history-btn');
     const clearHistoryModal = document.getElementById('clear-history-modal');
     const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
@@ -452,13 +455,6 @@ if (backFromHistoryBtn) {
 
     // Reverse the history array to display the newest entries first
     const reversedHistory = [...history].reverse();
-
-    // Iterate over the reversed history array and create list items for each entry
-    reversedHistory.forEach(entry => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem); // Add the list item to the history list in the DOM
-    });
 
 // Function to save a new history entry
 function saveHistoryEntry(drinkName, amount, percentage) {
