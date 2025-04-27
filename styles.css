@@ -998,14 +998,6 @@ margin: 0 auto;
   color: #ffffff; /* Bright text for header */
 }
 
-#qr-code-screen img {
-  width: 200px; /* Adjust size to fit the screen */
-  height: auto;
-  margin-top: 20px;
-  border-radius: 10px; /* Optional: Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a polished look */
-}
-
 /* Header styling for the settings screen */
 #settings-screen h1, 
 #settings-screen h2 {
@@ -1076,4 +1068,13 @@ margin: 0 auto;
 #daily-statistics p, #weekly-statistics p, #monthly-statistics p {
   font-size: 1em;
   color: #f4f4f4;
+}
+
+#qr-code-image {
+  border: none; /* Removes any border */
+  box-shadow: none; /* Removes any shadow */
+  width: 200px; /* Example: Adjust width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Center the QR code */
+  margin: 0 auto; /* Center horizontally */
 }
