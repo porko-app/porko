@@ -8,15 +8,30 @@ function updateFerretMood(units) {
     const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
     let mood = 'neutral';
 
-    // Determine the mood based on alcohol units
-    if (units <= 1.5) mood = 'neutral';
-    else if (units <= 3.5) mood = 'tipsy';
-    else if (units <= 6.0) mood = 'drunk';
-    else mood = 'wobbly';
+ // Determine the mood based on alcohol units
+ if (units <= 1.5) mood = 'neutral';
+ else if (units <= 3.5) mood = 'tipsy';
+ else if (units <= 6.0) mood = 'drunk';
+ else mood = 'wobbly';
 
     console.log('Updating ferret mood to:', mood);
 
+       // Hide all mood-related elements (images and speech bubbles)
+       states.forEach(state => {
+        const ferretElement = document.getElementById(`ferret-${state}`);
+        const bubbleElement = document.getElementById(`bubble-${state}`);
+        const bubbleTextElement = document.getElementById(`bubble-text-${state}`);
+
+        // Safely hide elements if they exist
+        if (ferretElement) ferretElement.style.display = 'none';
+        if (bubbleElement) bubbleElement.style.display = 'none';
+        if (bubbleTextElement) bubbleTextElement.style.display = 'none';
+    });
+
+    
+
 // Predefined messages for each mood (some include placeholders for the username)
+function getRandomMoodMessages(mood) {}
 const messages = {
     neutral: [
         `Хей, ${userName}! Всичко е супер!`,
@@ -434,26 +449,28 @@ function loadHistory() {
 // Clear History Button Logic
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 
-// Get references to the Clear History modal and buttons
+// Get references to the modal and overlay
 const clearHistoryModal = document.getElementById('clear-history-modal');
-const confirmClearBtn = document.getElementById('confirm-clear-btn');
-const cancelClearBtn = document.getElementById('cancel-clear-btn');
+const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
 
-// Show the custom modal when "Clear History" button is clicked
+// Show the modal
 clearHistoryBtn.addEventListener('click', () => {
-    clearHistoryModal.style.display = 'flex'; // Display your custom modal
+    clearHistoryModal.style.display = 'block';
+    clearHistoryModalOverlay.style.display = 'block';
 });
 
-// Handle the "Confirm" button in the modal
-confirmClearBtn.addEventListener('click', () => {
-    localStorage.removeItem('drinkHistory'); // Clear the history
-    alert("History cleared successfully!"); // Notify the user
-    clearHistoryModal.style.display = 'none'; // Hide the modal
-});
-
-// Handle the "Cancel" button in the modal
+// Hide the modal when "Cancel" is clicked
 cancelClearBtn.addEventListener('click', () => {
-    clearHistoryModal.style.display = 'none'; // Simply hide the modal without clearing the history
+    clearHistoryModal.style.display = 'none';
+    clearHistoryModalOverlay.style.display = 'none';
+});
+
+// Confirm clearing history
+confirmClearBtn.addEventListener('click', () => {
+    localStorage.removeItem('drinkHistory'); // Clear history
+    alert('History cleared successfully!');
+    clearHistoryModal.style.display = 'none';
+    clearHistoryModalOverlay.style.display = 'none';
 });
 
 function resetStatistics() {
@@ -507,21 +524,29 @@ if (backFromHistoryBtn) {
 
 // Function to load history from localStorage
 function loadHistory() {
+    // Retrieve the history from localStorage or initialize as an empty array
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    historyList.innerHTML = ''; // Clear existing list
+    
+    // Clear the existing history list in the DOM
+    historyList.innerHTML = '';
 
+    // Handle the case where there is no history
     if (history.length === 0) {
         const noHistoryMessage = document.createElement('li');
-        noHistoryMessage.textContent = 'Няма записана история.';
-        noHistoryMessage.style.color = '#cccccc';
+        noHistoryMessage.textContent = 'Няма записана история.'; // Display message for no history
+        noHistoryMessage.style.color = '#cccccc'; // Set light gray color for better visibility
         historyList.appendChild(noHistoryMessage);
-        return;
+        return; // Exit the function since there's no history to display
     }
 
-    history.forEach(entry => {
+    // Reverse the history array to display the newest entries first
+    const reversedHistory = [...history].reverse();
+
+    // Iterate over the reversed history array and create list items for each entry
+    reversedHistory.forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem);
+        historyList.appendChild(listItem); // Add the list item to the history list in the DOM
     });
 }
 
@@ -583,4 +608,43 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(0); // Reset ferret's mood for the new user
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Get references to the modal and buttons
+    const clearHistoryBtn = document.getElementById('clear-history-btn');
+    const clearHistoryModal = document.getElementById('clear-history-modal');
+    const clearHistoryModalOverlay = document.getElementById('clear-history-modal-overlay');
+    const confirmClearBtn = document.getElementById('confirm-clear-btn');
+    const cancelClearBtn = document.getElementById('cancel-clear-btn');
+
+    // Check if the modal and buttons exist
+    if (!clearHistoryBtn || !clearHistoryModal || !clearHistoryModalOverlay) {
+        console.error('Clear History elements not found in the DOM.');
+        return;
+    }
+
+    // Show the modal when the "Clear History" button is clicked
+    clearHistoryBtn.addEventListener('click', () => {
+        clearHistoryModal.style.display = 'block'; // Show the modal
+        clearHistoryModalOverlay.style.display = 'block'; // Show the overlay
+    });
+
+    // Hide the modal when "Cancel" is clicked
+    if (cancelClearBtn) {
+        cancelClearBtn.addEventListener('click', () => {
+            clearHistoryModal.style.display = 'none'; // Hide the modal
+            clearHistoryModalOverlay.style.display = 'none'; // Hide the overlay
+        });
+    }
+
+    // Clear history and hide the modal when "Confirm" is clicked
+    if (confirmClearBtn) {
+        confirmClearBtn.addEventListener('click', () => {
+            localStorage.removeItem('drinkHistory'); // Clear the history
+            alert('History cleared successfully!'); // Notify the user
+            clearHistoryModal.style.display = 'none'; // Hide the modal
+            clearHistoryModalOverlay.style.display = 'none'; // Hide the overlay
+        });
+    }
 });
