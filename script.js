@@ -107,27 +107,22 @@ const messages = {
             return;
         }
 
-        // Calculate alcohol units and update total
-        const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
-        totalUnits += units;
-        console.log("Updated totalUnits:", totalUnits);
-        updateStatistics();
+   // Calculate alcohol units and update total
+   const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
+   totalUnits += units;
+   console.log("Updated totalUnits:", totalUnits);
 
-        updateAlcoholUnitsDisplay();
-        updateFerretMood(totalUnits);
-        updateStatistics();
+   // Update the UI and ferret mood
+   updateAlcoholUnitsDisplay();
+   updateFerretMood(totalUnits);
 
+   // Save to history (called only once)
+   saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
 
-        // Save to history
-        saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
-
-    // Dynamically update statistics
-    updateStatistics(); // <-- Ensure statistics are updated immediately
-
-        // Close modals
-        document.getElementById('drink-details-modal').style.display = 'none';
-        document.getElementById('drink-modal').style.display = 'none';
-    });
+   // Close modals
+   document.getElementById('drink-details-modal').style.display = 'none';
+   document.getElementById('drink-modal').style.display = 'none';
+});
 
 
     // Event Listener for "Statistics" Button
@@ -485,33 +480,6 @@ function loadHistory() {
         historyList.appendChild(listItem);
     });
 
-    // Function to load history from localStorage
-function loadHistory() {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    historyList.innerHTML = ''; // Clear existing list
-
-    if (history.length === 0) {
-        const noHistoryMessage = document.createElement('li');
-        noHistoryMessage.textContent = 'Няма записана история.';
-        noHistoryMessage.style.color = '#cccccc';
-        historyList.appendChild(noHistoryMessage);
-        return;
-    }
-
-        // Reverse the history array to display the newest drink at the top
-        history.reverse().forEach(entry => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-            historyList.appendChild(listItem);
-        });
-
-    history.forEach(entry => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem);
-    });
-}
-
 // Clear History Button Logic
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 
@@ -585,28 +553,6 @@ if (backFromHistoryBtn) {
     console.error('Back button in History Log screen not found.');
 }
     });
-
-// Function to load history from localStorage tuk
-function loadHistory() {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    historyList.innerHTML = ''; // Clear existing list
-
-    if (history.length === 0) {
-        const noHistoryMessage = document.createElement('li');
-        noHistoryMessage.textContent = 'Няма записана история.';
-        noHistoryMessage.style.color = '#cccccc';
-        historyList.appendChild(noHistoryMessage);
-        return;
-    }
-
-    // Reverse the history array to display the newest drink at the top
-    history.reverse().forEach(entry => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-        historyList.appendChild(listItem);
-    });
-
-}
 
 // Function to save a new history entry
 function saveHistoryEntry(drinkName, amount, percentage) {
