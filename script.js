@@ -111,9 +111,12 @@ const messages = {
         const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
         totalUnits += units;
         console.log("Updated totalUnits:", totalUnits);
+        updateStatistics();
 
         updateAlcoholUnitsDisplay();
         updateFerretMood(totalUnits);
+        updateStatistics();
+
 
         // Save to history
         saveHistoryEntry(selectedDrink, drinkAmount, alcoholPercentage);
@@ -295,15 +298,20 @@ document.getElementById('daily-total').textContent = `${dailyTotal} единиц
     // Function to update statistics in the settings screen
     function updateStatistics() {
         const now = new Date();
-
+    
+        // Calculate 24-hour total (last 24 hours)
+        const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
+        document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
+    
         // Calculate weekly total (last 7 days)
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(now.getDate() - 7);
         const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
         document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
-
+    
         // Calculate monthly total (current month)
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // First day of the month
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
         document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
     }
@@ -769,6 +777,7 @@ if (changeNameBtn) {
     document.getElementById('first-screen').style.display = 'none';
     document.getElementById('second-screen').style.display = 'flex';
     updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
+    updateStatistics();
 });
 
 import { database } from "./firebase.js";
