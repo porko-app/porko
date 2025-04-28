@@ -5,20 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Порко приложение</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" rel="stylesheet">
-  
-  <!-- Link to your CSS file -->
+
+  <!-- Include Open Sans BG font -->
+  <link rel="stylesheet" href="//npoekmu.me/wp-content/uploads/display_custom_font/css/opensans_bg.css">
   <link rel="stylesheet" href="styles.css" />
-</head>
 
-  <!-- Firebase Core SDK -->
-<script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-<!-- Firebase Realtime Database SDK -->
-<script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
+  <!-- Firebase SDKs -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
 </head>
-
 <body>
+
   <!-- First Screen (Main UI) -->
   <div class="app-container" id="first-screen">
     <img src="logoporko.png" alt="FerretFeels Logo" class="logo" />
@@ -181,11 +178,6 @@
     Смени името си
   </button>
 
-  <!-- Terms of Use Button -->
-  <button id="terms-of-use-btn" class="settings-btn">
-    Условия за ползване
-  </button>
-
   <!-- QR Code Button -->
   <button id="qr-code-btn" class="settings-btn">
     QR код за споделяне
@@ -199,6 +191,10 @@
 <div id="statistics-screen" class="app-container" style="display: none;">
   <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
   <h2>Статистика</h2>
+  <div id="daily-statistics">
+    <h4>Общо за последните 24 часа:</h4>
+    <p id="daily-total">0.0 единици алкохол</p>
+  </div>
   <div id="weekly-statistics">
     <h4>Общо за седмицата:</h4>
     <p id="weekly-total">0.0 единици алкохол</p>
@@ -215,11 +211,16 @@
   <h2>ЧЗВ за алкохола</h2>
   <p>
     Какво е алкохолна единица и как се измерва?
+    Алкохолен градус (означение °) е единица за измерване на съдържанието на етилов спирт в алкохолна напитка, и се изразява чрез отношението на обема на етанола към общия обем на течността. Измерва се при температура на течността 20 °С.
+  </p>
+  <p>
    За колко време се усвоява 1 алкохолна единица в тялото ни?
-Какви са препоръчителните алкохолни единици?
-Как алкохолът напуска тялото ни?
-Какви съвети може да приемем за отговорна консумация?
-О, не! Утрешният ден след дълга вечер дойде. А, сега какво и как?
+   1 алкохолна единица се разгражда от човешкият организъм средно за малко повече от 1 час. Времето за абсорбация зависи от много фактори, като количество и вид алкохолна напитка, колко бързо пие човек, дали по време на консумация се храни и пие вода, ръст, тегло и пол.
+</p>
+<p>
+   Какви съвети може да приемем за отговорна консумация?
+Преди консумацията на алкохол е важно да се нахраните и пиете вода. Предварително си поставете граници за консумация. Планирайте как ще се приберете вкъщи предварително.
+По време на консумация бройте колко напитки изпивате. Бъдете наясно как Ви влияе алкохолът. Опитайте се да устоите на натиска от приятели, дори когато ВИЕ не желаете.
   </p>
 </div>
 
@@ -244,21 +245,12 @@
   </div>
 </div>
 
-<!-- Terms of Use Screen -->
-<div id="terms-of-use-screen" class="app-container" style="display: none;">
-  <button id="back-from-terms-btn" class="back-top-right-btn">← Назад</button>
-  <h2>Условия за ползване</h2>
-  <p>
-    Добре дошли в приложението Порко! Тук ще намерите информация относно правилата и условията за ползване. 
-    Моля, използвайте приложението отговорно и се забавлявайте!
-  </p>
-</div>
-
 <!-- QR Code Screen -->
 <div id="qr-code-screen" class="app-container" style="display: none;">
   <button id="back-from-qr-btn" class="back-top-right-btn">← Назад</button>
   <h2>QR код за споделяне</h2>
-  <img id="qr-code-image" src="qr-code.png" alt="QR Code" />
+  <!-- Add your PNG QR code here -->
+  <img id="qr-code-image" src="qr-code-image.png" alt="QR Code" />
 </div>
 
 <script type="module" src="script.js"></script>
