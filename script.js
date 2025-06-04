@@ -229,6 +229,41 @@ document.getElementById('daily-total').textContent = `${dailyTotal} единиц
         });
     });
 
+// ... (other code above)
+
+function isIsoDateString(str) {
+    // Simple check for ISO format: YYYY-MM-DDTHH:MM...
+    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str);
+}
+
+function migrateHistoryDatesToIso() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    let updated = false;
+
+    const migrated = history.map(entry => {
+        if (entry.date && !isIsoDateString(entry.date)) {
+            // Try to parse the old locale date string
+            const parsed = new Date(entry.date);
+            if (!isNaN(parsed.getTime())) {
+                // Convert to ISO string
+                updated = true;
+                return { ...entry, date: parsed.toISOString() };
+            }
+        }
+        return entry;
+    });
+
+    if (updated) {
+        localStorage.setItem('drinkHistory', JSON.stringify(migrated));
+    }
+}
+
+// Call migration early, before any stats/history is shown
+document.addEventListener('DOMContentLoaded', () => {
+    migrateHistoryDatesToIso();
+    // ...rest of your DOMContentLoaded code
+});
+
     // Info popup handling
     const infoBtn = document.getElementById('info-btn');
     const infoPopup = document.getElementById('info-popup');
@@ -557,12 +592,12 @@ if (backFromHistoryBtn) {
 // Function to save a new history entry
 function saveHistoryEntry(drinkName, amount, percentage) {
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    const newEntry = {
-        date: new Date().toLocaleString(),
-        drinkName,
-        amount,
-        percentage
-    };
+   const newEntry = {
+    date: new Date().toISOString(),
+    drinkName,
+    amount,
+    percentage
+};
     history.push(newEntry);
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
@@ -677,6 +712,7 @@ const incrementVisitorCount = () => {
         updateFerretMood(totalUnits); // Use the current totalUnits instead of resetting to 0
     });
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const changeNameBtn = document.getElementById('change-name-btn');
     const firstScreen = document.getElementById('first-screen');
@@ -788,3 +824,4 @@ const userForm = document.getElementById("user-info-form");
     document.getElementById("first-screen").style.display = "none";
     document.getElementById("second-screen").style.display = "flex";
 });
+
