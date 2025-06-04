@@ -244,6 +244,7 @@ function migrateHistoryDatesToIso() {
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
     let updated = false;
 
+    
     const migrated = history.map(entry => {
         if (entry.date && !isIsoDateString(entry.date)) {
             // Try to parse the old locale date string
@@ -265,7 +266,6 @@ function migrateHistoryDatesToIso() {
 // Call migration early, before any stats/history is shown
 document.addEventListener('DOMContentLoaded', () => {
     migrateHistoryDatesToIso();
-    // ...rest of your DOMContentLoaded code
 });
 
     // Info popup handling
@@ -512,12 +512,18 @@ function loadHistory() {
         return;
     }
 
-    // Reverse the history array to display the newest drink at the top
-    history.reverse().forEach(entry => {
+      history.slice().reverse().forEach(entry => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${entry.date} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+        let formattedDate = '';
+        if (entry.date) {
+            const dateObj = new Date(entry.date);
+            formattedDate = !isNaN(dateObj) ? dateObj.toLocaleString() : entry.date;
+        }
+        listItem.textContent = `${formattedDate} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
         historyList.appendChild(listItem);
+
     });
+
 
 // Clear History Button Logic
 const clearHistoryBtn = document.getElementById('clear-history-btn');
