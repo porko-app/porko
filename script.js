@@ -90,6 +90,10 @@ const messages = {
         const modalTitle = drinkDetailsModal.querySelector('h2');
         modalTitle.textContent = `Въведи повече информация за ${drinkName}`;
 
+ // Clear the input fields every time the modal opens
+    document.getElementById('alcohol-percentage').value = '';
+    document.getElementById('drink-amount').value = '';
+
         drinkDetailsModal.style.display = 'flex';
         document.getElementById('drink-modal').style.display = 'none';
     }
@@ -531,7 +535,7 @@ clearHistoryBtn.addEventListener('click', () => {
 // Handle the "Confirm" button in the modal
 confirmClearBtn.addEventListener('click', () => {
     localStorage.removeItem('drinkHistory'); // Clear the history
-    alert("History cleared successfully!"); // Notify the user
+    loadHistory();
     clearHistoryModal.style.display = 'none'; // Hide the modal
 });
 
