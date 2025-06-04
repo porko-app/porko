@@ -133,9 +133,30 @@ function updateFerretMood(units) {
 document.getElementById('alcohol-percentage').blur();
 document.getElementById('drink-amount').blur();
 
-// Scroll to the top (for mobile, so status is visible)
-window.scrollTo({ top: 0, behavior: 'smooth' }); // or just window.scrollTo(0,0);
+// Try to scroll both the window and main app container to the top
+window.scrollTo(0, 0);
+const mainContainers = [
+    document.getElementById('second-screen'),
+    document.body, // fallback
+    document.documentElement // fallback
+];
+mainContainers.forEach(container => {
+    if (container && typeof container.scrollTop !== "undefined") {
+        container.scrollTop = 0;
+    }
+});
+
+// For Firefox: force a slight reflow after a short timeout
+setTimeout(() => {
+    window.scrollTo(0, 0);
+    mainContainers.forEach(container => {
+        if (container && typeof container.scrollTop !== "undefined") {
+            container.scrollTop = 0;
+        }
     });
+}, 100);
+    });
+
 
     // Event Listener for "Statistics" Button
     const statisticsBtn = document.getElementById('statistics-btn');
