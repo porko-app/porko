@@ -128,6 +128,13 @@ function updateFerretMood(units) {
         // Close modals
         document.getElementById('drink-details-modal').style.display = 'none';
         document.getElementById('drink-modal').style.display = 'none';
+
+        // Remove focus from inputs (closes the mobile keyboard)
+document.getElementById('alcohol-percentage').blur();
+document.getElementById('drink-amount').blur();
+
+// Scroll to the top (for mobile, so status is visible)
+window.scrollTo({ top: 0, behavior: 'smooth' }); // or just window.scrollTo(0,0);
     });
 
     // Event Listener for "Statistics" Button
