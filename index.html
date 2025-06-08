@@ -22,27 +22,25 @@
 
     <form id="user-info-form">
       <label for="username">Напиши твоето име</label>
-      <input type="text" id="username" placeholder="пример: Порко" required />
-      
-
-       <!-- Change "Start" button to image -->
-       <button type="submit" id="start-btn">
+      <input type="text" id="username" placeholder="пример: Порко" required autocomplete="username" />
+      <!-- Change "Start" button to image -->
+      <button type="submit" id="start-btn">
         <img src="start-button.png" alt="Start" />
-    </button>
+      </button>
     </form>
 
     <!-- Info button inside 9:16 frame -->
-    <button id="info-btn" class="info-btn">
+    <button id="info-btn" class="info-btn" aria-label="Покажи информация">
       <img src="info-button.png" alt="Info" />
     </button>
   </div>
 
   <!-- Info Popup -->
-  <div id="info-popup" class="info-popup">
+  <div id="info-popup" class="info-popup" role="dialog" aria-modal="true" aria-labelledby="info-title" style="display: none;">
     <div class="info-content">
-      <h2>Важна информация</h2>
+      <h2 id="info-title">Важна информация</h2>
       <p>Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол.</p>
-      <button id="back-btn" class="back-btn">
+      <button id="back-btn" class="back-btn" aria-label="Затвори информацията">
         <img src="back-button.png" alt="Back" class="back-icon" />
       </button>      
     </div>
@@ -51,10 +49,8 @@
   <!-- ✅ NEW Welcome Screen -->
   <div class="app-container" id="welcome-screen" style="display: none;">
     <h2> </h2>
-    
-     <!-- Add Logo here -->
-  <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
-
+    <!-- Add Logo here -->
+    <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
     <p>Тук ще се запознаеш с твоето ново порче!</p>
     <p>Как работи?</p>
     <ul>
@@ -62,205 +58,192 @@
       <li>• Въвеждай твоите напитки и разбери алкохолните ти единици</li>
       <li>• Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
     </ul>
-    <button id="continue-btn">
+    <button id="continue-btn" aria-label="Да започнем">
       <img src="lets-go-button.png" alt="Let's Go" />
     </button>
-
     <!-- Visitor Counter on Welcome Screen -->
-<div id="visitor-counter" class="visitor-counter">
-  <span id="visitor-count">0</span> порчета са станали приятели с човека
-</div>
+    <div id="visitor-counter" class="visitor-counter">
+      <span id="visitor-count">0</span> порчета са станали приятели с човека
+    </div>
   </div>
 
   <!-- Second Screen -->
   <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
 
-<!-- Speech bubble images -->
-<img id="bubble-neutral" class="speech-bubble" src="speech-bubble-neutral.png" style="display: none;">
-<img id="bubble-tipsy" class="speech-bubble" src="speech-bubble-tipsy.png" style="display: none;">
-<img id="bubble-drunk" class="speech-bubble" src="speech-bubble-drunk.png" style="display: none;">
-<img id="bubble-wobbly" class="speech-bubble" src="speech-bubble-wobbly.png" style="display: none;">
+    <!-- Speech bubble images -->
+    <img id="bubble-neutral" class="speech-bubble" src="speech-bubble-neutral.png" alt="" style="display: none;">
+    <img id="bubble-tipsy" class="speech-bubble" src="speech-bubble-tipsy.png" alt="" style="display: none;">
+    <img id="bubble-drunk" class="speech-bubble" src="speech-bubble-drunk.png" alt="" style="display: none;">
+    <img id="bubble-wobbly" class="speech-bubble" src="speech-bubble-wobbly.png" alt="" style="display: none;">
 
-<!-- Text within the bubbles -->
-<div id="bubble-text-neutral" class="bubble-text" style="display: none;"></div>
-<div id="bubble-text-tipsy" class="bubble-text" style="display: none;"></div>
-<div id="bubble-text-drunk" class="bubble-text" style="display: none;"></div>
-<div id="bubble-text-wobbly" class="bubble-text" style="display: none;"></div>
+    <!-- Text within the bubbles -->
+    <div id="bubble-text-neutral" class="bubble-text" style="display: none;"></div>
+    <div id="bubble-text-tipsy" class="bubble-text" style="display: none;"></div>
+    <div id="bubble-text-drunk" class="bubble-text" style="display: none;"></div>
+    <div id="bubble-text-wobbly" class="bubble-text" style="display: none;"></div>
 
-<!-- Ferret images -->
-<img id="ferret-neutral" class="ferret-mood" src="ferret-neutral.png" style="display: none;">
-<img id="ferret-tipsy" class="ferret-mood" src="ferret-tipsy.png" style="display: none;">
-<img id="ferret-drunk" class="ferret-mood" src="ferret-drunk.png" style="display: none;">
-<img id="ferret-wobbly" class="ferret-mood" src="ferret-wobbly.png" style="display: none;">
+    <!-- Ferret images -->
+    <img id="ferret-neutral" class="ferret-mood" src="ferret-neutral.png" alt="" style="display: none;">
+    <img id="ferret-tipsy" class="ferret-mood" src="ferret-tipsy.png" alt="" style="display: none;">
+    <img id="ferret-drunk" class="ferret-mood" src="ferret-drunk.png" alt="" style="display: none;">
+    <img id="ferret-wobbly" class="ferret-mood" src="ferret-wobbly.png" alt="" style="display: none;">
 
-  
-<div id="alcohol-units-text">
-  Досега сте изпили <span id="dynamic-units" class="orange-text">0.0</span> единици алкохол
-</div>
-    
+    <div id="alcohol-units-text">
+      Досега сте изпили <span id="dynamic-units" class="orange-text">0.0</span> единици алкохол
+    </div>
 
     <!-- Bottom Buttons -->
-<div class="bottom-buttons">
-  <button id="menu-btn">
-      <img src="menu-button.png" alt="Menu" />
-  </button>
-  <button id="settings-btn">
-      <img src="settings-button.png" alt="Settings" />
-  </button>
-</div>
+    <div class="bottom-buttons">
+      <button id="menu-btn" aria-label="Меню">
+        <img src="menu-button.png" alt="Menu" />
+      </button>
+      <button id="settings-btn" aria-label="Настройки">
+        <img src="settings-button.png" alt="Settings" />
+      </button>
+    </div>
   </div>
 
   <!-- Choose Drink Button (In Second Screen) -->
-<div id="choose-drink-btn" style="display: none;">Choose Drink</div>
+  <div id="choose-drink-btn" style="display: none;">Choose Drink</div>
 
-<!-- Modal Popup for Drink Selection -->
-<div id="drink-modal" style="display: none;">
-  <div id="modal-content">
-      <span id="close-modal-btn">X</span>
-      <h2>Избери напитка</h2>
+  <!-- Modal Popup for Drink Selection -->
+  <div id="drink-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="drink-modal-title" style="display: none;">
+    <div id="modal-content">
+<button type="button" class="close-btn" id="close-modal-btn" aria-label="Затвори модала">×</button>
+<h2 id="drink-modal-title">Избери напитка</h2>
       <div id="drink-options">
-          <button class="drink-option" id="whiskey-btn">
-              <img src="whiskey-icon.png" alt="Whiskey" />
-          </button>
-          <button class="drink-option" id="vodka-btn">
-              <img src="vodka-icon.png" alt="Vodka" />
-          </button>
-          <button class="drink-option" id="rum-btn">
-              <img src="rum-icon.png" alt="Rum" />
-          </button>
-          <button class="drink-option" id="gin-btn">
-              <img src="gin-icon.png" alt="Gin" />
-          </button>
-          <button class="drink-option" id="tequila-btn">
-              <img src="tequila-icon.png" alt="Tequila" />
-          </button>
+        <button class="drink-option" id="whiskey-btn" aria-label="Избери уиски">
+          <img src="whiskey-icon.png" alt="Whiskey icon" />
+        </button>
+        <button class="drink-option" id="vodka-btn" aria-label="Избери водка">
+          <img src="vodka-icon.png" alt="Vodka icon" />
+        </button>
+        <button class="drink-option" id="rum-btn" aria-label="Избери ром">
+          <img src="rum-icon.png" alt="Rum icon" />
+        </button>
+        <button class="drink-option" id="gin-btn" aria-label="Избери джин">
+          <img src="gin-icon.png" alt="Gin icon" />
+        </button>
+        <button class="drink-option" id="tequila-btn" aria-label="Избери текила">
+          <img src="tequila-icon.png" alt="Tequila icon" />
+        </button>
       </div>
-  </div>
-</div>
-
-<!-- Mini Modal: Enter Drink Info -->
-<div id="drink-details-modal" class="details-modal">
-  <div class="details-content">
-    <span id="close-details-btn" class="close-btn">×</span>
-    <h2>Напиши информация за</h2>
-    
-    <label for="alcohol-percentage">% Алкохол</label>
-    <input type="number" id="alcohol-percentage" placeholder="процент на алкохол" min="0" max="100" />
-    
-    <label for="drink-amount">Количество в милилитри</label>
-    <input type="number" id="drink-amount" placeholder="милилитри" min="0" />
-    <button id="submit-drink" type="button">OK</button>
-  </div>
-</div>
-
-<!-- Custom Error Modal for Drink Input -->
-<div id="drink-error-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <h3>Моля въведете процент на алкохола и милилитри.</h3>
-    <button id="close-drink-error-btn" class="modal-btn">Go back</button>
-  </div>
-</div>
-
-<!-- THIRD SCREEN: Settings -->
-<div id="settings-screen" class="app-container" style="display: none;">
-  <h2>Настройки</h2>
-
-  <!-- FAQ Alcohol Info Button -->
-  <button id="faq-alcohol-info-btn" class="settings-btn">
-    ЧЗВ за алкохола
-  </button>
-
-
-<!-- History Log Button -->
-<button id="history-log-btn" class="settings-btn">
-  История на логовете
-</button>
-
-<!-- Statistics Button -->
-<button id="statistics-btn" class="settings-btn">
-  Показване на статистика
-</button>
-
-  <!-- Change Your Name Button -->
-  <button id="change-name-btn" class="settings-btn">
-    Смени името си
-  </button>
-
-  <!-- QR Code Button -->
-  <button id="qr-code-btn" class="settings-btn">
-    QR код за споделяне
-  </button>
-
-  <!-- Back Button -->
-  <button id="back-from-settings-btn">Назад</button>
-</div>
-
-<!-- Statistics Screen (Move outside Settings Screen) -->
-<div id="statistics-screen" class="app-container" style="display: none;">
-  <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
-  <h2>Статистика</h2>
-  <div id="daily-statistics">
-    <h4>Общо за последните 24 часа:</h4>
-    <p id="daily-total">0.0 единици алкохол</p>
-  </div>
-  <div id="weekly-statistics">
-    <h4>Общо за седмицата:</h4>
-    <p id="weekly-total">0.0 единици алкохол</p>
-  </div>
-  <div id="monthly-statistics">
-    <h4>Общо за месеца:</h4>
-    <p id="monthly-total">0.0 единици алкохол</p>
-  </div>
-</div>
-
-<!-- FAQ Alcohol Info Screen -->
-<div id="faq-screen" class="app-container" style="display: none;">
-  <button id="back-from-faq-btn" class="back-top-right-btn">← Назад</button>
-  <h2>ЧЗВ за алкохола</h2>
-  <p>
-    Какво е алкохолна единица и как се измерва?
-    Алкохолен градус (означение °) е единица за измерване на съдържанието на етилов спирт в алкохолна напитка, и се изразява чрез отношението на обема на етанола към общия обем на течността. Измерва се при температура на течността 20 °С.
-  </p>
-  <p>
-   За колко време се усвоява 1 алкохолна единица в тялото ни?
-   1 алкохолна единица се разгражда от човешкият организъм средно за малко повече от 1 час. Времето за абсорбация зависи от много фактори, като количество и вид алкохолна напитка, колко бързо пие човек, дали по време на консумация се храни и пие вода, ръст, тегло и пол.
-</p>
-<p>
-   Какви съвети може да приемем за отговорна консумация?
-Преди консумацията на алкохол е важно да се нахраните и пиете вода. Предварително си поставете граници за консумация. Планирайте как ще се приберете вкъщи предварително.
-По време на консумация бройте колко напитки изпивате. Бъдете наясно как Ви влияе алкохолът. Опитайте се да устоите на натиска от приятели, дори когато ВИЕ не желаете.
-  </p>
-</div>
-
-<!-- History Log Screen -->
-<div id="history-log-screen" class="app-container" style="display: none;">
-  <button id="back-from-history-btn" class="back-top-right-btn">← Назад</button>
-  <h2>История на логовете</h2>
-  <ul id="history-list">
-    <!-- History entries will be dynamically added here -->
-  </ul>
-  <button id="clear-history-btn" class="settings-btn">Изчисти историята</button>
-</div>
-
-<!-- Clear History Confirmation Modal -->
-<div id="clear-history-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <h3>Сигурни ли сте, че искате да изчистите историята?</h3>
-    <div class="modal-buttons">
-      <button id="confirm-clear-btn" class="modal-btn">Да</button>
-      <button id="cancel-clear-btn" class="modal-btn">Не</button>
     </div>
   </div>
-</div>
 
-<!-- QR Code Screen -->
-<div id="qr-code-screen" class="app-container" style="display: none;">
-  <button id="back-from-qr-btn" class="back-top-right-btn">← Назад</button>
-  <h2>QR код за споделяне</h2>
-  <!-- Add your PNG QR code here -->
-  <img id="qr-code-image" src="qr-code-image.png" alt="QR Code" />
-</div>
+  <!-- Mini Modal: Enter Drink Info -->
+  <div id="drink-details-modal" class="details-modal" role="dialog" aria-modal="true" aria-labelledby="drink-details-title" style="display: none;">
+    <div class="details-content">
+      <button id="close-details-btn" class="close-btn" aria-label="Затвори модала">×</button>
+      <h2 id="drink-details-title">Напиши информация за</h2>
+      <label for="alcohol-percentage">% Алкохол</label>
+      <input type="number" id="alcohol-percentage" placeholder="процент на алкохол" min="0" max="100" />
+      <label for="drink-amount">Количество в милилитри</label>
+      <input type="number" id="drink-amount" placeholder="милилитри" min="0" />
+      <button id="submit-drink" type="button">OK</button>
+    </div>
+  </div>
 
-<script type="module" src="script.js"></script>
+  <!-- Drink Input Error Modal (Custom) -->
+  <div id="drink-error-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="drink-error-title" style="display: none;">
+    <div class="modal-content">
+      <h3 id="drink-error-title">Моля въведете процент на алкохола и милилитри.</h3>
+      <button id="close-drink-error-btn" class="modal-btn">Go back</button>
+    </div>
+  </div>
+
+  <!-- THIRD SCREEN: Settings -->
+  <div id="settings-screen" class="app-container" style="display: none;">
+    <h2>Настройки</h2>
+    <!-- FAQ Alcohol Info Button -->
+    <button id="faq-alcohol-info-btn" class="settings-btn">
+      ЧЗВ за алкохола
+    </button>
+    <!-- History Log Button -->
+    <button id="history-log-btn" class="settings-btn">
+      История на логовете
+    </button>
+    <!-- Statistics Button -->
+    <button id="statistics-btn" class="settings-btn">
+      Показване на статистика
+    </button>
+    <!-- Change Your Name Button -->
+    <button id="change-name-btn" class="settings-btn">
+      Смени името си
+    </button>
+    <!-- QR Code Button -->
+    <button id="qr-code-btn" class="settings-btn">
+      QR код за споделяне
+    </button>
+    <!-- Back Button -->
+    <button id="back-from-settings-btn">Назад</button>
+  </div>
+
+  <!-- Statistics Screen (Move outside Settings Screen) -->
+  <div id="statistics-screen" class="app-container" style="display: none;">
+    <button id="back-from-statistics-btn" class="back-top-right-btn">← Назад</button>
+    <h2>Статистика</h2>
+    <div id="daily-statistics">
+      <h4>Общо за последните 24 часа:</h4>
+      <p id="daily-total">0.0 единици алкохол</p>
+    </div>
+    <div id="weekly-statistics">
+      <h4>Общо за седмицата:</h4>
+      <p id="weekly-total">0.0 единици алкохол</p>
+    </div>
+    <div id="monthly-statistics">
+      <h4>Общо за месеца:</h4>
+      <p id="monthly-total">0.0 единици алкохол</p>
+    </div>
+  </div>
+
+  <!-- FAQ Alcohol Info Screen -->
+  <div id="faq-screen" class="app-container" style="display: none;">
+    <button id="back-from-faq-btn" class="back-top-right-btn">← Назад</button>
+    <h2>ЧЗВ за алкохола</h2>
+    <p>
+      Какво е алкохолна единица и как се измерва?
+      Алкохолен градус (означение °) е единица за измерване на съдържанието на етилов спирт в алкохолна напитка, ...
+    </p>
+    <p>
+      За колко време се усвоява 1 алкохолна единица в тялото ни?
+      1 алкохолна единица се разгражда от човешкият организъм средно за малко повече от 1 час. Времето за абсорбация...
+    </p>
+    <p>
+      Какви съвети може да приемем за отговорна консумация?
+      Преди консумацията на алкохол е важно да се нахраните и пиете вода...
+    </p>
+  </div>
+
+  <!-- History Log Screen -->
+  <div id="history-log-screen" class="app-container" style="display: none;">
+    <button id="back-from-history-btn" class="back-top-right-btn">← Назад</button>
+    <h2>История на логовете</h2>
+    <ul id="history-list">
+      <!-- History entries will be dynamically added here -->
+    </ul>
+    <button id="clear-history-btn" class="settings-btn">Изчисти историята</button>
+  </div>
+
+  <!-- Clear History Confirmation Modal -->
+  <div id="clear-history-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="clear-history-title" style="display: none;">
+    <div class="modal-content">
+      <h3 id="clear-history-title">Сигурни ли сте, че искате да изчистите историята?</h3>
+      <div class="modal-buttons">
+        <button id="confirm-clear-btn" class="modal-btn">Да</button>
+        <button id="cancel-clear-btn" class="modal-btn">Не</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code Screen -->
+  <div id="qr-code-screen" class="app-container" style="display: none;">
+    <button id="back-from-qr-btn" class="back-top-right-btn">← Назад</button>
+    <h2>QR код за споделяне</h2>
+    <!-- Add your PNG QR code here -->
+    <img id="qr-code-image" src="qr-code-image.png" alt="QR Code" />
+  </div>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>
