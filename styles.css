@@ -1078,3 +1078,35 @@ margin: 0 auto;
   display: block; /* Center the QR code */
   margin: 0 auto; /* Center horizontally */
 }
+
+/* Custom Modal (use same as clear-history-modal/modal) */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1002;
+}
+.modal-content {
+  background: #fff;
+  padding: 22px 12px;         /* Reduce left/right padding */
+  border-radius: 12px;
+  text-align: center;
+  width: 220px;               /* Set a smaller width */
+  max-width: 86vw;            /* Responsive: never more than 86% of viewport width */
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.modal-btn {
+  margin-top: 18px;
+  background: orange;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}

@@ -105,11 +105,12 @@ function updateFerretMood(units) {
         const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
         const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
 
-        // Handle empty or invalid values
-        if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
-            alert("Моля въведете процент на алкохола и милилитри.");
-            return;
-        }
+    // Handle empty or invalid values
+    if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
+        // Show custom error modal
+        document.getElementById('drink-error-modal').style.display = 'flex';
+        return;
+    }
 
         // Calculate alcohol units and update total
         const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
@@ -425,6 +426,15 @@ setTimeout(() => {
         });
     }
 
+    const closeDrinkErrorBtn = document.getElementById('close-drink-error-btn');
+if (closeDrinkErrorBtn) {
+    closeDrinkErrorBtn.addEventListener('click', () => {
+        document.getElementById('drink-error-modal').style.display = 'none';
+    });
+} else {
+    console.error('Close button for drink error modal not found.');
+}
+
     // History Log Button Logic
     const historyLogBtn = document.getElementById('history-log-btn');
     const historyLogScreen = document.getElementById('history-log-screen');
@@ -445,16 +455,18 @@ setTimeout(() => {
         }
 
         // Show newest first, only once per entry
-        history.slice().reverse().forEach(entry => {
-            const listItem = document.createElement('li');
-            let formattedDate = '';
-            if (entry.date) {
-                const dateObj = new Date(entry.date);
-                formattedDate = !isNaN(dateObj) ? dateObj.toLocaleString() : entry.date;
-            }
-            listItem.textContent = `${formattedDate} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-            historyList.appendChild(listItem);
-        });
+history.slice().reverse().forEach(entry => {
+    const listItem = document.createElement('li');
+    let formattedDate = '';
+    if (entry.date) {
+        const dateObj = new Date(entry.date);
+        formattedDate = !isNaN(dateObj)
+            ? dateObj.toLocaleString(undefined, { hour12: false })
+            : entry.date;
+    }
+    listItem.textContent = `${formattedDate} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+    historyList.appendChild(listItem);
+});
     }
 
     // Clear History Button Logic
