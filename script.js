@@ -1,3 +1,101 @@
+// === TRANSLATIONS OBJECT ===
+const translations = {
+    bg: {
+        welcome1: "Тук ще се запознаеш с твоето ново порче!",
+        welcome2: "Как работи?",
+        howto1: "• Напиши твоето име за да стартираш приложението",
+        howto2: "• Въвеждай твоите напитки и разбери алкохолните ти единици",
+        howto3: "• Гледай как порчето ти се променя и какво казва според алкохолните единици",
+        start: "Да започнем",
+        visitor: "порчета са станали приятели с човека",
+        appName: "Порко приложение"
+    },
+    en: {
+        welcome1: "Here you will meet your new ferret friend!",
+        welcome2: "How does it work?",
+        howto1: "• Write your name to start the app",
+        howto2: "• Enter your drinks and see your alcohol units",
+        howto3: "• Watch your ferret change and talk based on your alcohol units",
+        start: "Let's Go",
+        visitor: "ferrets have became friends with us",
+        appName: "Porko App"
+    }
+};
+
+// === LOAD OR DEFAULT LANGUAGE ===
+let currentLanguage = localStorage.getItem('language') || 'bg';
+
+// === LANGUAGE BUTTON UPDATE FUNCTION ===
+function updateLangButton() {
+    const langBtn = document.getElementById('language-switch-btn');
+    if (langBtn) langBtn.textContent = currentLanguage === 'bg' ? 'EN' : 'BG';
+}
+
+// === TRANSLATE WELCOME SCREEN FUNCTION ===
+function updateWelcomeScreenLanguage() {
+    const t = translations[currentLanguage];
+
+    // Welcome texts
+    const paragraphs = document.querySelectorAll('#welcome-screen p');
+    if (paragraphs[0]) paragraphs[0].textContent = t.welcome1;
+    if (paragraphs[1]) paragraphs[1].textContent = t.welcome2;
+
+    // How-to list
+    const howtoList = document.querySelectorAll('#welcome-screen ul li');
+    if (howtoList[0]) howtoList[0].textContent = t.howto1;
+    if (howtoList[1]) howtoList[1].textContent = t.howto2;
+    if (howtoList[2]) howtoList[2].textContent = t.howto3;
+
+    // Start button (alt text)
+    const continueBtn = document.querySelector('#continue-btn img');
+    if (continueBtn) continueBtn.alt = t.start;
+
+    // Visitor counter label (keep the number from the span)
+    const visitorCounter = document.querySelector('#visitor-counter');
+    const visitorCount = document.querySelector('#visitor-count');
+    if (visitorCounter && visitorCount) {
+        visitorCounter.innerHTML = `<span id="visitor-count">${visitorCount.textContent}</span> ${t.visitor}`;
+    }
+
+    // Document title (optional)
+    document.title = t.appName;
+}
+
+// === HISTORY DATE MIGRATION ===
+function isIsoDateString(str) {
+    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str);
+}
+function migrateHistoryDatesToIso() {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    let updated = false;
+    const migrated = history.map(entry => {
+        if (entry.date && !isIsoDateString(entry.date)) {
+            const parsed = new Date(entry.date);
+            if (!isNaN(parsed.getTime())) {
+                updated = true;
+                return { ...entry, date: parsed.toISOString() };
+            }
+        }
+        return entry;
+    });
+    if (updated) {
+        localStorage.setItem('drinkHistory', JSON.stringify(migrated));
+    }
+}
+
+// === SAVE HISTORY ENTRY ===
+function saveHistoryEntry(drinkName, amount, percentage) {
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    const newEntry = {
+        date: new Date().toISOString(),
+        drinkName,
+        amount,
+        percentage
+    };
+    history.push(newEntry);
+    localStorage.setItem('drinkHistory', JSON.stringify(history));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     let selectedDrink = ""; // Global variable for selected drink
     let totalUnits = 0; // Global tracker for alcohol units
