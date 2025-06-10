@@ -61,130 +61,150 @@ function updateWelcomeScreenLanguage() {
     document.title = t.appName;
 }
 
-// === HISTORY DATE MIGRATION ===
-function isIsoDateString(str) {
-    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str);
-}
-function migrateHistoryDatesToIso() {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    let updated = false;
-    const migrated = history.map(entry => {
-        if (entry.date && !isIsoDateString(entry.date)) {
-            const parsed = new Date(entry.date);
-            if (!isNaN(parsed.getTime())) {
-                updated = true;
-                return { ...entry, date: parsed.toISOString() };
-            }
-        }
-        return entry;
-    });
-    if (updated) {
-        localStorage.setItem('drinkHistory', JSON.stringify(migrated));
-    }
-}
-
-// === SAVE HISTORY ENTRY ===
-function saveHistoryEntry(drinkName, amount, percentage) {
-    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-    const newEntry = {
-        date: new Date().toISOString(),
-        drinkName,
-        amount,
-        percentage
-    };
-    history.push(newEntry);
-    localStorage.setItem('drinkHistory', JSON.stringify(history));
-}
-
+// === MAIN APP CODE ===
 document.addEventListener('DOMContentLoaded', () => {
     let selectedDrink = ""; // Global variable for selected drink
     let totalUnits = 0; // Global tracker for alcohol units
     let userName = ""; // Global tracker for the user's name
 
-
-    // --- RESTORE MOOD AND UNITS ON LOAD (10 HOUR WINDOW) ---
-    const savedUnits = parseFloat(localStorage.getItem('totalUnits') || "0");
-    const lastDrinkTimestamp = localStorage.getItem('lastDrinkTimestamp');
-    if (lastDrinkTimestamp) {
-        const now = new Date();
-        const lastDrink = new Date(lastDrinkTimestamp);
-        const hoursSinceLastDrink = (now - lastDrink) / (1000 * 60 * 60);
-        if (hoursSinceLastDrink < 10) {
-            totalUnits = savedUnits;
-        } else {
-            totalUnits = 0;
-            localStorage.setItem('totalUnits', "0");
-        }
+    // === LANGUAGE SWITCH BUTTON LOGIC ===
+    const langBtn = document.getElementById('language-switch-btn');
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'bg' ? 'en' : 'bg';
+            localStorage.setItem('language', currentLanguage);
+            updateWelcomeScreenLanguage();
+            updateLangButton();
+            updateVisitorCountDisplay(); // Ensure counter stays updated after translation
+        });
     }
-    // --- END RESTORE BLOCK ---
+    updateWelcomeScreenLanguage();
+    updateLangButton();
 
-// Function to update the ferret's mood based on alcohol units
-function updateFerretMood(units) {
-    const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
-    let mood = 'neutral';
+    // === FIREBASE VISITOR COUNTER ===
+    // These lines must be inside DOMContentLoaded for correct DOM and module loading
+    import("./firebase.js").then(({ database }) => {
+        const { ref, get, set } = window;
+        const visitorRef = ref(database, "visitorCounter");
 
-    // Determine the mood based on alcohol units
-    if (units <= 4.0) mood = 'neutral';
-    else if (units <= 7.0) mood = 'tipsy';
-    else if (units <= 10.0) mood = 'drunk';
-    else mood = 'wobbly';
+        // Helper to get the current counter element (since translation can rebuild it)
+        function getVisitorCountElement() {
+            return document.getElementById("visitor-count");
+        }
 
-    console.log('Updating ferret mood to:', mood);
+        // Initialize visitor counter in Firebase if needed
+        const initializeVisitorCounter = async () => {
+            try {
+                const snapshot = await get(visitorRef);
+                if (!snapshot.exists()) {
+                    await set(visitorRef, { count: 0 });
+                    console.log("Visitor counter initialized to 0.");
+                }
+            } catch (error) {
+                console.error("Error initializing visitor counter:", error);
+            }
+        };
 
-    // Predefined messages for each mood (some include placeholders for the username)
-    const messages = {
-        neutral: [
-            `Хей, ${userName}! Всичко е супер!`,
-            "Чувствам се страхотно! А ти?",
-            `Толкова е хубаво да сме заедно, ${userName}!`,
-            "Хайде да се насладим на деня!"
-        ],
-        tipsy: [
-            `Юхуу, ${userName}! Чувствам се леко замаян!`,
-            "Ох, чувствам се приятно развеселен!",
-            `Хей, ${userName}, забавляваме се, нали?`,
-            "Опа, леко ми се върти главата!"
-        ],
-        drunk: [
-            `Охо, ${userName}, нещата стават по-интересни!`,
-            "Чувствам се доста... уааа!",
-            `Това е малко повече от очакваното, ${userName}!`,
-            "Ох, всичко изглежда толкова забавно!"
-        ],
-        wobbly: [
-            "О, не! Вече е твърде много!",
-            `Моля, ${userName}, нека си починем за малко!`,
-            "Чувствам се като в лодка в буря!",
-            `${userName}, имам нужда от вода...`
-        ]
-    };
+        // Update the counter display on the page
+        const updateVisitorCountDisplay = async () => {
+            try {
+                const snapshot = await get(visitorRef);
+                if (snapshot.exists()) {
+                    const visitorCount = snapshot.val().count || 0;
+                    const visitorCounterElement = getVisitorCountElement();
+                    if (visitorCounterElement) {
+                        visitorCounterElement.textContent = visitorCount;
+                    }
+                } else {
+                    const visitorCounterElement = getVisitorCountElement();
+                    if (visitorCounterElement) {
+                        visitorCounterElement.textContent = 0;
+                    }
+                }
+            } catch (error) {
+                const visitorCounterElement = getVisitorCountElement();
+                if (visitorCounterElement) {
+                    visitorCounterElement.textContent = "Error";
+                }
+                console.error("Error fetching visitor counter:", error);
+            }
+        };
 
-    // Hide all mood-related elements (images and speech bubbles)
-    states.forEach(state => {
-        const ferretElement = document.getElementById(`ferret-${state}`);
-        const bubbleElement = document.getElementById(`bubble-${state}`);
-        const bubbleTextElement = document.getElementById(`bubble-text-${state}`);
+        // Expose globally if needed elsewhere
+        window.updateVisitorCountDisplay = updateVisitorCountDisplay;
 
-        if (ferretElement) ferretElement.style.display = 'none';
-        if (bubbleElement) bubbleElement.style.display = 'none';
-        if (bubbleTextElement) bubbleTextElement.style.display = 'none';
+        // Initialize and update on load
+        (async () => {
+            await initializeVisitorCounter();
+            await updateVisitorCountDisplay();
+        })();
     });
 
-    // Randomly select a message for the current mood
-    const randomMessage = messages[mood][Math.floor(Math.random() * messages[mood].length)];
+    // Function to update the ferret's mood based on alcohol units
+    function updateFerretMood(units) {
+        const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
+        let mood = 'neutral';
 
-    // Show the correct mood's image and speech bubble with the selected message
-    const ferretElement = document.getElementById(`ferret-${mood}`);
-    const bubbleElement = document.getElementById(`bubble-${mood}`);
-    const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
+        // Determine the mood based on alcohol units
+        if (units <= 4.0) mood = 'neutral';
+        else if (units <= 7.0) mood = 'tipsy';
+        else if (units <= 10.0) mood = 'drunk';
+        else mood = 'wobbly';
 
-    if (ferretElement) ferretElement.style.display = 'block';
-    if (bubbleElement) bubbleElement.style.display = 'block';
-    if (bubbleTextElement) {
-        bubbleTextElement.textContent = randomMessage;
-        bubbleTextElement.style.display = 'block';
+        // Predefined messages for each mood (some include placeholders for the username)
+        const messages = {
+            neutral: [
+                `Хей, ${userName}! Всичко е супер!`,
+                "Чувствам се страхотно! А ти?",
+                `Толкова е хубаво да сме заедно, ${userName}!`,
+                "Хайде да се насладим на деня!"
+            ],
+            tipsy: [
+                `Юхуу, ${userName}! Чувствам се леко замаян!`,
+                "Ох, чувствам се приятно развеселен!",
+                `Хей, ${userName}, забавляваме се, нали?`,
+                "Опа, леко ми се върти главата!"
+            ],
+            drunk: [
+                `Охо, ${userName}, нещата стават по-интересни!`,
+                "Чувствам се доста... уааа!",
+                `Това е малко повече от очакваното, ${userName}!`,
+                "Ох, всичко изглежда толкова забавно!"
+            ],
+            wobbly: [
+                "О, не! Вече е твърде много!",
+                `Моля, ${userName}, нека си починем за малко!`,
+                "Чувствам се като в лодка в буря!",
+                `${userName}, имам нужда от вода...`
+            ]
+        };
+
+        // Hide all mood-related elements (images and speech bubbles)
+        states.forEach(state => {
+            const ferretElement = document.getElementById(`ferret-${state}`);
+            const bubbleElement = document.getElementById(`bubble-${state}`);
+            const bubbleTextElement = document.getElementById(`bubble-text-${state}`);
+
+            if (ferretElement) ferretElement.style.display = 'none';
+            if (bubbleElement) bubbleElement.style.display = 'none';
+            if (bubbleTextElement) bubbleTextElement.style.display = 'none';
+        });
+
+        // Randomly select a message for the current mood
+        const randomMessage = messages[mood][Math.floor(Math.random() * messages[mood].length)];
+
+        // Show the correct mood's image and speech bubble with the selected message
+        const ferretElement = document.getElementById(`ferret-${mood}`);
+        const bubbleElement = document.getElementById(`bubble-${mood}`);
+        const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
+
+        if (ferretElement) ferretElement.style.display = 'block';
+        if (bubbleElement) bubbleElement.style.display = 'block';
+        if (bubbleTextElement) {
+            bubbleTextElement.textContent = randomMessage;
+            bubbleTextElement.style.display = 'block';
+        }
     }
-}
 
     // Function to calculate alcohol units
     function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
@@ -220,12 +240,12 @@ function updateFerretMood(units) {
         const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
         const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
 
-    // Handle empty or invalid values
-    if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
-        // Show custom error modal
-        document.getElementById('drink-error-modal').style.display = 'flex';
-        return;
-    }
+        // Handle empty or invalid values
+        if (isNaN(alcoholPercentage) || isNaN(drinkAmount)) {
+            // Show custom error modal
+            document.getElementById('drink-error-modal').style.display = 'flex';
+            return;
+        }
 
         // Calculate alcohol units and update total
         const units = calculateAlcoholUnits(alcoholPercentage, drinkAmount);
@@ -246,33 +266,32 @@ function updateFerretMood(units) {
         document.getElementById('drink-modal').style.display = 'none';
 
         // Remove focus from inputs (closes the mobile keyboard)
-document.getElementById('alcohol-percentage').blur();
-document.getElementById('drink-amount').blur();
+        document.getElementById('alcohol-percentage').blur();
+        document.getElementById('drink-amount').blur();
 
-// Try to scroll both the window and main app container to the top
-window.scrollTo(0, 0);
-const mainContainers = [
-    document.getElementById('second-screen'),
-    document.body, // fallback
-    document.documentElement // fallback
-];
-mainContainers.forEach(container => {
-    if (container && typeof container.scrollTop !== "undefined") {
-        container.scrollTop = 0;
-    }
-});
+        // Try to scroll both the window and main app container to the top
+        window.scrollTo(0, 0);
+        const mainContainers = [
+            document.getElementById('second-screen'),
+            document.body, // fallback
+            document.documentElement // fallback
+        ];
+        mainContainers.forEach(container => {
+            if (container && typeof container.scrollTop !== "undefined") {
+                container.scrollTop = 0;
+            }
+        });
 
-// For Firefox: force a slight reflow after a short timeout
-setTimeout(() => {
-    window.scrollTo(0, 0);
-    mainContainers.forEach(container => {
-        if (container && typeof container.scrollTop !== "undefined") {
-            container.scrollTop = 0;
-        }
+        // For Firefox: force a slight reflow after a short timeout
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            mainContainers.forEach(container => {
+                if (container && typeof container.scrollTop !== "undefined") {
+                    container.scrollTop = 0;
+                }
+            });
+        }, 100);
     });
-}, 100);
-    });
-
 
     // Event Listener for "Statistics" Button
     const statisticsBtn = document.getElementById('statistics-btn');
@@ -513,16 +532,9 @@ setTimeout(() => {
             console.error('Error saving user info to Firebase:', error);
         }
 
-    // Count unique visitor per device
-    if (!localStorage.getItem('visitorCounted')) {
-        incrementVisitorCount();
-        localStorage.setItem('visitorCounted', 'true');
-    }
-
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(totalUnits);
-        incrementVisitorCount();
     });
 
     // Event listener for the "Choose Drink" button
@@ -549,13 +561,13 @@ setTimeout(() => {
     }
 
     const closeDrinkErrorBtn = document.getElementById('close-drink-error-btn');
-if (closeDrinkErrorBtn) {
-    closeDrinkErrorBtn.addEventListener('click', () => {
-        document.getElementById('drink-error-modal').style.display = 'none';
-    });
-} else {
-    console.error('Close button for drink error modal not found.');
-}
+    if (closeDrinkErrorBtn) {
+        closeDrinkErrorBtn.addEventListener('click', () => {
+            document.getElementById('drink-error-modal').style.display = 'none';
+        });
+    } else {
+        console.error('Close button for drink error modal not found.');
+    }
 
     // History Log Button Logic
     const historyLogBtn = document.getElementById('history-log-btn');
@@ -577,18 +589,18 @@ if (closeDrinkErrorBtn) {
         }
 
         // Show newest first, only once per entry
-history.slice().reverse().forEach(entry => {
-    const listItem = document.createElement('li');
-    let formattedDate = '';
-    if (entry.date) {
-        const dateObj = new Date(entry.date);
-        formattedDate = !isNaN(dateObj)
-            ? dateObj.toLocaleString(undefined, { hour12: false })
-            : entry.date;
-    }
-    listItem.textContent = `${formattedDate} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-    historyList.appendChild(listItem);
-});
+        history.slice().reverse().forEach(entry => {
+            const listItem = document.createElement('li');
+            let formattedDate = '';
+            if (entry.date) {
+                const dateObj = new Date(entry.date);
+                formattedDate = !isNaN(dateObj)
+                    ? dateObj.toLocaleString(undefined, { hour12: false })
+                    : entry.date;
+            }
+            listItem.textContent = `${formattedDate} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
+            historyList.appendChild(listItem);
+        });
     }
 
     // Clear History Button Logic
@@ -721,35 +733,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 const incrementVisitorCount = () => {
-    runTransaction(visitorRef, (currentData) => {
-        if (!currentData || typeof currentData.count !== "number") {
-            return { count: 1 };
-        }
-        return { count: currentData.count + 1 };
-    })
-    .then(() => {
-        console.log("Visitor counter updated successfully!");
-        updateVisitorCountDisplay();
-    })
-    .catch((error) => {
-        console.error("Error updating visitor counter:", error);
-    });
+    get(visitorRef)
+        .then((snapshot) => {
+            const currentCount = snapshot.exists() ? snapshot.val().count : 0;
+            const newCount = currentCount + 1;
+            return set(visitorRef, { count: newCount });
+        })
+        .then(() => {
+            console.log("Visitor counter updated successfully!");
+            updateVisitorCountDisplay();
+        })
+        .catch((error) => {
+            console.error("Error updating visitor counter:", error);
+        });
 };
-
-const termsOfUseBtn = document.getElementById('terms-of-use-btn');
-const termsOfUseScreen = document.getElementById('terms-of-use-screen');
-const settingsScreen = document.getElementById('settings-screen');
-const backFromTermsBtn = document.getElementById('back-from-terms-btn');
-
-if (termsOfUseBtn && termsOfUseScreen && settingsScreen && backFromTermsBtn) {
-    termsOfUseBtn.addEventListener('click', () => {
-        settingsScreen.style.display = 'none';
-        termsOfUseScreen.style.display = 'flex';
-    });
-    backFromTermsBtn.addEventListener('click', () => {
-        termsOfUseScreen.style.display = 'none';
-        settingsScreen.style.display = 'flex';
-    });
-} else {
-    console.error('Terms of Use elements not found.');
-}
