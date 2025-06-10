@@ -26,39 +26,65 @@ const translations = {
 let currentLanguage = localStorage.getItem('language') || 'bg';
 
 // === LANGUAGE BUTTON UPDATE FUNCTION ===
-function updateLangButton() {
-    const langBtn = document.getElementById('language-switch-btn');
-    if (langBtn) langBtn.textContent = currentLanguage === 'bg' ? 'EN' : 'BG';
+const langBtn = document.getElementById('language-switch-btn');
+if (langBtn) {
+    langBtn.addEventListener('click', () => {
+        currentLanguage = currentLanguage === 'bg' ? 'en' : 'bg'; // Toggle language
+        localStorage.setItem('language', currentLanguage); // Save to localStorage
+        updateWelcomeScreenLanguage(); // Update translations
+        updateLangButton(); // Update button text
+        updateVisitorCountDisplay(); // Ensure counter stays updated after translation
+    });
 }
 
 // === TRANSLATE WELCOME SCREEN FUNCTION ===
 function updateWelcomeScreenLanguage() {
-    const t = translations[currentLanguage];
+    const t = translations[currentLanguage]; // Get translations for the current language
 
-    // Welcome texts
+    // Ensure translations exist for the current language
+    if (!t) {
+        console.error(`No translations found for language: ${currentLanguage}`);
+        return;
+    }
+
+    // Update welcome texts
     const paragraphs = document.querySelectorAll('#welcome-screen p');
-    if (paragraphs[0]) paragraphs[0].textContent = t.welcome1;
-    if (paragraphs[1]) paragraphs[1].textContent = t.welcome2;
+    if (paragraphs.length >= 2) {
+        paragraphs[0].textContent = t.welcome1 || '';
+        paragraphs[1].textContent = t.welcome2 || '';
+    } else {
+        console.error("Welcome screen paragraphs are missing or incorrectly structured.");
+    }
 
-    // How-to list
+    // Update how-to list
     const howtoList = document.querySelectorAll('#welcome-screen ul li');
-    if (howtoList[0]) howtoList[0].textContent = t.howto1;
-    if (howtoList[1]) howtoList[1].textContent = t.howto2;
-    if (howtoList[2]) howtoList[2].textContent = t.howto3;
+    if (howtoList.length >= 3) {
+        howtoList[0].textContent = t.howto1 || '';
+        howtoList[1].textContent = t.howto2 || '';
+        howtoList[2].textContent = t.howto3 || '';
+    } else {
+        console.error("How-to list items are missing or incorrectly structured.");
+    }
 
-    // Start button (alt text)
+    // Update start button (alt text)
     const continueBtn = document.querySelector('#continue-btn img');
-    if (continueBtn) continueBtn.alt = t.start;
+    if (continueBtn) {
+        continueBtn.alt = t.start || '';
+    } else {
+        console.error("Continue button image is missing.");
+    }
 
-    // Visitor counter label (keep the number from the span)
+    // Update visitor counter label (keep the number from the span)
     const visitorCounter = document.querySelector('#visitor-counter');
     const visitorCount = document.querySelector('#visitor-count');
     if (visitorCounter && visitorCount) {
-        visitorCounter.innerHTML = `<span id="visitor-count">${visitorCount.textContent}</span> ${t.visitor}`;
+        visitorCounter.innerHTML = `<span id="visitor-count">${visitorCount.textContent}</span> ${t.visitor || ''}`;
+    } else {
+        console.error("Visitor counter elements are missing.");
     }
 
-    // Document title (optional)
-    document.title = t.appName;
+    // Update document title
+    document.title = t.appName || 'Porko app';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
