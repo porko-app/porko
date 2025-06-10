@@ -1,6 +1,6 @@
-// === TRANSLATIONS OBJECT ===
 const translations = {
     bg: {
+        // Welcome Screen Translations
         welcome1: "Тук ще се запознаеш с твоето ново порче!",
         welcome2: "Как работи?",
         howto1: "• Напиши твоето име за да стартираш приложението",
@@ -8,17 +8,126 @@ const translations = {
         howto3: "• Гледай как порчето ти се променя и какво казва според алкохолните единици",
         start: "Да започнем",
         visitor: "порчета са станали приятели с човека",
-        appName: "Порко приложение"
+        appName: "Порко приложение",
+
+        // First Screen Translations
+        firstScreenTitle: "Напиши твоето име",
+        firstScreenPlaceholder: "пример: Порко",
+        infoButtonAriaLabel: "Покажи информация",
+        infoPopupTitle: "Важна информация",
+        infoPopupText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол.",
+        backButtonAriaLabel: "Затвори информацията",
+
+        // Second Screen Translations
+        alcoholUnitsText: "Досега сте изпили <span id='dynamic-units' class='orange-text'>0.0</span> единици алкохол",
+        menuButtonAriaLabel: "Меню",
+        settingsButtonAriaLabel: "Настройки",
+
+        // Ferret Statuses
+        neutralStatuses: [
+            "Хей! Всичко е супер!",
+            "Чувствам се страхотно! А ти?",
+            "Толкова е хубаво да сме заедно!",
+            "Хайде да се насладим на деня!"
+        ],
+        tipsyStatuses: [
+            "Юхуу! Чувствам се леко замаян!",
+            "Ох, чувствам се приятно развеселен!",
+            "Забавляваме се, нали?",
+            "Опа, леко ми се върти главата!"
+        ],
+        drunkStatuses: [
+            "Охо, нещата стават по-интересни!",
+            "Чувствам се доста... уааа!",
+            "Това е малко повече от очакваното!",
+            "Ох, всичко изглежда толкова забавно!"
+        ],
+        wobblyStatuses: [
+            "О, не! Вече е твърде много!",
+            "Моля, нека си починем за малко!",
+            "Чувствам се като в лодка в буря!",
+            "Имам нужда от вода..."
+        ],
+
+        // Drink Modal and Details
+        chooseDrinkTitle: "Избери напитка",
+        drinkDetailsTitle: "Напиши информация за",
+        alcoholPercentageLabel: "% Алкохол",
+        drinkAmountLabel: "Количество в милилитри",
+        submitDrinkButton: "OK",
+        drinkErrorMessage: "Моля въведете процент на алкохола и милилитри.",
+        drinkOptions: {
+            whiskey: "Уиски (прибл.40-50%)",
+            vodka: "Водка (прибл. 40%)",
+            rum: "Ром (прибл. 40%)",
+            gin: "Джин (прибл. 36-50%)",
+            tequila: "Текила (прибл. 35-50%)"
+        }
     },
     en: {
+        // Welcome Screen Translations
         welcome1: "Here you will meet your new ferret friend!",
         welcome2: "How does it work?",
         howto1: "• Write your name to start the app",
         howto2: "• Enter your drinks and see your alcohol units",
         howto3: "• Watch your ferret change and talk based on your alcohol units",
         start: "Let's Go",
-        visitor: "ferrets have became friends with us",
-        appName: "Porko App"
+        visitor: "ferrets have become friends with us",
+        appName: "Porko App",
+
+        // First Screen Translations
+        firstScreenTitle: "Enter your name",
+        firstScreenPlaceholder: "example: Porko",
+        infoButtonAriaLabel: "Show information",
+        infoPopupTitle: "Important Information",
+        infoPopupText: "The app is designed to track alcohol consumption and does not encourage excessive drinking.",
+        backButtonAriaLabel: "Close the information",
+
+        // Second Screen Translations
+        alcoholUnitsText: "So far, you have consumed <span id='dynamic-units' class='orange-text'>0.0</span> alcohol units",
+        menuButtonAriaLabel: "Menu",
+        settingsButtonAriaLabel: "Settings",
+
+        // Ferret Statuses
+        neutralStatuses: [
+            "Hey! Everything is great!",
+            "I feel amazing! How about you?",
+            "It’s so nice to be together!",
+            "Let’s enjoy the day!"
+        ],
+        tipsyStatuses: [
+            "Yoo-hoo! I feel a little tipsy!",
+            "Oh, I feel pleasantly cheerful!",
+            "We’re having fun, aren’t we?",
+            "Oops, my head’s spinning a little!"
+        ],
+        drunkStatuses: [
+            "Oh wow, things are getting interesting!",
+            "I feel quite... whoa!",
+            "This is a bit more than expected!",
+            "Oh, everything looks so funny!"
+        ],
+        wobblyStatuses: [
+            "Oh no! This is too much now!",
+            "Please, let’s take a break!",
+            "I feel like I’m on a boat in a storm!",
+            "I need water..."
+        ],
+
+        // Drink Modal and Details
+        chooseDrinkTitle: "Choose a Drink",
+        drinkDetailsTitle: "Enter details for",
+        alcoholPercentageLabel: "% Alcohol",
+        drinkAmountLabel: "Amount in milliliters",
+        submitDrinkButton: "OK",
+        drinkErrorMessage: "Please enter both the alcohol percentage and milliliters.",
+        drinkOptions: {
+            whiskey: "Whiskey (approx. 40-50%)",
+            vodka: "Vodka (approx. 40%)",
+            rum: "Rum (approx. 40%)",
+            gin: "Gin (approx. 36-50%)",
+            tequila: "Tequila (approx. 35-50%)"
+        }
     }
 };
 
@@ -31,9 +140,13 @@ if (langBtn) {
     langBtn.addEventListener('click', () => {
         currentLanguage = currentLanguage === 'bg' ? 'en' : 'bg'; // Toggle language
         localStorage.setItem('language', currentLanguage); // Save to localStorage
-        updateWelcomeScreenLanguage(); // Update translations
-        updateLangButton(); // Update button text
-        updateVisitorCountDisplay(); // Ensure counter stays updated after translation
+        updateWelcomeScreenLanguage();
+         updateFirstScreenLanguage();
+             updateSecondScreenLanguage();
+             updateFerretStatusesAndModal();
+
+        updateLangButton(); 
+        updateVisitorCountDisplay();
     });
 }
 
@@ -85,6 +198,143 @@ function updateWelcomeScreenLanguage() {
 
     // Update document title
     document.title = t.appName || 'Porko app';
+}
+
+function updateFirstScreenLanguage() {
+    const t = translations[currentLanguage]; // Get translations for the current language
+
+    // Ensure translations exist for the current language
+    if (!t) {
+        console.error(`No translations found for language: ${currentLanguage}`);
+        return;
+    }
+
+    // Update the title (label text)
+    const titleLabel = document.querySelector('#user-info-form label');
+    if (titleLabel) {
+        titleLabel.textContent = t.firstScreenTitle || '';
+    }
+
+    // Update the placeholder for the input field
+    const usernameInput = document.getElementById('username');
+    if (usernameInput) {
+        usernameInput.placeholder = t.firstScreenPlaceholder || '';
+    }
+
+    // Update the aria-label for the Info button
+    const infoButton = document.getElementById('info-btn');
+    if (infoButton) {
+        infoButton.setAttribute('aria-label', t.infoButtonAriaLabel || '');
+    }
+
+    // Update the Info Popup title
+    const infoPopupTitle = document.getElementById('info-title');
+    if (infoPopupTitle) {
+        infoPopupTitle.textContent = t.infoPopupTitle || '';
+    }
+
+    // Update the Info Popup text
+    const infoPopupText = document.querySelector('#info-popup p');
+    if (infoPopupText) {
+        infoPopupText.textContent = t.infoPopupText || '';
+    }
+
+    // Update the aria-label for the Back button inside the Info Popup
+    const backButton = document.getElementById('back-btn');
+    if (backButton) {
+        backButton.setAttribute('aria-label', t.backButtonAriaLabel || '');
+    }
+
+    console.log('First screen translations updated.');
+}
+
+function updateSecondScreenLanguage() {
+    const t = translations[currentLanguage]; // Get translations for the current language
+
+    // Ensure translations exist for the current language
+    if (!t) {
+        console.error(`No translations found for language: ${currentLanguage}`);
+        return;
+    }
+
+    // Update alcohol units text
+    const alcoholUnitsText = document.getElementById('alcohol-units-text');
+    if (alcoholUnitsText) {
+        alcoholUnitsText.innerHTML = t.alcoholUnitsText || '';
+    }
+
+    // Update Menu button aria-label
+    const menuButton = document.getElementById('menu-btn');
+    if (menuButton) {
+        menuButton.setAttribute('aria-label', t.menuButtonAriaLabel || '');
+    }
+
+    // Update Settings button aria-label
+    const settingsButton = document.getElementById('settings-btn');
+    if (settingsButton) {
+        settingsButton.setAttribute('aria-label', t.settingsButtonAriaLabel || '');
+    }
+
+    console.log('Second screen translations updated.');
+}
+
+function updateFerretStatusesAndModal() {
+    const t = translations[currentLanguage]; // Get translations for the current language
+
+    // Ensure translations exist for the current language
+    if (!t) {
+        console.error(`No translations found for language: ${currentLanguage}`);
+        return;
+    }
+
+    // Update "Choose Drink" modal title
+    const chooseDrinkTitle = document.getElementById('drink-modal-title');
+    if (chooseDrinkTitle) {
+        chooseDrinkTitle.textContent = t.chooseDrinkTitle || '';
+    }
+
+    // Update drink options
+    const drinkOptions = t.drinkOptions;
+    if (drinkOptions) {
+        Object.keys(drinkOptions).forEach(drinkId => {
+            const drinkButton = document.getElementById(`${drinkId}-btn`);
+            if (drinkButton) {
+                drinkButton.setAttribute('aria-label', drinkOptions[drinkId]);
+                const drinkImage = drinkButton.querySelector('img');
+                if (drinkImage) {
+                    drinkImage.alt = drinkOptions[drinkId];
+                }
+            }
+        });
+    }
+
+    // Update drink details modal
+    const drinkDetailsTitle = document.getElementById('drink-details-title');
+    if (drinkDetailsTitle) {
+        drinkDetailsTitle.textContent = t.drinkDetailsTitle || '';
+    }
+
+    const alcoholPercentageLabel = document.querySelector('label[for="alcohol-percentage"]');
+    if (alcoholPercentageLabel) {
+        alcoholPercentageLabel.textContent = t.alcoholPercentageLabel || '';
+    }
+
+    const drinkAmountLabel = document.querySelector('label[for="drink-amount"]');
+    if (drinkAmountLabel) {
+        drinkAmountLabel.textContent = t.drinkAmountLabel || '';
+    }
+
+    const submitDrinkButton = document.getElementById('submit-drink');
+    if (submitDrinkButton) {
+        submitDrinkButton.textContent = t.submitDrinkButton || '';
+    }
+
+    const drinkErrorMessage = document.getElementById('drink-error-title');
+    if (drinkErrorMessage) {
+        drinkErrorMessage.textContent = t.drinkErrorMessage || '';
+    }
+
+    console.log('Ferret statuses and modal translations updated.');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
