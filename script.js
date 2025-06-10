@@ -3,6 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalUnits = 0; // Global tracker for alcohol units
     let userName = ""; // Global tracker for the user's name
 
+
+    // --- RESTORE MOOD AND UNITS ON LOAD (10 HOUR WINDOW) ---
+    const savedUnits = parseFloat(localStorage.getItem('totalUnits') || "0");
+    const lastDrinkTimestamp = localStorage.getItem('lastDrinkTimestamp');
+    if (lastDrinkTimestamp) {
+        const now = new Date();
+        const lastDrink = new Date(lastDrinkTimestamp);
+        const hoursSinceLastDrink = (now - lastDrink) / (1000 * 60 * 60);
+        if (hoursSinceLastDrink < 10) {
+            totalUnits = savedUnits;
+        } else {
+            totalUnits = 0;
+            localStorage.setItem('totalUnits', "0");
+        }
+    }
+    // --- END RESTORE BLOCK ---
+
 // Function to update the ferret's mood based on alcohol units
 function updateFerretMood(units) {
     const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
