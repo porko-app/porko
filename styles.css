@@ -461,6 +461,7 @@ h1 {
 
 #welcome-screen p {
   font-size: 14px;
+  min-height: 18px; /* Ensures stable height for short EN strings */
   line-height: 1.0; /* Reduced line height for paragraphs */
   margin-bottom: 2px; /* Reduced margin between paragraphs */
   margin-top: 30px; /* Add margin-top to move text down */
@@ -469,6 +470,7 @@ h1 {
 
 #welcome-screen ul {
   font-size: 14px;  /* Reduce font size of list items */
+  min-height: 52px; /* Ensures the whole list area stays the same */
   line-height: 1.2; /* Reduced line height */
   margin-bottom: 10px; /* Reduced margin-bottom to give more space */
   list-style-type: none !important; /* Force removal of bullets */
@@ -509,6 +511,13 @@ h1 {
 }
 
 .visitor-counter {
+    min-width: 260px;          /* Large enough for both languages */
+  max-width: 320px;          /* Still responsive */
+  width: 90%;                /* As before */
+  white-space: nowrap;       /* Prevent line breaks */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   font-size: 14px;
   color: #ffffff;
@@ -1289,3 +1298,34 @@ margin: 0 auto;
     font-size: 0.96em;
   }
 }
+
+/* Language Switch Button */
+.language-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  background: #1d192e;        /* matches frame color */
+  color: #fff;                /* white text */
+  border: 2px solid orange;   /* orange border */
+  border-radius: 10px;        /* rounded corners */
+  display: flex;                /* NEW: enables flexbox */
+  align-items: center;          /* NEW: vertical centering */
+  justify-content: center;      /* NEW: horizontal centering */
+  padding: 7px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  outline: none;
+}
+
+.language-btn:hover,
+.language-btn:focus {
+  background: orange;
+  color: #1d192e;
+  border-color: #fff;
+}
+
