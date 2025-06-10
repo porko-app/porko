@@ -398,9 +398,16 @@ setTimeout(() => {
             console.error('Error saving user info to Firebase:', error);
         }
 
+    // Count unique visitor per device
+    if (!localStorage.getItem('visitorCounted')) {
+        incrementVisitorCount();
+        localStorage.setItem('visitorCounted', 'true');
+    }
+
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(totalUnits);
+        incrementVisitorCount();
     });
 
     // Event listener for the "Choose Drink" button
@@ -599,17 +606,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 const incrementVisitorCount = () => {
-    get(visitorRef)
-        .then((snapshot) => {
-            const currentCount = snapshot.exists() ? snapshot.val().count : 0;
-            const newCount = currentCount + 1;
-            return set(visitorRef, { count: newCount });
-        })
-        .then(() => {
-            console.log("Visitor counter updated successfully!");
-            updateVisitorCountDisplay();
-        })
-        .catch((error) => {
-            console.error("Error updating visitor counter:", error);
-        });
+    runTransaction(visitorRef, (currentData) => {
+        if (!currentData || typeof currentData.count !== "number") {
+            return { count: 1 };
+        }
+        return { count: currentData.count + 1 };
+    })
+    .then(() => {
+        console.log("Visitor counter updated successfully!");
+        updateVisitorCountDisplay();
+    })
+    .catch((error) => {
+        console.error("Error updating visitor counter:", error);
+    });
 };
+
+const termsOfUseBtn = document.getElementById('terms-of-use-btn');
+const termsOfUseScreen = document.getElementById('terms-of-use-screen');
+const settingsScreen = document.getElementById('settings-screen');
+const backFromTermsBtn = document.getElementById('back-from-terms-btn');
+
+if (termsOfUseBtn && termsOfUseScreen && settingsScreen && backFromTermsBtn) {
+    termsOfUseBtn.addEventListener('click', () => {
+        settingsScreen.style.display = 'none';
+        termsOfUseScreen.style.display = 'flex';
+    });
+    backFromTermsBtn.addEventListener('click', () => {
+        termsOfUseScreen.style.display = 'none';
+        settingsScreen.style.display = 'flex';
+    });
+} else {
+    console.error('Terms of Use elements not found.');
+}

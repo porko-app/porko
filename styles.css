@@ -660,7 +660,7 @@ margin: 0 auto;
   max-width: 90vh; /* Make the content fill the modal width */
   max-height: 80vh; /* Limit the max height to 80% of the viewport height */
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 #drink-options {
@@ -1211,14 +1211,15 @@ margin: 0 auto;
 
 #drink-modal #close-modal-btn {
   position: absolute;
-  top: 0px;
-  right: 12px;
+  top: -16px;
+  right: -8px;
   width: 32px;
   height: 32px;
+  padding: 0;
   background: orange;
   color: #fff;
   border: none;
-  border-radius: 10px;     /* << Rounded box instead of a circle */
+  border-radius: 8px;      /* Makes it a square with rounded corners */
   font-size: 22px;
   font-weight: bold;
   display: flex;
@@ -1236,7 +1237,55 @@ margin: 0 auto;
   transform: scale(1.09);
 }
 
-#drink-modal #close-modal-btn {
-  width: 32px;
-  height: 32px;
+/* FAQ Section Formatting */
+.faq-list {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 10px 0 30px 0;
+}
+
+.faq-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 18px 16px 14px 16px;
+  box-shadow: 0 2px 12px rgba(76,130,201,0.05);
+}
+
+.faq-question {
+  font-weight: bold;
+  color: #ff9900;
+  font-size: 1.08em;
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.faq-answer {
+  font-weight: normal;
+  font-size: 0.98em;
+  color: #f4f4f4;
+  line-height: 1.6;
+  margin-left: 10px;
+}
+
+@media (max-width: 480px) {
+  .faq-list {
+    max-width: 98vw;
+    padding: 3px 0 10px 0;
+  }
+  .faq-item {
+    padding: 14px 7px 12px 10px;
+  }
+  .faq-question {
+    font-size: 1em;
+  }
+  .faq-answer {
+    font-size: 0.96em;
+  }
 }
