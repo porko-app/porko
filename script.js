@@ -10,7 +10,7 @@ const translations = {
         appName: "Порко приложение",
         usernameLabel: "Напиши твоето име",
         usernamePlaceholder: "пример: Порко",
-        startBtnAlt: "Старт",
+        startBtn: "Старт",
         infoBtnAlt: "Покажи информация",
         infoTitle: "Важна информация",
         infoText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Бъдете отговорни и се грижете за здравето си.",
@@ -56,7 +56,7 @@ const translations = {
         appName: "Porko App",
         usernameLabel: "Write your name",
         usernamePlaceholder: "e.g. Porko",
-        startBtnAlt: "Start",
+        startBtn: "Start",
         infoBtnAlt: "Show information",
         infoTitle: "Important Information",
         infoText: "This app is for tracking alcohol consumption and does not encourage excessive drinking. Please be responsible and take care of your health.",
@@ -185,10 +185,10 @@ function updateFirstScreenLanguage() {
     const usernameInput = document.getElementById('username');
     if (usernameInput) usernameInput.placeholder = t.usernamePlaceholder;
 
-    // Start button image alt
-    const startBtnImg = document.querySelector('#start-btn img');
-    if (startBtnImg) startBtnImg.alt = t.startBtnAlt;
-
+ // Start button label (auto-translate)
+    const startBtnLabel = document.getElementById('start-btn-label');
+    if (startBtnLabel) startBtnLabel.textContent = t.startBtn;
+    
     // Info button image alt & aria-label
     const infoBtnImg = document.querySelector('#info-btn img');
     const infoBtn = document.getElementById('info-btn');
