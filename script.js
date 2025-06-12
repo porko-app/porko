@@ -5,7 +5,7 @@ const translations = {
         howto1: "• Напиши твоето име за да стартираш приложението",
         howto2: "• Въвеждай твоите напитки и разбери алкохолните ти единици",
         howto3: "• Гледай как порчето ти се променя и какво казва според алкохолните единици",
-        start: "Да започнем",
+        start: "Продължи",
         visitor: "порчета са станали приятели с човека",
         appName: "Порко приложение",
         usernameLabel: "Напиши твоето име",
@@ -51,7 +51,7 @@ const translations = {
         howto1: "• Write your name to start the app",
         howto2: "• Enter your drinks and see your alcohol units",
         howto3: "• Watch your ferret change and talk based on your alcohol units",
-        start: "Let's Go",
+        start: "Continue",
         visitor: "ferrets have became friends with us",
         appName: "Porko App",
         usernameLabel: "Write your name",
@@ -150,12 +150,15 @@ function updateWelcomeScreenLanguage() {
     }
 
     // Update start button (alt text)
-    const continueBtn = document.querySelector('#continue-btn img');
-    if (continueBtn) {
-        continueBtn.alt = t.start || '';
-    } else {
-        console.error("Continue button image is missing.");
-    }
+// Update start button (alt text and label)
+const continueBtn = document.querySelector('#continue-btn');
+const continueBtnLabel = document.querySelector('#continue-btn-label');
+if (continueBtnLabel) {
+    continueBtnLabel.textContent = t.start || '';
+    continueBtn.setAttribute('aria-label', t.start || '');
+} else {
+    console.error("Continue button label is missing.");
+}
 
     // Update visitor counter label (keep the number from the span)
     const visitorCounter = document.querySelector('#visitor-counter');
@@ -577,12 +580,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoBtn = document.getElementById('info-btn');
     const infoPopup = document.getElementById('info-popup');
     const backBtn = document.getElementById('back-btn');
+    const termsFromInfoBtn = document.getElementById('terms-from-info-btn'); // New button in info popup
+    const termsOfUseScreen = document.getElementById('terms-of-use-screen');
+    const firstScreen = document.getElementById('first-screen');
+    const backFromTermsBtn = document.getElementById('back-from-terms-btn');
     if (infoBtn) {
         infoBtn.addEventListener('click', () => {
             infoPopup.style.display = 'flex';
             setTimeout(() => (infoPopup.style.opacity = 1), 10);
         });
     }
+
+if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
+    termsFromInfoBtn.addEventListener('click', () => {
+        infoPopup.style.opacity = 0;
+        setTimeout(() => {
+            infoPopup.style.display = 'none';
+            // Hide all app containers, then show terms
+            document.querySelectorAll('.app-container').forEach(el => el.style.display = 'none');
+            termsOfUseScreen.style.display = 'flex';
+        }, 300);
+    });
+}
+
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             infoPopup.style.opacity = 0;
@@ -625,20 +645,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Terms of Use
     const termsOfUseBtn = document.getElementById('terms-of-use-btn');
-    const termsOfUseScreen = document.getElementById('terms-of-use-screen');
     if (termsOfUseBtn) {
         termsOfUseBtn.addEventListener('click', () => {
             settingsScreen.style.display = 'none';
             termsOfUseScreen.style.display = 'flex';
         });
     }
-    const backFromTermsBtn = document.getElementById('back-from-terms-btn');
-    if (backFromTermsBtn) {
-        backFromTermsBtn.addEventListener('click', () => {
+
+if (backFromTermsBtn) {
+    backFromTermsBtn.addEventListener('click', () => {
+        // If first screen is hidden, go to settings; if not, go to first screen
+        if (settingsScreen && settingsScreen.style.display === 'flex') {
             termsOfUseScreen.style.display = 'none';
             settingsScreen.style.display = 'flex';
-        });
-    }
+        } else if (firstScreen) {
+            termsOfUseScreen.style.display = 'none';
+            firstScreen.style.display = 'flex';
+        }
+    });
+} else {
+    console.error('Back button in Terms of Use screen not found.');
+}
 
     // QR Code
     const qrCodeBtn = document.getElementById('qr-code-btn');
@@ -663,10 +690,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('second-screen').style.display = 'none';
     document.getElementById('settings-screen').style.display = 'none';
 
-    document.getElementById('continue-btn').addEventListener('click', () => {
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('first-screen').style.display = 'flex';
+const continueBtn = document.getElementById('continue-btn');
+const welcomeScreen = document.getElementById('welcome-screen');
+if (continueBtn && welcomeScreen && firstScreen) {
+    continueBtn.addEventListener('click', () => {
+        welcomeScreen.style.display = 'none';
+        firstScreen.style.display = 'flex';
     });
+}
+
 
     // User info form (Start)
     const userForm = document.getElementById('user-info-form');
@@ -797,7 +829,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Change your name logic
     const changeNameBtn = document.getElementById('change-name-btn');
-    const firstScreen = document.getElementById('first-screen');
     if (changeNameBtn) {
         changeNameBtn.addEventListener('click', () => {
             settingsScreen.style.display = 'none';
