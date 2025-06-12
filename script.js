@@ -23,7 +23,7 @@ const translations = {
 };
 
 // === LOAD OR DEFAULT LANGUAGE ===
-let currentLanguage = localStorage.getItem('language') || 'bg';
+let currentLanguage = localStorage.getItem('language') || 'en';
 
 // === LANGUAGE BUTTON UPDATE FUNCTION ===
 function updateLangButton() {
@@ -323,9 +323,9 @@ const incrementVisitorCount = () => {
 
 // === APP INIT ===
 document.addEventListener('DOMContentLoaded', () => {
-    migrateHistoryDatesToIso();
+    updateWelcomeScreenLanguage();
     updateLangButton();
-    // Restore units & mood, with reset after 10h
+    migrateHistoryDatesToIso();
     restoreUnitsFromStorage();
     // Firebase visitor counter
     initializeVisitorCounter().then(updateVisitorCountDisplay);
@@ -593,7 +593,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
         updateFerretMood(totalUnits);
-        incrementVisitorCount();
     });
 
     // Choose drink
