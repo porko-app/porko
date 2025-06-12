@@ -274,7 +274,6 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9
 
 const auth = getAuth();
 signInAnonymously(auth)
-const visitorCounterElement = document.getElementById("visitor-count");
 const visitorRef = ref(database, "visitorCounter");
 
 const initializeVisitorCounter = async () => {
@@ -290,6 +289,11 @@ const initializeVisitorCounter = async () => {
 };
 
 const updateVisitorCountDisplay = async () => {
+       const visitorCounterElement = document.getElementById("visitor-count");
+    if (!visitorCounterElement) {
+        console.error("Visitor counter element not found in DOM.");
+        return;
+    }
     try {
         const snapshot = await get(visitorRef);
         if (snapshot.exists()) {
