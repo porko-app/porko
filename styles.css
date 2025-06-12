@@ -183,7 +183,7 @@ button {
 .info-content {
   background-color: #fff;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 18px;
   text-align: center;
   width: 80%; /* Adjusted to fit the 9:16 container */
   max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
@@ -202,6 +202,62 @@ button {
   font-size: 16px;
   line-height: 1.5;
 }
+
+/* TERMS OF USE FROM INFO BUTTON */
+#terms-from-info-btn {
+  background: #211e38;
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 600;
+  padding: 12px 0;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: -5px;
+  margin-top: 20px;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.07s;
+  cursor: pointer;
+  outline: none;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: transform 0.13s;
+}
+.back-btn img {
+  width: 48px;
+  height: 48px;
+  opacity: 0.9;
+  transition: filter 0.2s;
+}
+.back-btn:hover,
+.back-btn:focus {
+  transform: scale(1.08);
+}
+
+@media (max-width: 480px) {
+  .info-content {
+    padding: 22px 8vw 20px 8vw;
+    max-width: 95vw;
+  }
+  .info-content h2 {
+    font-size: 1.3rem;
+  }
+  #terms-from-info-btn {
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+}
+/* TO HERE */
 
 /* Image-style back button */
 .back-btn {
@@ -494,20 +550,38 @@ h1 {
 }
 
 /* Continue Button welcome screen */
-#continue-btn {
-  background: none; /* Remove background */
-  border: none; /* Remove border */
-  padding: 0; /* Remove any padding */
-  outline: none; /* Remove focus outline */
-  margin-left: 55px; /* Move the button 20px to the left */
-  margin-top: 40px; /* Moves it a little upwards */
+/* Welcome main button styling */
+.welcome-main-btn {
+  display: block;
+  margin: 32px auto 0 auto;
+  padding: 12px 0;
+  width: 70%;
+  max-width: 230px;
+  border: 2px solid #fbb040;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.1s;
+  box-shadow: 0 2px 8px 0 rgba(251, 176, 64, 0.06);
 }
 
-#continue-btn img {
-  display: block; /* Ensure image is displayed as block */
-  width: 200px; /* Adjust the size if needed */
-  height: auto; /* Keep aspect ratio */
-  border: none; /* Remove any border if there is one around the image */
+.welcome-main-btn:hover,
+.welcome-main-btn:focus {
+  background: #fbb040;
+  color: #1d192e;
+  box-shadow: 0 6px 24px 0 rgba(251, 176, 64, 0.18);
+  transform: translateY(-2px) scale(1.02);
+  outline: none;
+}
+
+#continue-btn-label {
+  display: block;
+  width: 100%;
 }
 
 .visitor-counter {
@@ -1329,3 +1403,34 @@ margin: 0 auto;
   border-color: #fff;
 }
 
+/* Terms of Use - FAQ style */
+.terms-list {
+  width: 100%;
+  max-width: 380px;
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.terms-item {
+  background: #232146;
+  border-radius: 10px;
+  padding: 18px 18px 14px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  color: #f4f4f4;
+  text-align: left;
+}
+
+.terms-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #ffb347; /* Optional: orange highlight like FAQ */
+}
+
+.terms-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #e2e2e2;
+}
