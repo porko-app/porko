@@ -17,6 +17,7 @@ const translations = {
         backBtnAlt: "Затвори информацията",
         alcoholUnitsLabel: "Алкохолни единици",
         chooseDrink: "Избери напитка",
+        soFarDrank: "Досега сте изпили {units} единици алкохол",
         ferretStates: {
             neutral: [
                 "Хей, {name}! Всичко е супер!",
@@ -62,6 +63,7 @@ const translations = {
         backBtnAlt: "Close information",
         alcoholUnitsLabel: "Alcohol units",
         chooseDrink: "Choose a drink",
+        soFarDrank: "So far you have drunk {units} alcohol units",
         ferretStates: {
             neutral: [
                 "Hey, {name}! Everything is great!",
@@ -211,7 +213,7 @@ function updateSecondScreenLanguage() {
     // Alcohol units label
     const unitsLabel = document.getElementById('alcohol-units-label');
     if (unitsLabel) unitsLabel.textContent = t.alcoholUnitsLabel;
-
+    
     // Choose drink button/label
     const chooseDrinkBtn = document.getElementById('menu-btn');
     if (chooseDrinkBtn) chooseDrinkBtn.textContent = t.chooseDrink;
@@ -310,7 +312,9 @@ function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
 // === FUNCTION: UPDATE ALCOHOL UNITS DISPLAY ===
 function updateAlcoholUnitsDisplay() {
     const unitsTextElement = document.getElementById('dynamic-units');
-    unitsTextElement.innerHTML = `${totalUnits.toFixed(1)}`;
+      const t = translations[currentLanguage];
+    const formatted = t.soFarDrank.replace('{units}', `<span class="orange-text">${totalUnits.toFixed(2)}</span>`);
+    document.getElementById('alcohol-units-text').innerHTML = formatted;
     saveUnitsToStorage();
 }
 
