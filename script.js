@@ -18,6 +18,8 @@ const translations = {
         alcoholUnitsLabel: "Алкохолни единици",
         chooseDrink: "Избери напитка",
         soFarDrank: "Досега сте изпили {units} единици алкохол",
+          termsBtn: "Общи условия",
+        termsTitle: "Общи условия",
         ferretStates: {
             neutral: [
                 "Хей, {name}! Всичко е супер!",
@@ -64,6 +66,8 @@ const translations = {
         alcoholUnitsLabel: "Alcohol units",
         chooseDrink: "Choose a drink",
         soFarDrank: "So far you have drunk {units} alcohol units",
+        termsBtn: "Terms of Use",
+        termsTitle: "Terms of Use",
         ferretStates: {
             neutral: [
                 "Hey, {name}! Everything is great!",
@@ -116,7 +120,8 @@ if (langBtn) {
          updateSecondScreenLanguage();
          updateFerretMood(totalUnits)
         updateLangButton(); // Update button text
-        updateVisitorCountDisplay(); // Ensure counter stays updated after translation
+        updateVisitorCountDisplay();
+         updateTermsTranslation(); // Ensure counter stays updated after translation
     });
 }
 
@@ -208,6 +213,18 @@ function updateFirstScreenLanguage() {
     const backBtn = document.getElementById('back-btn');
     if (backBtnImg) backBtnImg.alt = t.backBtnAlt;
     if (backBtn) backBtn.setAttribute('aria-label', t.backBtnAlt);
+}
+
+function updateTermsTranslation() {
+    const t = translations[currentLanguage];
+    const termsFromInfoBtn = document.getElementById('terms-from-info-btn');
+    if (termsFromInfoBtn) termsFromInfoBtn.textContent = t.termsBtn;
+
+    // Optionally also update the Terms screen:
+    const termsTitle = document.getElementById('terms-title');
+    if (termsTitle) termsTitle.textContent = t.termsTitle;
+    const termsText = document.getElementById('terms-text');
+    if (termsText) termsText.textContent = t.termsText;
 }
 
 function updateSecondScreenLanguage() {
@@ -440,6 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
     restoreUnitsFromStorage();
     // Firebase visitor counter
     initializeVisitorCounter().then(updateVisitorCountDisplay);
+    updateTermsTranslation();
 
     // --- DRINKS LOGIC ---
     const drinks = {
@@ -642,6 +660,7 @@ if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
             settingsScreen.style.display = 'flex';
         });
     }
+
 
     // Terms of Use
     const termsOfUseBtn = document.getElementById('terms-of-use-btn');

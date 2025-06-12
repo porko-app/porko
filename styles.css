@@ -346,65 +346,136 @@ input::-webkit-inner-spin-button {
 
 /* Bottom Buttons (Menu & Settings) */
 .bottom-buttons {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  width: 70%;
-  margin-top: -10px;
+  justify-content: center;           /* Center children horizontally */
+  align-items: flex-start;           /* Align items to the top (for visual alignment) */
+  position: relative;
+  margin-top: 36px;
+  gap: 0;                            /* No gap, we’ll use absolute for settings */
+  min-height: 90px;                  /* Ensure enough height for buttons */
 }
 
-/* Style for the bottom buttons */
-.bottom-buttons button {
+/* Center the menu button */
+#menu-btn {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  color: #ff9800;
+  background: transparent;
+  border: 2.5px solid #ff9800;
+  border-radius: 26px;
+  padding: 13px 38px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 0 0 0 transparent;
+  outline: none;
+  text-align: center;
+  min-width: 120px;
+  margin: 0 auto;
+  display: block;
+  /* Ensure it's above the background */
+  z-index: 2;
+}
+
+#menu-btn:focus,
+#menu-btn:hover {
+  background: rgba(255, 152, 0, 0.12);
+  color: #fff;
+  box-shadow: 0 0 8px 2px rgba(255, 152, 0, 0.15);
+}
+
+#menu-btn:active {
+  background: #ff9800;
+  color: #1a1625;
+}
+
+/* Position the settings button absolutely to the right of the bottom-buttons container */
+#settings-btn {
   background: none;
   border: none;
+  padding: 0;
+  position: absolute;
+  right: 18%;           /* Adjust this value for more/less rightward push */
+  top: 8px;             /* Align vertically with menu button */
   cursor: pointer;
-  margin-right: 20px; /* Adjust space between the buttons */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Style for the button images */
-.bottom-buttons img {
-  width: 50px;  /* Adjust the size of the button images */
-  height: 50px;
-}
-
-.bottom-buttons img {
-  width: 50px;  /* Adjust the size of the button images */
-  height: 50px;
-}
-
-/* Make the Menu button bigger */
-#menu-btn img {
-  width: 100px;  /* Increase the size of the Menu button */
-  height: 60px; /* Increase the size of the Menu button */
-}
-
-/* Specific style for the Settings button */
+/* Style the settings image for size and color filter if needed */
 #settings-btn img {
-  width: 60px;  /* Keep the Settings button size the same */
-  height: 50px; /* Keep the Settings button size the same */
+  width: 54px;
+  height: 54px;
+  display: block;
+  filter: drop-shadow(0 0 2px #ff9800);
 }
 
-/* Push the Menu button to the left */
-#menu-btn {
-  margin-left: 35px;  /* Pushes the menu button to the left */
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+  .bottom-buttons {
+    min-height: 70px;
+  }
+  #menu-btn {
+    font-size: 1rem;
+    padding: 10px 18px;
+    min-width: 82px;
+  }
+  #settings-btn img {
+    width: 40px;
+    height: 40px;
+  }
+  #settings-btn {
+    right: 10%;
+    top: 0;
+  }
 }
 
 /* SETTINGS SCREEN BUTTON STYLES */
 
 /* General styling for all settings buttons */
-.settings-btn {
-  display: block; /* Each button on a new line */
-  width: 100%; /* Full width of the container */
-  padding: 12px 20px; /* Add some padding for better clickability */
-  margin: 10px 0; /* Space between buttons */
-  font-size: 16px; /* Make the text readable */
-  font-weight: bold; /* Bold text for emphasis */
-  color: #f4f4f4; /* White text color */
-  background-color: #1d192e; /* Dark background for contrast */
-  border: 1px solid #f68305; /* Add a white border for better visibility */
-  border-radius: 8px; /* Rounded corners for a modern look */
-  text-align: center; /* Center the text */
-  cursor: pointer; /* Pointer cursor for hover */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+/* Move the settings button further right */
+#settings-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  right: 2%;        /* Move closer to the right edge (increase or decrease as needed) */
+  top: -20px;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   width: 62px;              /* Make the button area square */
+  height: 62px;             /* Make the button area square */
+  border-radius: 50%;       /* Makes hit area circular/square */
+    box-sizing: border-box;
+}
+
+#settings-btn img {
+  width: 54px;
+  height: 54px;
+  display: block;
+  filter: drop-shadow(0 0 2px #ff9800);
+}
+
+/* Responsive adjustment for mobile */
+@media (max-width: 600px) {
+  .bottom-buttons {
+    min-height: 70px;
+  }
+  #settings-btn img {
+    width: 40px;
+    height: 40px;
+  }
+  #settings-btn {
+    right: 4%;   /* Also move closer to the edge on mobile */
+    top: 0;
+  }
 }
 
 /* Hover and focus effects for buttons */
