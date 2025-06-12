@@ -1,4 +1,3 @@
-// === TRANSLATIONS OBJECT ===
 const translations = {
     bg: {
         welcome1: "Тук ще се запознаеш с твоето ново порче!",
@@ -15,7 +14,35 @@ const translations = {
         infoBtnAlt: "Покажи информация",
         infoTitle: "Важна информация",
         infoText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Бъдете отговорни и се грижете за здравето си.",
-        backBtnAlt: "Затвори информацията"
+        backBtnAlt: "Затвори информацията",
+        alcoholUnitsLabel: "Алкохолни единици",
+        chooseDrink: "Избери напитка",
+        ferretStates: {
+            neutral: [
+                "Хей, {name}! Всичко е супер!",
+                "Чувствам се страхотно! А ти?",
+                "Толкова е хубаво да сме заедно, {name}!",
+                "Хайде да се насладим на деня!"
+            ],
+            tipsy: [
+                "Юхуу, {name}! Чувствам се леко замаян!",
+                "Ох, чувствам се приятно развеселен!",
+                "Хей, {name}, забавляваме се, нали?",
+                "Опа, леко ми се върти главата!"
+            ],
+            drunk: [
+                "Охо, {name}, нещата стават по-интересни!",
+                "Чувствам се доста... уааа!",
+                "Това е малко повече от очакваното, {name}!",
+                "Ох, всичко изглежда толкова забавно!"
+            ],
+            wobbly: [
+                "О, не! Вече е твърде много!",
+                "Моля, {name}, нека си починем за малко!",
+                "Чувствам се като в лодка в буря!",
+                "{name}, имам нужда от вода..."
+            ]
+        }
     },
     en: {
         welcome1: "Here you will meet your new ferret friend!",
@@ -32,7 +59,35 @@ const translations = {
         infoBtnAlt: "Show information",
         infoTitle: "Important Information",
         infoText: "This app is for tracking alcohol consumption and does not encourage excessive drinking. Please be responsible and take care of your health.",
-        backBtnAlt: "Close information"
+        backBtnAlt: "Close information",
+        alcoholUnitsLabel: "Alcohol units",
+        chooseDrink: "Choose a drink",
+        ferretStates: {
+            neutral: [
+                "Hey, {name}! Everything is great!",
+                "I'm feeling awesome! How about you?",
+                "It's so nice to be together, {name}!",
+                "Let's enjoy the day!"
+            ],
+            tipsy: [
+                "Yoohoo, {name}! I'm feeling a bit tipsy!",
+                "Oh, I feel pleasantly buzzed!",
+                "Hey, {name}, we're having fun, aren't we?",
+                "Oops, my head is spinning a little!"
+            ],
+            drunk: [
+                "Whoa, {name}, things are getting interesting!",
+                "I'm feeling pretty... whoa!",
+                "This is a bit more than expected, {name}!",
+                "Oh, everything looks so fun!"
+            ],
+            wobbly: [
+                "Oh no! That's too much already!",
+                "Please, {name}, let's rest for a bit!",
+                "I feel like I'm on a boat in a storm!",
+                "{name}, I need water..."
+            ]
+        }
     }
 };
 
@@ -56,6 +111,8 @@ if (langBtn) {
         localStorage.setItem('language', currentLanguage); // Save to localStorage
         updateWelcomeScreenLanguage();
          updateFirstScreenLanguage();
+         updateSecondScreenLanguage();
+         updateFerretMood(totalUnits)
         updateLangButton(); // Update button text
         updateVisitorCountDisplay(); // Ensure counter stays updated after translation
     });
@@ -148,6 +205,18 @@ function updateFirstScreenLanguage() {
     if (backBtn) backBtn.setAttribute('aria-label', t.backBtnAlt);
 }
 
+function updateSecondScreenLanguage() {
+    const t = translations[currentLanguage];
+
+    // Alcohol units label
+    const unitsLabel = document.getElementById('alcohol-units-label');
+    if (unitsLabel) unitsLabel.textContent = t.alcoholUnitsLabel;
+
+    // Choose drink button/label
+    const chooseDrinkBtn = document.getElementById('menu-btn');
+    if (chooseDrinkBtn) chooseDrinkBtn.textContent = t.chooseDrink;
+}
+
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
 let selectedDrink = "";
 let totalUnits = 0;
@@ -193,42 +262,23 @@ function restoreUnitsFromStorage() {
 function updateFerretMood(units) {
     const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
     let mood = 'neutral';
-
     if (units <= 4.0) mood = 'neutral';
     else if (units <= 7.0) mood = 'tipsy';
     else if (units <= 10.0) mood = 'drunk';
     else mood = 'wobbly';
 
-    console.log('Updating ferret mood to:', mood);
+    const t = translations[currentLanguage];
+    const messages = t.ferretStates[mood];
 
-    const messages = {
-        neutral: [
-            `Хей, ${userName}! Всичко е супер!`,
-            "Чувствам се страхотно! А ти?",
-            `Толкова е хубаво да сме заедно, ${userName}!`,
-            "Хайде да се насладим на деня!"
-        ],
-        tipsy: [
-            `Юхуу, ${userName}! Чувствам се леко замаян!`,
-            "Ох, чувствам се приятно развеселен!",
-            `Хей, ${userName}, забавляваме се, нали?`,
-            "Опа, леко ми се върти главата!"
-        ],
-        drunk: [
-            `Охо, ${userName}, нещата стават по-интересни!`,
-            "Чувствам се доста... уааа!",
-            `Това е малко повече от очакваното, ${userName}!`,
-            "Ох, всичко изглежда толкова забавно!"
-        ],
-        wobbly: [
-            "О, не! Вече е твърде много!",
-            `Моля, ${userName}, нека си починем за малко!`,
-            "Чувствам се като в лодка в буря!",
-            `${userName}, имам нужда от вода...`
-        ]
-    };
+    // Defensive check
+    if (!messages || !messages.length) {
+        console.error('No messages for this mood/language!');
+        return;
+    }
 
-    // Hide all mood-related elements (images and speech bubbles)
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)].replace('{name}', userName);
+
+    // Hide all mood elements
     states.forEach(state => {
         const ferretElement = document.getElementById(`ferret-${state}`);
         const bubbleElement = document.getElementById(`bubble-${state}`);
@@ -239,10 +289,7 @@ function updateFerretMood(units) {
         if (bubbleTextElement) bubbleTextElement.style.display = 'none';
     });
 
-    // Randomly select a message for the current mood
-    const randomMessage = messages[mood][Math.floor(Math.random() * messages[mood].length)];
-
-    // Show the correct mood's image and speech bubble with the selected message
+    // Show the correct elements
     const ferretElement = document.getElementById(`ferret-${mood}`);
     const bubbleElement = document.getElementById(`bubble-${mood}`);
     const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
@@ -250,7 +297,7 @@ function updateFerretMood(units) {
     if (ferretElement) ferretElement.style.display = 'block';
     if (bubbleElement) bubbleElement.style.display = 'block';
     if (bubbleTextElement) {
-        bubbleTextElement.textContent = randomMessage;
+        bubbleTextElement.textContent = randomMsg;
         bubbleTextElement.style.display = 'block';
     }
 }
