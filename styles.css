@@ -435,60 +435,47 @@ input::-webkit-inner-spin-button {
 }
 
 /* SETTINGS SCREEN BUTTON STYLES */
-
-/* General styling for all settings buttons */
-/* Move the settings button further right */
 #settings-btn {
   background: none;
   border: none;
   padding: 0;
   position: absolute;
-  right: 2%;        /* Move closer to the right edge (increase or decrease as needed) */
-  top: -20px;
+  right: 1%;                  /* Adjust this value for your layout */
+  top: -22px;
   cursor: pointer;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-   width: 62px;              /* Make the button area square */
-  height: 62px;             /* Make the button area square */
-  border-radius: 50%;       /* Makes hit area circular/square */
-    box-sizing: border-box;
+  width: 62px;                /* Square shape */
+  height: 62px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+#settings-btn:focus,
+#settings-btn:hover {
+  background: rgba(255, 152, 0, 0.12);
 }
 
 #settings-btn img {
   width: 54px;
   height: 54px;
   display: block;
-  filter: drop-shadow(0 0 2px #ff9800);
+  margin: auto;
 }
 
-/* Responsive adjustment for mobile */
+/* Responsive for mobile */
 @media (max-width: 600px) {
-  .bottom-buttons {
-    min-height: 70px;
-  }
-  #settings-btn img {
-    width: 40px;
-    height: 40px;
-  }
   #settings-btn {
-    right: 4%;   /* Also move closer to the edge on mobile */
+    width: 44px;
+    height: 44px;
+    right: 4%;
     top: 0;
   }
-}
-
-/* Hover and focus effects for buttons */
-.settings-btn:hover,
-.settings-btn:focus {
-  background-color: #4c82c9; /* Slightly lighter background on hover */
-  transform: scale(1.05); /* Slight scaling effect */
-}
-
-/* Optional: Add active state for when the button is clicked */
-.settings-btn:active {
-  background-color: #a7a7a7; /* Darker background on click */
-  transform: scale(0.98); /* Slight shrinking effect */
+  #settings-btn img {
+    width: 36px;
+    height: 36px;
+  }
 }
 /* FAQ Screen Styling */
 #faq-screen {
