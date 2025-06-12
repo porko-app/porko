@@ -16,17 +16,15 @@
 </head>
 <body>
 
-  <!-- First Screen (Main UI) -->
-  <div class="app-container" id="first-screen">
-    <img src="logoporko.png" alt="FerretFeels Logo" class="logo" />
-
-    <form id="user-info-form">
-      <label for="username">Напиши твоето име</label>
-      <input type="text" id="username" placeholder="пример: Порко" required autocomplete="username" />
-      <!-- Change "Start" button to image -->
-      <button type="submit" id="start-btn">
-        <img src="start-button.png" alt="Start" />
-      </button>
+<!-- First Screen (Main UI) -->
+<div class="app-container" id="first-screen">
+  <img src="logoporko.png" alt="FerretFeels Logo" class="logo" />
+  <form id="user-info-form">
+    <label for="username">Напиши твоето име</label>
+    <input type="text" id="username" placeholder="пример: Порко" required autocomplete="username" />
+    <button id="start-btn" class="welcome-main-btn" type="submit">
+      <span id="start-btn-label">Старт</span>
+    </button>
     </form>
 
     <!-- Info button inside 9:16 frame -->
@@ -35,16 +33,17 @@
     </button>
   </div>
 
-  <!-- Info Popup -->
-  <div id="info-popup" class="info-popup" role="dialog" aria-modal="true" aria-labelledby="info-title" style="display: none;">
-    <div class="info-content">
-      <h2 id="info-title">Важна информация</h2>
-      <p>Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол.</p>
-      <button id="back-btn" class="back-btn" aria-label="Затвори информацията">
-        <img src="back-button.png" alt="Back" class="back-icon" />
-      </button>      
-    </div>
+<!-- Info Popup -->
+<div id="info-popup" class="info-popup" role="dialog" aria-modal="true" aria-labelledby="info-title" style="display: none;">
+  <div class="info-content">
+    <h2 id="info-title">Важна информация</h2>
+    <p>Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Моля, бъдете отговорни и се грижете за своето здраве.</p>
+    <button id="back-btn" class="back-btn" aria-label="Затвори информацията">
+      <img src="back-button.png" alt="Back" class="back-icon" />
+    </button>
+    <button id="terms-from-info-btn" class="settings-btn" style="margin-top: 15px;">Общи условия</button>
   </div>
+</div>
 
   <!-- ✅ NEW Welcome Screen -->
   <div class="app-container" id="welcome-screen" style="display: none;">
@@ -60,9 +59,9 @@
       <li>• Въвеждай твоите напитки и разбери алкохолните ти единици</li>
       <li>• Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
     </ul>
-    <button id="continue-btn" aria-label="Да започнем">
-      <img src="lets-go-button.png" alt="Let's Go" />
-    </button>
+<button id="continue-btn" class="welcome-main-btn" type="button">
+  <span id="continue-btn-label">ПРОДЪЛЖИ</span>
+</button>
     <!-- Visitor Counter on Welcome Screen -->
     <div id="visitor-counter" class="visitor-counter">
       <span id="visitor-count">0</span> порчета са станали приятели с човека
@@ -275,14 +274,54 @@
     <img id="qr-code-image" src="qr-code-image.png" alt="QR Code" />
   </div>
 
-  <!-- ...add the Terms of Use screen just after your settings screen... -->
 <div id="terms-of-use-screen" class="app-container" style="display: none;">
   <button id="back-from-terms-btn" class="back-top-right-btn">← Назад</button>
   <h2>Общи условия</h2>
-  <p>
-    Тук ще бъдат описани общите условия за използване на приложението. Моля, прочетете внимателно преди да използвате услугата!
-  </p>
-  <!-- Add more terms content as needed -->
+ <div class="terms-list">
+    <div class="terms-item">
+      <div class="terms-title">Предназначение на приложението</div>
+      <div class="terms-text">
+        Това приложение е създадено с цел да помага на потребителите да следят консумацията си на алкохол за информационни и развлекателни цели. То не насърчава и не поощрява прекомерната употреба на алкохол.
+      </div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title">Отговорност на потребителя</div>
+      <div class="terms-text">
+        Потребителите носят пълна отговорност за информацията, която въвеждат в приложението, включително избраните напитки и въведените псевдоними (имена).
+      </div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title">Отказ от отговорност</div>
+      <div class="terms-text">
+        Това приложение не е медицински инструмент. За здравни съвети винаги се консултирайте с квалифициран специалист.
+      </div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title">Поверителност и имена</div>
+      <div class="terms-text">
+        Приложението съхранява въведеното от вас име за целите на статистика и персонализация. <u>Моля, не използвайте своето истинско име, имейл или друга чувствителна лична информация като име.</u>
+        <br>Не носим отговорност, ако въведете чувствителна или лична информация в полето за име, тъй като това име се запазва в нашата система.
+      </div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title">История на напитките и локални данни</div>
+      <div class="terms-text">
+        Всички данни за вашите напитки и историята на консумация (включително данните, които въвеждате чрез менюто за напитки) се съхраняват само локално на вашето устройство (телефон или компютър). Тази информация <u>не се качва на нашите сървъри</u> и е достъпна само за вас. Можете да изтриете историята си по всяко време чрез наличната опция в приложението.
+      </div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title">Съхранение на данни</div>
+      <div class="terms-text">
+        Приложението съхранява само вашето име (за статистика) в нашите сървъри. Не се изисква или съхранява друга лична информация на нашите сървъри.
+      </div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title">Ограничение на отговорността</div>
+      <div class="terms-text">
+        Създателите на това приложение не носят отговорност за каквито и да е последствия, произтичащи от употребата или неправилната употреба на приложението.
+      </div>
+    </div>
+  </div>
 </div>
 
   <script type="module" src="script.js"></script>
