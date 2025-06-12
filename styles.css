@@ -346,14 +346,21 @@ input::-webkit-inner-spin-button {
 
 /* Bottom Buttons (Menu & Settings) */
 .bottom-buttons {
+  position: absolute;
+   left: 0;
+  right: 0;
+  bottom: 16px;
+   margin-left: auto;
+  margin-right: auto;  
   width: 100%;
   display: flex;
   justify-content: center;           /* Center children horizontally */
   align-items: flex-start;           /* Align items to the top (for visual alignment) */
   position: relative;
-  margin-top: 36px;
+  margin-top: 30px;
   gap: 0;                            /* No gap, we’ll use absolute for settings */
   min-height: 90px;                  /* Ensure enough height for buttons */
+    margin-bottom: 10px
 }
 
 /* Center the menu button */
@@ -477,6 +484,60 @@ input::-webkit-inner-spin-button {
     height: 36px;
   }
 }
+
+.settings-btn {
+  display: block;
+  width: 90%;
+  max-width: 320px;
+  margin: 10px auto;
+  padding: 13px 0 12px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff; /* White text */
+  background: #1d192e; /* Same as container background */
+  border: 3px solid #ff9800; /* Orange border */
+  border-radius: 32px; /* Pill shape */
+  text-align: center;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  transition:
+    border-color 0.18s cubic-bezier(.4,0,.2,1),
+    color 0.18s cubic-bezier(.4,0,.2,1),
+    background 0.18s cubic-bezier(.4,0,.2,1),
+    transform 0.16s cubic-bezier(.4,0,.2,1);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.settings-btn:hover,
+.settings-btn:focus {
+  background: #251f37;
+  color: #ff9800;
+  border-color: #ff9800;
+  transform: scale(1.03);
+}
+
+.settings-btn:active {
+  background: #181430;
+  color: #ff9800;
+  border-color: #ff9800;
+  transform: scale(0.98);
+}
+
+.settings-btn:last-child {
+  margin-bottom: 4px;
+}
+
+@media (max-width: 480px) {
+  .settings-btn {
+    font-size: 0.98rem;
+    padding: 11px 0 10px 0;
+    border-radius: 24px;
+    max-width: 97%;
+  }
+}
+
 /* FAQ Screen Styling */
 #faq-screen {
   display: flex;
@@ -1150,7 +1211,8 @@ input[type="number"] {
   color: #ffffff; /* Set the text color to white */
   font-size: 24px; /* Ensure the font size is consistent */
   text-align: center; /* Center-align the header text */
-  margin-bottom: 20px; /* Add space below the header */
+  margin-top: -7px;  /* Was 50px or more, now less for higher placement */
+  margin-bottom: 20px;
 }
 
 /* Back Button in Top Right Corner (Clear Background for Terms of Use Screen) */
