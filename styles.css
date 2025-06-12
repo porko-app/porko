@@ -316,7 +316,7 @@ input::-webkit-inner-spin-button {
   word-wrap: break-word; /* Ensure long words break to the next line */
   white-space: normal; /* Allow text to wrap onto multiple lines */
   line-height: 1.5; /* Improve readability between lines */
-  font-size: 16px; /* Adjust font size for better visibility */
+  font-size: 13px; /* Adjust font size for better visibility */
   text-align: center; /* Center align the text in the bubble */
   padding: 10px; /* Add padding for spacing around the text */
   width: 90%; /* Ensure the text fits within the bubble */
