@@ -8,7 +8,14 @@ const translations = {
         howto3: "• Гледай как порчето ти се променя и какво казва според алкохолните единици",
         start: "Да започнем",
         visitor: "порчета са станали приятели с човека",
-        appName: "Порко приложение"
+        appName: "Порко приложение",
+        usernameLabel: "Напиши твоето име",
+        usernamePlaceholder: "пример: Порко",
+        startBtnAlt: "Старт",
+        infoBtnAlt: "Покажи информация",
+        infoTitle: "Важна информация",
+        infoText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Бъдете отговорни и се грижете за здравето си.",
+        backBtnAlt: "Затвори информацията"
     },
     en: {
         welcome1: "Here you will meet your new ferret friend!",
@@ -18,7 +25,14 @@ const translations = {
         howto3: "• Watch your ferret change and talk based on your alcohol units",
         start: "Let's Go",
         visitor: "ferrets have became friends with us",
-        appName: "Porko App"
+        appName: "Porko App",
+        usernameLabel: "Write your name",
+        usernamePlaceholder: "e.g. Porko",
+        startBtnAlt: "Start",
+        infoBtnAlt: "Show information",
+        infoTitle: "Important Information",
+        infoText: "This app is for tracking alcohol consumption and does not encourage excessive drinking. Please be responsible and take care of your health.",
+        backBtnAlt: "Close information"
     }
 };
 
@@ -40,7 +54,8 @@ if (langBtn) {
     langBtn.addEventListener('click', () => {
         currentLanguage = currentLanguage === 'bg' ? 'en' : 'bg'; // Toggle language
         localStorage.setItem('language', currentLanguage); // Save to localStorage
-        updateWelcomeScreenLanguage(); // Update translations
+        updateWelcomeScreenLanguage();
+         updateFirstScreenLanguage();
         updateLangButton(); // Update button text
         updateVisitorCountDisplay(); // Ensure counter stays updated after translation
     });
@@ -94,6 +109,43 @@ function updateWelcomeScreenLanguage() {
 
     // Update document title
     document.title = t.appName || 'Porko app';
+}
+
+// FIRST SCREEN TRANSLATE
+function updateFirstScreenLanguage() {
+    const t = translations[currentLanguage];
+
+    // Label for username
+    const usernameLabel = document.querySelector('#user-info-form label[for="username"]');
+    if (usernameLabel) usernameLabel.textContent = t.usernameLabel;
+
+    // Input placeholder
+    const usernameInput = document.getElementById('username');
+    if (usernameInput) usernameInput.placeholder = t.usernamePlaceholder;
+
+    // Start button image alt
+    const startBtnImg = document.querySelector('#start-btn img');
+    if (startBtnImg) startBtnImg.alt = t.startBtnAlt;
+
+    // Info button image alt & aria-label
+    const infoBtnImg = document.querySelector('#info-btn img');
+    const infoBtn = document.getElementById('info-btn');
+    if (infoBtnImg) infoBtnImg.alt = t.infoBtnAlt;
+    if (infoBtn) infoBtn.setAttribute('aria-label', t.infoBtnAlt);
+
+    // Info popup title
+    const infoTitle = document.getElementById('info-title');
+    if (infoTitle) infoTitle.textContent = t.infoTitle;
+
+    // Info popup text
+    const infoText = document.querySelector('#info-popup p');
+    if (infoText) infoText.textContent = t.infoText;
+
+    // Info popup back button alt & aria-label
+    const backBtnImg = document.querySelector('#back-btn img');
+    const backBtn = document.getElementById('back-btn');
+    if (backBtnImg) backBtnImg.alt = t.backBtnAlt;
+    if (backBtn) backBtn.setAttribute('aria-label', t.backBtnAlt);
 }
 
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
@@ -328,6 +380,7 @@ const incrementVisitorCount = () => {
 // === APP INIT ===
 document.addEventListener('DOMContentLoaded', () => {
     updateWelcomeScreenLanguage();
+    updateFirstScreenLanguage();
     updateLangButton();
     migrateHistoryDatesToIso();
     restoreUnitsFromStorage();
@@ -571,8 +624,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const usernameInput = document.getElementById('username');
         userName = usernameInput.value.trim();
 
-        if (!userName) {
-            alert('Моля, напишете твоето име!');
+       if (!userName) {
+            alert(translations[currentLanguage].emptyNameAlert);
             return;
         }
 
