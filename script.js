@@ -21,7 +21,7 @@ const translations = {
         soFarDrank: "Досега сте изпили {units} единици алкохол",
         termsBtn: "Общи условия",
         termsTitle: "Общи условия",
-        menumenuBtn: "Меню",
+        menuBtn: "Меню",
           drinkModalTitle: "Избери напитка",
           whiskey: "Уиски",
            vodka: "Водка",
@@ -132,29 +132,52 @@ function checkFerretResetAndReload() {
     totalUnits = parseFloat(localStorage.getItem('totalUnits')) || 0;
 }
 
-function updateLangButton() {
-    const langBtn = document.getElementById('language-switch-btn');
-    if (langBtn) {
-        langBtn.textContent = currentLanguage === 'bg' ? 'EN' : 'BG';
-    }
+function updateLogoLanguage() {
+  // Welcome screen logo
+  const welcomeLogo = document.getElementById("welcome-logo");
+  if (welcomeLogo) {
+    welcomeLogo.src = currentLanguage === "en" ? "logoporkoen.png" : "logoporko.png";
+  }
+  // First screen logo
+  const logoImg = document.getElementById("logo-img");
+  if (logoImg) {
+    logoImg.src = currentLanguage === "en" ? "logoporkoen.png" : "logoporko.png";
+  }
+}
+
+function updateLangButtons() {
+  const langBtnWelcome = document.getElementById('welcome-language-switch-btn');
+  if (langBtnWelcome) {
+    langBtnWelcome.textContent = currentLanguage === 'bg' ? 'EN' : 'BG';
+  }
 }
 
 // --- Language Switcher
 document.addEventListener("DOMContentLoaded", () => {
-    const langBtn = document.getElementById("language-switch-btn");
-    if (langBtn) {
-        langBtn.addEventListener("click", () => {
-            currentLanguage = currentLanguage === "bg" ? "en" : "bg";
-            localStorage.setItem("language", currentLanguage);
-            updateWelcomeScreenLanguage();
-            updateFirstScreenLanguage();
-            updateSecondScreenLanguage();
-            updateFerretMood(totalUnits);
-            updateLangButton();
-            updateVisitorCountDisplay();
-            updateTermsTranslation();
-        });
-    }
+  updateLogoLanguage();
+  updateLangButtons();
+
+  function handleLanguageSwitch() {
+    currentLanguage = currentLanguage === "bg" ? "en" : "bg";
+    localStorage.setItem("language", currentLanguage);
+    updateWelcomeScreenLanguage();
+    updateFirstScreenLanguage();
+    updateSecondScreenLanguage();
+    updateMenuButton();
+    updateFerretMood(totalUnits);
+    updateLangButtons();
+    updateVisitorCountDisplay();
+    updateTermsTranslation();
+    updateLogoLanguage();
+  }
+  const langBtnWelcome = document.getElementById("welcome-language-switch-btn");
+  if (langBtnWelcome) {
+    langBtnWelcome.addEventListener("click", handleLanguageSwitch);
+  }
+  const langBtnFirst = document.getElementById("language-switch-btn");
+  if (langBtnFirst) {
+    langBtnFirst.addEventListener("click", handleLanguageSwitch);
+  }
 });
 
 // ... rest of translation functions unchanged ...
@@ -240,6 +263,13 @@ function updateSecondScreenLanguage() {
     menuBtn.textContent = t.menuBtn;
     menuBtn.setAttribute('aria-label', t.menuBtn);
 }
+}
+
+function updateMenuButton() {
+  const menuBtn = document.getElementById("menu-btn");
+  if (menuBtn) {
+    menuBtn.textContent = translations[currentLanguage].menuBtn;
+  }
 }
 
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
@@ -398,7 +428,9 @@ const incrementVisitorCount = () => {
 document.addEventListener('DOMContentLoaded', () => {
     updateWelcomeScreenLanguage();
     updateFirstScreenLanguage();
-    updateLangButton();
+    updateSecondScreenLanguage();
+    updateLangButtons();
+    updateMenuButton();
     migrateHistoryDatesToIso();
     checkFerretResetAndReload();
     initializeVisitorCounter().then(updateVisitorCountDisplay);

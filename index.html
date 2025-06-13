@@ -16,57 +16,57 @@
 </head>
 <body>
 
-<!-- First Screen (Main UI) -->
+<!-- ✅ Welcome Screen -->
+<div class="app-container" id="welcome-screen" style="display: flex;">
+  <h2></h2>
+  <button id="welcome-language-switch-btn" class="language-btn">EN</button>
+  <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
+  <p>Тук ще се запознаеш с твоето ново порче!</p>
+  <p>Как работи?</p>
+  <ul>
+    <li>• Напиши твоето име за да стартираш приложението</li>
+    <li>• Въвеждай твоите напитки и разбери алкохолните ти единици</li>
+    <li>• Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
+  </ul>
+  <button id="continue-btn" class="welcome-main-btn" type="button">
+    <span id="continue-btn-label">ПРОДЪЛЖИ</span>
+  </button>
+  <div id="visitor-counter" class="visitor-counter">
+    <span id="visitor-count">0</span> порчета са станали приятели с нас
+  </div>
+</div>
+
+<!-- ✅ First Screen (Main UI) -->
 <div class="app-container" id="first-screen">
-  <img src="logoporko.png" alt="FerretFeels Logo" class="logo" />
+  <img src="logoporko.png" alt="FerretFeels Logo" class="logo" id="logo-img" />
+
+  <!-- Info button ONLY on first screen -->
+  <button id="info-btn" class="info-btn" aria-label="Покажи информация">
+    <img src="info-button.png" alt="Info" />
+  </button>
+
   <form id="user-info-form">
     <label for="username">Напиши твоето име</label>
     <input type="text" id="username" placeholder="пример: Порко" required autocomplete="username" />
     <button type="submit" id="start-btn" class="welcome-main-btn">
       <span id="start-btn-label">Старт</span>
     </button>
-    </form>
+  </form>
+</div>
 
-    <!-- Info button inside 9:16 frame -->
-    <button id="info-btn" class="info-btn" aria-label="Покажи информация">
-      <img src="info-button.png" alt="Info" />
-    </button>
-  </div>
-
-<!-- Info Popup -->
+<!-- Info Popup (can be outside; appears above everything when needed) -->
 <div id="info-popup" class="info-popup" role="dialog" aria-modal="true" aria-labelledby="info-title" style="display: none;">
   <div class="info-content">
     <h2 id="info-title">Важна информация</h2>
-    <p>Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Моля, бъдете отговорни и се грижете за своето здраве.</p>
+    <p>
+      Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Моля, бъдете отговорни и се грижете за своето здраве.
+    </p>
     <button id="back-btn" class="back-btn" aria-label="Затвори информацията">
       <img src="back-button.png" alt="Back" class="back-icon" />
     </button>
-    <button id="terms-from-info-btn" class="settings-btn" style="margin-top: 15px;"></button>
+    <button id="terms-from-info-btn" class="settings-btn" style="margin-top: 15px;">Общи условия</button>
   </div>
 </div>
-
-  <!-- ✅ NEW Welcome Screen -->
-  <div class="app-container" id="welcome-screen" style="display: none;">
-    <h2> </h2>
-    <button id="language-switch-btn" class="language-btn">EN</button>
-    <!-- Add Logo here -->
-    <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
-    <!-- Language Switch Button -->
-    <p>Тук ще се запознаеш с твоето ново порче!</p>
-    <p>Как работи?</p>
-    <ul>
-      <li>• Напиши твоето име за да стартираш приложението</li>
-      <li>• Въвеждай твоите напитки и разбери алкохолните ти единици</li>
-      <li>• Гледай как порчето ти се променя и какво казва според алкохолните единици</li>
-    </ul>
-<button id="continue-btn" class="welcome-main-btn" type="button">
-  <span id="continue-btn-label">ПРОДЪЛЖИ</span>
-</button>
-    <!-- Visitor Counter on Welcome Screen -->
-    <div id="visitor-counter" class="visitor-counter">
-      <span id="visitor-count">0</span> порчета са станали приятели с нас
-    </div>
-  </div>
 
   <!-- Second Screen -->
   <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
@@ -93,7 +93,7 @@
 
     <!-- Bottom Buttons -->
 <div class="bottom-buttons">
-  <button id="menu-btn" aria-label="Меню">Меню</button>
+  <button id="menu-btn"></button>
   <button id="settings-btn" aria-label="Настройки">
     <img src="settings-button.png" alt="Settings" />
   </button>
