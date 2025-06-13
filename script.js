@@ -120,8 +120,7 @@ if (langBtn) {
          updateSecondScreenLanguage();
          updateFerretMood(totalUnits)
         updateLangButton(); // Update button text
-        updateVisitorCountDisplay();
-         updateTermsTranslation(); // Ensure counter stays updated after translation
+        updateVisitorCountDisplay(); // Ensure counter stays updated after translation
     });
 }
 
@@ -251,33 +250,30 @@ function saveUnitsToStorage() {
     localStorage.setItem('lastUnitsUpdate', Date.now());
 }
 
-function restoreUnitsFromStorage() {
+function restoreUnitsAndMaybeReset() {
     const savedUnits = localStorage.getItem('totalUnits');
     const savedUpdate = localStorage.getItem('lastUnitsUpdate');
     const now = Date.now();
 
-    if (savedUnits !== null && savedUpdate !== null) {
-        const hoursPassed = (now - Number(savedUpdate)) / (1000 * 60 * 60);
-        if (hoursPassed > 10) {
-            // More than 10 hours passed: reset units and update time
-            totalUnits = 0;
-            localStorage.setItem('totalUnits', 0);
-            localStorage.setItem('lastUnitsUpdate', now);
-            updateAlcoholUnitsDisplay();
-            updateFerretMood(0);
-        } else {
-            totalUnits = parseFloat(savedUnits);
-            updateAlcoholUnitsDisplay();
-            updateFerretMood(totalUnits);
-        }
-    } else {
-        // No previous data: initialize
+    // Restore or initialize values
+    totalUnits = savedUnits !== null ? parseFloat(savedUnits) : 0;
+    let lastUnitsUpdate = savedUpdate !== null ? Number(savedUpdate) : now;
+
+    // Calculate hours since last update
+    const hoursPassed = (now - lastUnitsUpdate) / (1000 * 60 * 60);
+
+    // If over 10 hours, reset
+    if (hoursPassed > 10) {
         totalUnits = 0;
+        lastUnitsUpdate = now;
         localStorage.setItem('totalUnits', 0);
-        localStorage.setItem('lastUnitsUpdate', now);
-        updateAlcoholUnitsDisplay();
-        updateFerretMood(0);
+        localStorage.setItem('lastUnitsUpdate', lastUnitsUpdate);
+        localStorage.setItem('lastMoodReset', new Date().toISOString());
     }
+
+        // Always update UI to reflect current state
+    updateAlcoholUnitsDisplay();
+    updateFerretMood(totalUnits);
 }
 
 // === FUNCTION: FERRET MOOD ===
@@ -454,7 +450,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFirstScreenLanguage();
     updateLangButton();
     migrateHistoryDatesToIso();
-    restoreUnitsFromStorage();
+ restoreUnitsAndMaybeReset();    // <--- 1. Load stored units
+    checkAndResetFerretMood();     // <--- 2. Immediately check & reset mood if needed!
     // Firebase visitor counter
     initializeVisitorCounter().then(updateVisitorCountDisplay);
     updateTermsTranslation();
@@ -553,8 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateStatistics() {
         const now = new Date();
-        // Reset mood if needed
-        checkAndResetFerretMood();
         const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
         const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
         document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
