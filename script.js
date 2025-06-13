@@ -22,12 +22,12 @@ const translations = {
         termsBtn: "Общи условия",
         termsTitle: "Общи условия",
         menuBtn: "Меню",
-          drinkModalTitle: "Избери напитка",
-          whiskey: "Уиски",
-           vodka: "Водка",
-           rum: "Ром",
-           gin: "Джин",
-           tequila: "Текила",
+        drinkModalTitle: "Избери напитка",
+        whiskey: "Уиски",
+        vodka: "Водка",
+        rum: "Ром",
+        gin: "Джин",
+        tequila: "Текила",
         ferretStates: {
             neutral: [
                 "Хей, {name}! Всичко е супер!",
@@ -77,12 +77,12 @@ const translations = {
         termsBtn: "Terms of Use",
         termsTitle: "Terms of Use",
         menuBtn: "Menu",
-          drinkModalTitle: "Choose a drink",
-          whiskey: "Whiskey",
-          vodka: "Vodka",
-          rum: "Rum",
-          gin: "Gin",
-          tequila: "Tequila",
+        drinkModalTitle: "Choose a drink",
+        whiskey: "Whiskey",
+        vodka: "Vodka",
+        rum: "Rum",
+        gin: "Gin",
+        tequila: "Tequila",
         ferretStates: {
             neutral: [
                 "Hey, {name}! Everything is great!",
@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateFirstScreenLanguage();
     updateSecondScreenLanguage();
     updateMenuButton();
+    updateDrinkModalLanguage()
     updateFerretMood(totalUnits);
     updateLangButtons();
     updateVisitorCountDisplay();
@@ -265,11 +266,66 @@ function updateSecondScreenLanguage() {
 }
 }
 
+function updateDrinkModalLanguage() {
+  const t = translations[currentLanguage];
+
+  // Modal title
+  const modalTitle = document.getElementById("drink-modal-title");
+  if (modalTitle) modalTitle.textContent = t.drinkModalTitle;
+
+  // Drink buttons
+  const drinkButtons = [
+    { id: "whiskey-btn", key: "whiskey" },
+    { id: "vodka-btn", key: "vodka" },
+    { id: "rum-btn", key: "rum" },
+    { id: "gin-btn", key: "gin" },
+    { id: "tequila-btn", key: "tequila" }
+  ];
+
+  drinkButtons.forEach(drink => {
+    const btn = document.getElementById(drink.id);
+    if (btn) {
+      btn.textContent = t[drink.key].toUpperCase(); // keep ALL CAPS styling
+      btn.setAttribute("aria-label", `${t.drinkModalTitle} ${t[drink.key]}`);
+    }
+  });
+
+  // Close button
+  const closeBtn = document.getElementById("close-modal-btn");
+  if (closeBtn) closeBtn.setAttribute("aria-label", currentLanguage === "bg" ? "Затвори модала" : "Close");
+}
+
 function updateMenuButton() {
   const menuBtn = document.getElementById("menu-btn");
   if (menuBtn) {
     menuBtn.textContent = translations[currentLanguage].menuBtn;
   }
+}
+
+function updateMenuLanguage() {
+  const t = translations[currentLanguage];
+
+  // Example: Modal title
+  const drinkModalTitle = document.getElementById('drink-modal-title');
+  if (drinkModalTitle) drinkModalTitle.textContent = t.drinkModalTitle;
+
+  // Example: Drink options (assuming you have one button per drink)
+  const whiskeyBtn = document.getElementById('drink-whiskey');
+  if (whiskeyBtn) whiskeyBtn.textContent = t.whiskey;
+
+  const vodkaBtn = document.getElementById('drink-vodka');
+  if (vodkaBtn) vodkaBtn.textContent = t.vodka;
+
+  const rumBtn = document.getElementById('drink-rum');
+  if (rumBtn) rumBtn.textContent = t.rum;
+
+  const ginBtn = document.getElementById('drink-gin');
+  if (ginBtn) ginBtn.textContent = t.gin;
+
+  const tequilaBtn = document.getElementById('drink-tequila');
+  if (tequilaBtn) tequilaBtn.textContent = t.tequila;
+
+  // ...repeat for any other menu items or options
 }
 
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
@@ -431,6 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSecondScreenLanguage();
     updateLangButtons();
     updateMenuButton();
+    updateDrinkModalLanguage()
     migrateHistoryDatesToIso();
     checkFerretResetAndReload();
     initializeVisitorCounter().then(updateVisitorCountDisplay);
