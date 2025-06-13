@@ -28,6 +28,15 @@ const translations = {
         rum: "Ром",
         gin: "Джин",
         tequila: "Текила",
+        alcoholLabel: "% Алкохол",
+        alcoholPlaceholder: "процент на алкохол",
+        amountLabel: "Количество в милилитри",
+        amountPlaceholder: "милилитри",
+        submitDrink: "OK",
+        closeDetailsAria: "Затвори модала",
+        drinkErrorTitle: "Моля въведете процент на алкохола и милилитри.",
+        closeDrinkError: "Назад",
+        drinkDetailsTitle: "Въведи повече информация за {drink} (прибл. {percent}%)",
         ferretStates: {
             neutral: [
                 "Хей, {name}! Всичко е супер!",
@@ -83,6 +92,15 @@ const translations = {
         rum: "Rum",
         gin: "Gin",
         tequila: "Tequila",
+        drinkDetailsTitle: "Enter more information about {drink} (approx. {percent}%)",
+        alcoholLabel: "% Alcohol",
+        alcoholPlaceholder: "alcohol percentage",
+        amountLabel: "Amount in milliliters",
+        amountPlaceholder: "milliliters",
+        submitDrink: "OK",
+        closeDetailsAria: "Close modal",
+        drinkErrorTitle: "Please enter alcohol percentage and milliliters.",
+        closeDrinkError: "Go back",
         ferretStates: {
             neutral: [
                 "Hey, {name}! Everything is great!",
@@ -110,6 +128,15 @@ const translations = {
             ]
         }
     }
+};
+
+const drinkPercents = {
+  whiskey: 40,
+  vodka: 40,
+  rum: 40,
+  gin: "35–50",
+  tequila: "35–50"
+  // ...add more as needed
 };
 
 // === LOAD OR DEFAULT LANGUAGE ===
@@ -164,7 +191,8 @@ document.addEventListener("DOMContentLoaded", () => {
     updateFirstScreenLanguage();
     updateSecondScreenLanguage();
     updateMenuButton();
-    updateDrinkModalLanguage()
+    updateDrinkModalLanguage();
+    updateDrinkDetailsModalLanguage();
     updateFerretMood(totalUnits);
     updateLangButtons();
     updateVisitorCountDisplay();
@@ -266,6 +294,39 @@ function updateSecondScreenLanguage() {
 }
 }
 
+function updateDrinkDetailsModalLanguage() {
+  const t = translations[currentLanguage];
+
+  // Drink details modal
+  const detailsTitle = document.getElementById('drink-details-title');
+  if (detailsTitle) detailsTitle.textContent = t.drinkDetailsTitle;
+
+  const alcoholLabel = document.querySelector('label[for="alcohol-percentage"]');
+  if (alcoholLabel) alcoholLabel.textContent = t.alcoholLabel;
+
+  const alcoholInput = document.getElementById('alcohol-percentage');
+  if (alcoholInput) alcoholInput.placeholder = t.alcoholPlaceholder;
+
+  const amountLabel = document.querySelector('label[for="drink-amount"]');
+  if (amountLabel) amountLabel.textContent = t.amountLabel;
+
+  const amountInput = document.getElementById('drink-amount');
+  if (amountInput) amountInput.placeholder = t.amountPlaceholder;
+
+  const submitBtn = document.getElementById('submit-drink');
+  if (submitBtn) submitBtn.textContent = t.submitDrink;
+
+  const closeDetailsBtn = document.getElementById('close-details-btn');
+  if (closeDetailsBtn) closeDetailsBtn.setAttribute('aria-label', t.closeDetailsAria);
+
+  // Drink error modal
+  const errorTitle = document.getElementById('drink-error-title');
+  if (errorTitle) errorTitle.textContent = t.drinkErrorTitle;
+
+  const closeErrorBtn = document.getElementById('close-drink-error-btn');
+  if (closeErrorBtn) closeErrorBtn.textContent = t.closeDrinkError;
+}
+
 function updateDrinkModalLanguage() {
   const t = translations[currentLanguage];
 
@@ -324,8 +385,6 @@ function updateMenuLanguage() {
 
   const tequilaBtn = document.getElementById('drink-tequila');
   if (tequilaBtn) tequilaBtn.textContent = t.tequila;
-
-  // ...repeat for any other menu items or options
 }
 
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
@@ -385,15 +444,21 @@ function updateAlcoholUnitsDisplay() {
     saveUnitsToStorage();
 }
 
-function openDetailsModal(drinkName) {
-    selectedDrink = drinkName;
-    const drinkDetailsModal = document.getElementById('drink-details-modal');
-    const modalTitle = drinkDetailsModal.querySelector('h2');
-    modalTitle.textContent = `Въведи повече информация за ${drinkName}`;
-    document.getElementById('alcohol-percentage').value = '';
-    document.getElementById('drink-amount').value = '';
-    drinkDetailsModal.style.display = 'flex';
-    document.getElementById('drink-modal').style.display = 'none';
+function openDetailsModal(drinkKey) {
+  selectedDrink = drinkKey;
+  const drinkDetailsModal = document.getElementById('drink-details-modal');
+  const modalTitle = drinkDetailsModal.querySelector('h2');
+  const t = translations[currentLanguage];
+  const percent = drinkPercents[drinkKey] || "?";
+  const drinkName = t[drinkKey] || drinkKey;
+  modalTitle.textContent = t.drinkDetailsTitle
+    .replace("{drink}", drinkName)
+    .replace("{percent}", percent);
+
+  document.getElementById('alcohol-percentage').value = '';
+  document.getElementById('drink-amount').value = '';
+  drinkDetailsModal.style.display = 'flex';
+  document.getElementById('drink-modal').style.display = 'none';
 }
 
 function saveHistoryEntry(drinkName, amount, percentage) {
@@ -487,24 +552,24 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSecondScreenLanguage();
     updateLangButtons();
     updateMenuButton();
-    updateDrinkModalLanguage()
+    updateDrinkModalLanguage();
+    updateDrinkDetailsModalLanguage();
     migrateHistoryDatesToIso();
     checkFerretResetAndReload();
     initializeVisitorCounter().then(updateVisitorCountDisplay);
     updateTermsTranslation();
 
-    const drinks = {
-        whiskey: 'Уиски (прибл.40-50%)',
-        vodka: 'Водка (прибл. 40%)',
-        rum: 'Ром (прибл. 40%)',
-        gin: 'Джин (прибл. 36-50%)',
-        tequila: 'Текила (прибл. 35-50%)',
-    };
+    // List of drink keys you support
+    const drinkKeys = ['whiskey', 'vodka', 'rum', 'gin', 'tequila'];
 
-    Object.keys(drinks).forEach(drinkId => {
-        document.getElementById(`${drinkId}-btn`)?.addEventListener('click', () => {
-            openDetailsModal(drinks[drinkId]);
-        });
+    // Add event listeners to each drink button
+    drinkKeys.forEach(drinkKey => {
+        const btn = document.getElementById(`${drinkKey}-btn`);
+        if (btn) {
+            btn.addEventListener('click', function() {
+                openDetailsModal(drinkKey);
+            });
+        }
     });
 
     document.getElementById('submit-drink')?.addEventListener('click', () => {
