@@ -1,3 +1,4 @@
+// === TRANSLATIONS ===
 const translations = {
     bg: {
         welcome1: "Тук ще се запознаеш с твоето ново порче!",
@@ -13,12 +14,12 @@ const translations = {
         startBtn: "Старт",
         infoBtnAlt: "Покажи информация",
         infoTitle: "Важна информация",
-        infoText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Бъдете отговорни и се грижете за здравето си.",
+        infoText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Моля, бъдете отговорни и се грижете за здравето си.",
         backBtnAlt: "Затвори информацията",
         alcoholUnitsLabel: "Алкохолни единици",
         chooseDrink: "Избери напитка",
         soFarDrank: "Досега сте изпили {units} единици алкохол",
-          termsBtn: "Общи условия",
+        termsBtn: "Общи условия",
         termsTitle: "Общи условия",
         ferretStates: {
             neutral: [
@@ -100,114 +101,105 @@ const translations = {
 // === LOAD OR DEFAULT LANGUAGE ===
 let currentLanguage = localStorage.getItem('language') || 'en';
 
-// === LANGUAGE BUTTON UPDATE FUNCTION ===
+// --- Utility: 10-hour Ferret Reset ---
+function checkFerretReset() {
+    const now = Date.now();
+    const lastUpdate = Number(localStorage.getItem('lastUnitsUpdate') || now);
+    const hoursPassed = (now - lastUpdate) / (1000 * 60 * 60);
+    if (hoursPassed > 10) {
+        localStorage.setItem('totalUnits', 0);
+        localStorage.setItem('lastUnitsUpdate', now);
+    }
+}
+
+// Helper: always reload totalUnits after possible reset
+function checkFerretResetAndReload() {
+    checkFerretReset();
+    totalUnits = parseFloat(localStorage.getItem('totalUnits')) || 0;
+}
+
 function updateLangButton() {
     const langBtn = document.getElementById('language-switch-btn');
     if (langBtn) {
         langBtn.textContent = currentLanguage === 'bg' ? 'EN' : 'BG';
-    } else {
-        console.error('Language switch button not found.');
     }
 }
 
-const langBtn = document.getElementById('language-switch-btn');
-if (langBtn) {
-    langBtn.addEventListener('click', () => {
-        currentLanguage = currentLanguage === 'bg' ? 'en' : 'bg'; // Toggle language
-        localStorage.setItem('language', currentLanguage); // Save to localStorage
-        updateWelcomeScreenLanguage();
-         updateFirstScreenLanguage();
-         updateSecondScreenLanguage();
-         updateFerretMood(totalUnits)
-        updateLangButton(); // Update button text
-        updateVisitorCountDisplay(); // Ensure counter stays updated after translation
-    });
-}
+// --- Language Switcher
+document.addEventListener("DOMContentLoaded", () => {
+    const langBtn = document.getElementById("language-switch-btn");
+    if (langBtn) {
+        langBtn.addEventListener("click", () => {
+            currentLanguage = currentLanguage === "bg" ? "en" : "bg";
+            localStorage.setItem("language", currentLanguage);
+            updateWelcomeScreenLanguage();
+            updateFirstScreenLanguage();
+            updateSecondScreenLanguage();
+            updateFerretMood(totalUnits);
+            updateLangButton();
+            updateVisitorCountDisplay();
+            updateTermsTranslation();
+        });
+    }
+});
 
-// === TRANSLATE WELCOME SCREEN FUNCTION ===
+// ... rest of translation functions unchanged ...
+
 function updateWelcomeScreenLanguage() {
-    const t = translations[currentLanguage]; // Get translations for the current language
+    const t = translations[currentLanguage];
+    if (!t) return;
 
-    // Ensure translations exist for the current language
-    if (!t) {
-        console.error(`No translations found for language: ${currentLanguage}`);
-        return;
-    }
-
-    // Update welcome texts
     const paragraphs = document.querySelectorAll('#welcome-screen p');
     if (paragraphs.length >= 2) {
         paragraphs[0].textContent = t.welcome1 || '';
         paragraphs[1].textContent = t.welcome2 || '';
-    } else {
-        console.error("Welcome screen paragraphs are missing or incorrectly structured.");
     }
 
-    // Update how-to list
     const howtoList = document.querySelectorAll('#welcome-screen ul li');
     if (howtoList.length >= 3) {
         howtoList[0].textContent = t.howto1 || '';
         howtoList[1].textContent = t.howto2 || '';
         howtoList[2].textContent = t.howto3 || '';
-    } else {
-        console.error("How-to list items are missing or incorrectly structured.");
     }
 
-    // Update start button (alt text)
-// Update start button (alt text and label)
-const continueBtn = document.querySelector('#continue-btn');
-const continueBtnLabel = document.querySelector('#continue-btn-label');
-if (continueBtnLabel) {
-    continueBtnLabel.textContent = t.start || '';
-    continueBtn.setAttribute('aria-label', t.start || '');
-} else {
-    console.error("Continue button label is missing.");
-}
+    const continueBtn = document.querySelector('#continue-btn');
+    const continueBtnLabel = document.querySelector('#continue-btn-label');
+    if (continueBtnLabel) {
+        continueBtnLabel.textContent = t.start || '';
+        continueBtn.setAttribute('aria-label', t.start || '');
+    }
 
-    // Update visitor counter label (keep the number from the span)
     const visitorCounter = document.querySelector('#visitor-counter');
     const visitorCount = document.querySelector('#visitor-count');
     if (visitorCounter && visitorCount) {
         visitorCounter.innerHTML = `<span id="visitor-count">${visitorCount.textContent}</span> ${t.visitor || ''}`;
-    } else {
-        console.error("Visitor counter elements are missing.");
     }
 
-    // Update document title
     document.title = t.appName || 'Porko app';
 }
 
-// FIRST SCREEN TRANSLATE
 function updateFirstScreenLanguage() {
     const t = translations[currentLanguage];
-
-    // Label for username
     const usernameLabel = document.querySelector('#user-info-form label[for="username"]');
     if (usernameLabel) usernameLabel.textContent = t.usernameLabel;
 
-    // Input placeholder
     const usernameInput = document.getElementById('username');
     if (usernameInput) usernameInput.placeholder = t.usernamePlaceholder;
 
- // Start button label (auto-translate)
     const startBtnLabel = document.getElementById('start-btn-label');
     if (startBtnLabel) startBtnLabel.textContent = t.startBtn;
-    
-    // Info button image alt & aria-label
+
     const infoBtnImg = document.querySelector('#info-btn img');
     const infoBtn = document.getElementById('info-btn');
     if (infoBtnImg) infoBtnImg.alt = t.infoBtnAlt;
     if (infoBtn) infoBtn.setAttribute('aria-label', t.infoBtnAlt);
 
-    // Info popup title
     const infoTitle = document.getElementById('info-title');
     if (infoTitle) infoTitle.textContent = t.infoTitle;
 
-    // Info popup text
     const infoText = document.querySelector('#info-popup p');
     if (infoText) infoText.textContent = t.infoText;
 
-    // Info popup back button alt & aria-label
     const backBtnImg = document.querySelector('#back-btn img');
     const backBtn = document.getElementById('back-btn');
     if (backBtnImg) backBtnImg.alt = t.backBtnAlt;
@@ -219,7 +211,6 @@ function updateTermsTranslation() {
     const termsFromInfoBtn = document.getElementById('terms-from-info-btn');
     if (termsFromInfoBtn) termsFromInfoBtn.textContent = t.termsBtn;
 
-    // Optionally also update the Terms screen:
     const termsTitle = document.getElementById('terms-title');
     if (termsTitle) termsTitle.textContent = t.termsTitle;
     const termsText = document.getElementById('terms-text');
@@ -228,12 +219,9 @@ function updateTermsTranslation() {
 
 function updateSecondScreenLanguage() {
     const t = translations[currentLanguage];
-
-    // Alcohol units label
     const unitsLabel = document.getElementById('alcohol-units-label');
     if (unitsLabel) unitsLabel.textContent = t.alcoholUnitsLabel;
-    
-    // Choose drink button/label
+
     const chooseDrinkBtn = document.getElementById('menu-btn');
     if (chooseDrinkBtn) chooseDrinkBtn.textContent = t.chooseDrink;
 }
@@ -242,41 +230,13 @@ function updateSecondScreenLanguage() {
 let selectedDrink = "";
 let totalUnits = 0;
 let userName = "";
-let lastUnitsUpdate = null;
 
-// === ALCOHOL & FERRET STATE PERSISTENCE ===
+// === ALCOHOL & FERRET STATE PERSISTENCE & RESET LOGIC ===
 function saveUnitsToStorage() {
     localStorage.setItem('totalUnits', totalUnits);
     localStorage.setItem('lastUnitsUpdate', Date.now());
 }
 
-function restoreUnitsAndMaybeReset() {
-    const savedUnits = localStorage.getItem('totalUnits');
-    const savedUpdate = localStorage.getItem('lastUnitsUpdate');
-    const now = Date.now();
-
-    // Restore or initialize values
-    totalUnits = savedUnits !== null ? parseFloat(savedUnits) : 0;
-    let lastUnitsUpdate = savedUpdate !== null ? Number(savedUpdate) : now;
-
-    // Calculate hours since last update
-    const hoursPassed = (now - lastUnitsUpdate) / (1000 * 60 * 60);
-
-    // If over 10 hours, reset
-    if (hoursPassed > 10) {
-        totalUnits = 0;
-        lastUnitsUpdate = now;
-        localStorage.setItem('totalUnits', 0);
-        localStorage.setItem('lastUnitsUpdate', lastUnitsUpdate);
-        localStorage.setItem('lastMoodReset', new Date().toISOString());
-    }
-
-        // Always update UI to reflect current state
-    updateAlcoholUnitsDisplay();
-    updateFerretMood(totalUnits);
-}
-
-// === FUNCTION: FERRET MOOD ===
 function updateFerretMood(units) {
     const states = ['neutral', 'tipsy', 'drunk', 'wobbly'];
     let mood = 'neutral';
@@ -287,31 +247,22 @@ function updateFerretMood(units) {
 
     const t = translations[currentLanguage];
     const messages = t.ferretStates[mood];
+    const nameToUse = userName ? userName : (t.usernamePlaceholder || "Friend");
+    if (!messages || !messages.length) return;
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)].replace('{name}', nameToUse);
 
-    // Defensive check
-    if (!messages || !messages.length) {
-        console.error('No messages for this mood/language!');
-        return;
-    }
-
-    const randomMsg = messages[Math.floor(Math.random() * messages.length)].replace('{name}', userName);
-
-    // Hide all mood elements
     states.forEach(state => {
         const ferretElement = document.getElementById(`ferret-${state}`);
         const bubbleElement = document.getElementById(`bubble-${state}`);
         const bubbleTextElement = document.getElementById(`bubble-text-${state}`);
-
         if (ferretElement) ferretElement.style.display = 'none';
         if (bubbleElement) bubbleElement.style.display = 'none';
         if (bubbleTextElement) bubbleTextElement.style.display = 'none';
     });
 
-    // Show the correct elements
     const ferretElement = document.getElementById(`ferret-${mood}`);
     const bubbleElement = document.getElementById(`bubble-${mood}`);
     const bubbleTextElement = document.getElementById(`bubble-text-${mood}`);
-
     if (ferretElement) ferretElement.style.display = 'block';
     if (bubbleElement) bubbleElement.style.display = 'block';
     if (bubbleTextElement) {
@@ -320,36 +271,28 @@ function updateFerretMood(units) {
     }
 }
 
-// === FUNCTION: CALCULATE ALCOHOL UNITS ===
 function calculateAlcoholUnits(alcoholPercentage, drinkAmount) {
     return (alcoholPercentage * drinkAmount) / 1000;
 }
 
-// === FUNCTION: UPDATE ALCOHOL UNITS DISPLAY ===
 function updateAlcoholUnitsDisplay() {
-    const unitsTextElement = document.getElementById('dynamic-units');
-      const t = translations[currentLanguage];
+    const t = translations[currentLanguage];
     const formatted = t.soFarDrank.replace('{units}', `<span class="orange-text">${totalUnits.toFixed(2)}</span>`);
     document.getElementById('alcohol-units-text').innerHTML = formatted;
     saveUnitsToStorage();
 }
 
-// === FUNCTION: OPEN DRINK DETAILS MODAL ===
 function openDetailsModal(drinkName) {
     selectedDrink = drinkName;
-
     const drinkDetailsModal = document.getElementById('drink-details-modal');
     const modalTitle = drinkDetailsModal.querySelector('h2');
     modalTitle.textContent = `Въведи повече информация за ${drinkName}`;
-
     document.getElementById('alcohol-percentage').value = '';
     document.getElementById('drink-amount').value = '';
-
     drinkDetailsModal.style.display = 'flex';
     document.getElementById('drink-modal').style.display = 'none';
 }
 
-// === FUNCTION: SAVE HISTORY ENTRY ===
 function saveHistoryEntry(drinkName, amount, percentage) {
     const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
     const newEntry = {
@@ -362,7 +305,6 @@ function saveHistoryEntry(drinkName, amount, percentage) {
     localStorage.setItem('drinkHistory', JSON.stringify(history));
 }
 
-// === FUNCTION: MIGRATE HISTORY DATES TO ISO ===
 function isIsoDateString(str) {
     return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str);
 }
@@ -385,45 +327,39 @@ function migrateHistoryDatesToIso() {
     }
 }
 
-// === FIREBASE VISITOR COUNTER LOGIC (UNCHANGED) ===
+// ===== FIREBASE VISITOR COUNTER LOGIC (SAFE, NO USER DATA WRITE) =====
 import { database } from "./firebase.js";
 import { ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
-
+// ---- Only allow reading/incrementing the visitor counter, not writing user data ----
 const auth = getAuth();
-signInAnonymously(auth)
+signInAnonymously(auth);
 const visitorRef = ref(database, "visitorCounter");
 
 const initializeVisitorCounter = async () => {
     try {
         const snapshot = await get(visitorRef);
         if (!snapshot.exists()) {
-            await set(visitorRef, { count: 0 });
-            console.log("Visitor counter initialized to 0.");
+            try {
+                await set(visitorRef, { count: 0 });
+            } catch (err) {}
         }
-    } catch (error) {
-        console.error("Error initializing visitor counter:", error);
-    }
+    } catch (error) {}
 };
 
 const updateVisitorCountDisplay = async () => {
-       const visitorCounterElement = document.getElementById("visitor-count");
-    if (!visitorCounterElement) {
-        console.error("Visitor counter element not found in DOM.");
-        return;
-    }
+    const visitorCounterElement = document.getElementById("visitor-count");
+    if (!visitorCounterElement) return;
     try {
         const snapshot = await get(visitorRef);
         if (snapshot.exists()) {
             const visitorCount = snapshot.val().count || 0;
             visitorCounterElement.textContent = visitorCount;
         } else {
-            console.warn("Visitor counter not found in Firebase.");
             visitorCounterElement.textContent = 0;
         }
     } catch (error) {
-        console.error("Error fetching visitor counter:", error);
         visitorCounterElement.textContent = "Error";
     }
 };
@@ -436,12 +372,9 @@ const incrementVisitorCount = () => {
         return { count: currentData.count + 1 };
     })
     .then(() => {
-        console.log("Visitor counter updated successfully!");
         updateVisitorCountDisplay();
     })
-    .catch((error) => {
-        console.error("Error updating visitor counter:", error);
-    });
+    .catch(() => {});
 };
 
 // === APP INIT ===
@@ -450,13 +383,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFirstScreenLanguage();
     updateLangButton();
     migrateHistoryDatesToIso();
- restoreUnitsAndMaybeReset();    // <--- 1. Load stored units
-    checkAndResetFerretMood();     // <--- 2. Immediately check & reset mood if needed!
-    // Firebase visitor counter
+    checkFerretResetAndReload();
     initializeVisitorCounter().then(updateVisitorCountDisplay);
     updateTermsTranslation();
 
-    // --- DRINKS LOGIC ---
     const drinks = {
         whiskey: 'Уиски (прибл.40-50%)',
         vodka: 'Водка (прибл. 40%)',
@@ -466,13 +396,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     Object.keys(drinks).forEach(drinkId => {
-        document.getElementById(`${drinkId}-btn`).addEventListener('click', () => {
+        document.getElementById(`${drinkId}-btn`)?.addEventListener('click', () => {
             openDetailsModal(drinks[drinkId]);
         });
     });
 
-    // --- DRINK DETAILS SUBMIT ---
-    document.getElementById('submit-drink').addEventListener('click', () => {
+    document.getElementById('submit-drink')?.addEventListener('click', () => {
         const alcoholPercentage = parseFloat(document.getElementById('alcohol-percentage').value);
         const drinkAmount = parseFloat(document.getElementById('drink-amount').value);
 
@@ -516,7 +445,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     });
 
-    // --- STATISTICS & SETTINGS ---
     const statisticsBtn = document.getElementById('statistics-btn');
     const statisticsScreen = document.getElementById('statistics-screen');
     const settingsScreen = document.getElementById('settings-screen');
@@ -535,7 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CALCULATE STATISTICS ---
     function calculateTotalAlcohol(startDate, endDate) {
         const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
         const total = history.reduce((sum, entry) => {
@@ -564,36 +491,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
     }
 
-    // --- FERRET MOOD RESET LOGIC: 10 HOUR ---
-    function resetFerretMoodToNeutral() {
-        totalUnits = 0;
-        updateAlcoholUnitsDisplay();
-        updateFerretMood(0);
-        localStorage.setItem('totalUnits', 0);
-        localStorage.setItem('lastUnitsUpdate', Date.now());
-        localStorage.setItem('lastMoodReset', new Date().toISOString());
-    }
-
-    function checkAndResetFerretMood() {
-        const lastResetTime = localStorage.getItem('lastMoodReset');
-        const lastUpdate = localStorage.getItem('lastUnitsUpdate');
-        const now = Date.now();
-
-        let shouldReset = false;
-        if (lastUpdate && (now - Number(lastUpdate)) > 10 * 60 * 60 * 1000) {
-            shouldReset = true;
-        }
-        if (!lastResetTime || shouldReset) {
-            resetFerretMoodToNeutral();
-        }
-    }
-
-    // --- MODAL & UI BUTTONS ---
-    // Info popup
     const infoBtn = document.getElementById('info-btn');
     const infoPopup = document.getElementById('info-popup');
     const backBtn = document.getElementById('back-btn');
-    const termsFromInfoBtn = document.getElementById('terms-from-info-btn'); // New button in info popup
+    const termsFromInfoBtn = document.getElementById('terms-from-info-btn');
     const termsOfUseScreen = document.getElementById('terms-of-use-screen');
     const firstScreen = document.getElementById('first-screen');
     const backFromTermsBtn = document.getElementById('back-from-terms-btn');
@@ -604,17 +505,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
-    termsFromInfoBtn.addEventListener('click', () => {
-        infoPopup.style.opacity = 0;
-        setTimeout(() => {
-            infoPopup.style.display = 'none';
-            // Hide all app containers, then show terms
-            document.querySelectorAll('.app-container').forEach(el => el.style.display = 'none');
-            termsOfUseScreen.style.display = 'flex';
-        }, 300);
-    });
-}
+    if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
+        termsFromInfoBtn.addEventListener('click', () => {
+            infoPopup.style.opacity = 0;
+            setTimeout(() => {
+                infoPopup.style.display = 'none';
+                document.querySelectorAll('.app-container').forEach(el => el.style.display = 'none');
+                termsOfUseScreen.style.display = 'flex';
+            }, 300);
+        });
+    }
 
     if (backBtn) {
         backBtn.addEventListener('click', () => {
@@ -623,7 +523,6 @@ if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
         });
     }
 
-    // Settings
     const settingsBtn = document.getElementById('settings-btn');
     const secondScreen = document.getElementById('second-screen');
     const backFromSettingsBtn = document.getElementById('back-from-settings-btn');
@@ -641,7 +540,6 @@ if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
         });
     }
 
-    // FAQ
     const faqAlcoholInfoBtn = document.getElementById('faq-alcohol-info-btn');
     const faqScreen = document.getElementById('faq-screen');
     const backFromFaqBtn = document.getElementById('back-from-faq-btn');
@@ -656,8 +554,6 @@ if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
         });
     }
 
-
-    // Terms of Use
     const termsOfUseBtn = document.getElementById('terms-of-use-btn');
     if (termsOfUseBtn) {
         termsOfUseBtn.addEventListener('click', () => {
@@ -666,22 +562,18 @@ if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
         });
     }
 
-if (backFromTermsBtn) {
-    backFromTermsBtn.addEventListener('click', () => {
-        // If first screen is hidden, go to settings; if not, go to first screen
-        if (settingsScreen && settingsScreen.style.display === 'flex') {
-            termsOfUseScreen.style.display = 'none';
-            settingsScreen.style.display = 'flex';
-        } else if (firstScreen) {
-            termsOfUseScreen.style.display = 'none';
-            firstScreen.style.display = 'flex';
-        }
-    });
-} else {
-    console.error('Back button in Terms of Use screen not found.');
-}
+    if (backFromTermsBtn) {
+        backFromTermsBtn.addEventListener('click', () => {
+            if (settingsScreen && settingsScreen.style.display === 'flex') {
+                termsOfUseScreen.style.display = 'none';
+                settingsScreen.style.display = 'flex';
+            } else if (firstScreen) {
+                termsOfUseScreen.style.display = 'none';
+                firstScreen.style.display = 'flex';
+            }
+        });
+    }
 
-    // QR Code
     const qrCodeBtn = document.getElementById('qr-code-btn');
     const qrCodeScreen = document.getElementById('qr-code-screen');
     const backFromQrBtn = document.getElementById('back-from-qr-btn');
@@ -698,47 +590,33 @@ if (backFromTermsBtn) {
         });
     }
 
-    // Welcome screen logic
     document.getElementById('welcome-screen').style.display = 'flex';
     document.getElementById('first-screen').style.display = 'none';
     document.getElementById('second-screen').style.display = 'none';
     document.getElementById('settings-screen').style.display = 'none';
 
-const continueBtn = document.getElementById('continue-btn');
-const welcomeScreen = document.getElementById('welcome-screen');
-if (continueBtn && welcomeScreen && firstScreen) {
-    continueBtn.addEventListener('click', () => {
-        welcomeScreen.style.display = 'none';
-        firstScreen.style.display = 'flex';
-    });
-}
+    const continueBtn = document.getElementById('continue-btn');
+    const welcomeScreen = document.getElementById('welcome-screen');
+    if (continueBtn && welcomeScreen && firstScreen) {
+        continueBtn.addEventListener('click', () => {
+            welcomeScreen.style.display = 'none';
+            firstScreen.style.display = 'flex';
+        });
+    }
 
-
-    // User info form (Start)
+    // === CRUCIAL: always update UI after user logs in ===
     const userForm = document.getElementById('user-info-form');
     userForm.addEventListener('submit', async event => {
         event.preventDefault();
         const usernameInput = document.getElementById('username');
         userName = usernameInput.value.trim();
 
-       if (!userName) {
-            alert(translations[currentLanguage].emptyNameAlert);
+        if (!userName) {
+            alert(translations[currentLanguage].emptyNameAlert || "Please enter your name.");
             return;
         }
 
-        // Save user info to Firebase
-        try {
-            const userRef = ref(database, `users/${userName}`);
-            await set(userRef, {
-                username: userName,
-                createdAt: new Date().toISOString()
-            });
-            console.log('User info saved to Firebase:', userName);
-        } catch (error) {
-            console.error('Error saving user info to Firebase:', error);
-        }
-
-        // Count unique visitor per device
+        // --- FIX: No user info write to Firebase, only increment visitor count ---
         if (!localStorage.getItem('visitorCounted')) {
             incrementVisitorCount();
             localStorage.setItem('visitorCounted', 'true');
@@ -746,17 +624,16 @@ if (continueBtn && welcomeScreen && firstScreen) {
 
         document.getElementById('first-screen').style.display = 'none';
         document.getElementById('second-screen').style.display = 'flex';
+        updateAlcoholUnitsDisplay();
         updateFerretMood(totalUnits);
     });
 
-    // Choose drink
     const menuButton = document.getElementById('menu-btn');
     const drinkModal = document.getElementById('drink-modal');
     menuButton.addEventListener('click', () => {
         drinkModal.style.display = 'flex';
     });
 
-    // Close modal buttons
     const closeModalButton = document.getElementById('close-modal-btn');
     const closeDetailsButton = document.getElementById('close-details-btn');
     if (closeModalButton) {
@@ -770,7 +647,6 @@ if (continueBtn && welcomeScreen && firstScreen) {
         });
     }
 
-    // Drink error modal
     const closeDrinkErrorBtn = document.getElementById('close-drink-error-btn');
     if (closeDrinkErrorBtn) {
         closeDrinkErrorBtn.addEventListener('click', () => {
@@ -778,7 +654,6 @@ if (continueBtn && welcomeScreen && firstScreen) {
         });
     }
 
-    // History Log Screen
     const historyLogBtn = document.getElementById('history-log-btn');
     const historyLogScreen = document.getElementById('history-log-screen');
     const backFromHistoryBtn = document.getElementById('back-from-history-btn');
@@ -809,7 +684,6 @@ if (continueBtn && welcomeScreen && firstScreen) {
         });
     }
 
-    // Clear history modal
     const clearHistoryBtn = document.getElementById('clear-history-btn');
     const clearHistoryModal = document.getElementById('clear-history-modal');
     const confirmClearBtn = document.getElementById('confirm-clear-btn');
@@ -826,7 +700,6 @@ if (continueBtn && welcomeScreen && firstScreen) {
         clearHistoryModal.style.display = 'none';
     });
 
-    // History log open/close
     if (historyLogBtn) {
         historyLogBtn.addEventListener('click', () => {
             loadHistory();
@@ -841,7 +714,6 @@ if (continueBtn && welcomeScreen && firstScreen) {
         });
     }
 
-    // Change your name logic
     const changeNameBtn = document.getElementById('change-name-btn');
     if (changeNameBtn) {
         changeNameBtn.addEventListener('click', () => {
@@ -849,4 +721,27 @@ if (continueBtn && welcomeScreen && firstScreen) {
             firstScreen.style.display = 'flex';
         });
     }
+
+// === AUTO FERRET RESET TIMER ===
+// This code will check every 30 seconds if a reset is needed, and update the ferret and UI instantly.
+
+setInterval(() => {
+    const oldUnits = totalUnits;
+    // Use the same logic as on page load
+    checkFerretReset();
+    const newUnits = parseFloat(localStorage.getItem('totalUnits')) || 0;
+    console.log("Timer tick", { oldUnits, current: parseFloat(localStorage.getItem('totalUnits')) });
+    if (oldUnits !== newUnits) {
+        totalUnits = newUnits;
+        updateAlcoholUnitsDisplay();
+        updateFerretMood(totalUnits);
+    }
+}, 30000); // every 30 seconds
+
+// Also, call this once on page load to ensure UI is correct
+checkFerretReset();
+totalUnits = parseFloat(localStorage.getItem('totalUnits')) || 0;
+updateAlcoholUnitsDisplay();
+updateFerretMood(totalUnits);
+
 });
