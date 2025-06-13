@@ -21,6 +21,13 @@ const translations = {
         soFarDrank: "Досега сте изпили {units} единици алкохол",
         termsBtn: "Общи условия",
         termsTitle: "Общи условия",
+        menumenuBtn: "Меню",
+          drinkModalTitle: "Избери напитка",
+          whiskey: "Уиски",
+           vodka: "Водка",
+           rum: "Ром",
+           gin: "Джин",
+           tequila: "Текила",
         ferretStates: {
             neutral: [
                 "Хей, {name}! Всичко е супер!",
@@ -69,6 +76,13 @@ const translations = {
         soFarDrank: "So far you have drunk {units} alcohol units",
         termsBtn: "Terms of Use",
         termsTitle: "Terms of Use",
+        menuBtn: "Menu",
+          drinkModalTitle: "Choose a drink",
+          whiskey: "Whiskey",
+          vodka: "Vodka",
+          rum: "Rum",
+          gin: "Gin",
+          tequila: "Tequila",
         ferretStates: {
             neutral: [
                 "Hey, {name}! Everything is great!",
@@ -221,15 +235,18 @@ function updateSecondScreenLanguage() {
     const t = translations[currentLanguage];
     const unitsLabel = document.getElementById('alcohol-units-label');
     if (unitsLabel) unitsLabel.textContent = t.alcoholUnitsLabel;
-
-    const chooseDrinkBtn = document.getElementById('menu-btn');
-    if (chooseDrinkBtn) chooseDrinkBtn.textContent = t.chooseDrink;
+    const menuBtn = document.getElementById('menu-btn');
+    if (menuBtn) {
+    menuBtn.textContent = t.menuBtn;
+    menuBtn.setAttribute('aria-label', t.menuBtn);
+}
 }
 
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
 let selectedDrink = "";
 let totalUnits = 0;
 let userName = "";
+let previousScreenBeforeTerms = null;
 
 // === ALCOHOL & FERRET STATE PERSISTENCE & RESET LOGIC ===
 function saveUnitsToStorage() {
@@ -505,16 +522,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
-        termsFromInfoBtn.addEventListener('click', () => {
-            infoPopup.style.opacity = 0;
-            setTimeout(() => {
-                infoPopup.style.display = 'none';
-                document.querySelectorAll('.app-container').forEach(el => el.style.display = 'none');
-                termsOfUseScreen.style.display = 'flex';
-            }, 300);
-        });
-    }
+if (termsFromInfoBtn && termsOfUseScreen && infoPopup) {
+    termsFromInfoBtn.addEventListener('click', () => {
+        infoPopup.style.opacity = 0;
+        setTimeout(() => {
+            infoPopup.style.display = 'none';
+            document.querySelectorAll('.app-container').forEach(el => el.style.display = 'none');
+            previousScreenBeforeTerms = firstScreen; // <-- Add this line
+            termsOfUseScreen.style.display = 'flex';
+        }, 300);
+    });
+}
 
     if (backBtn) {
         backBtn.addEventListener('click', () => {
@@ -555,24 +573,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const termsOfUseBtn = document.getElementById('terms-of-use-btn');
-    if (termsOfUseBtn) {
-        termsOfUseBtn.addEventListener('click', () => {
-            settingsScreen.style.display = 'none';
-            termsOfUseScreen.style.display = 'flex';
-        });
-    }
+if (termsOfUseBtn) {
+    termsOfUseBtn.addEventListener('click', () => {
+        previousScreenBeforeTerms = settingsScreen; // <-- Add this line
+        settingsScreen.style.display = 'none';
+        termsOfUseScreen.style.display = 'flex';
+    });
+}
 
-    if (backFromTermsBtn) {
-        backFromTermsBtn.addEventListener('click', () => {
-            if (settingsScreen && settingsScreen.style.display === 'flex') {
-                termsOfUseScreen.style.display = 'none';
-                settingsScreen.style.display = 'flex';
-            } else if (firstScreen) {
-                termsOfUseScreen.style.display = 'none';
-                firstScreen.style.display = 'flex';
-            }
-        });
-    }
+if (backFromTermsBtn) {
+    backFromTermsBtn.addEventListener('click', () => {
+        termsOfUseScreen.style.display = 'none';
+        if (previousScreenBeforeTerms) {
+            previousScreenBeforeTerms.style.display = 'flex';
+        } else {
+            firstScreen.style.display = 'flex';
+        }
+    });
+} else {
+    console.error('Back button in Terms of Use screen not found.');
+}
 
     const qrCodeBtn = document.getElementById('qr-code-btn');
     const qrCodeScreen = document.getElementById('qr-code-screen');

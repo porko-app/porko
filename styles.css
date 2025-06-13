@@ -834,43 +834,52 @@ input[type="number"] {
   transform: scale(1.09);
 }
 
-#modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 90vh; /* Make the content fill the modal width */
-  max-height: 80vh; /* Limit the max height to 80% of the viewport height */
-  position: relative;
-  overflow: visible;
-}
-
 #drink-options {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align buttons from the top */
-  align-items: center; /* Center buttons horizontally */
-  margin-top: 0; /* Removed negative margin to keep proper spacing */
-  gap: 10px; /* Space between buttons */
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
 }
 
-/* Style for drink buttons */
 .drink-option {
-  background: none;
+  width: 240px;
+  max-width: 90vw;
+  height: 48px;
+  background: #221e32;
   border: none;
+  border-radius: 24px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 0;
+  outline: none;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.07);
   cursor: pointer;
-  padding: 5px 10px; /* Adjust padding to make the buttons smaller */
-  color: #333; /* Use a neutral text color for better readability */
-  border-radius: 8px; /* Rounded corners for a polished look */
-  outline: none !important;
-  box-shadow: none !important;
-  transition: transform 0.3s ease, background-color 0.3s ease; /* Add smooth hover effect */
-  width: 80%; /* Make the buttons narrower and centered */
-  max-width: 200px; /* Set a maximum width for consistency */
-  height: 40px; /* Adjust the height to make the buttons smaller */
+  transition: background 0.16s, transform 0.13s;
   display: flex;
-  justify-content: center; /* Center text horizontally */
-  align-items: center; /* Center text vertically */
-  margin: 10px auto; /* Add spacing between buttons and center them */
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.drink-option:hover,
+.drink-option:focus {
+  background: #2f2843;
+  color: #ffae1a;
+  transform: scale(1.04);
+}
+
+/* Responsive for mobile */
+@media (max-width: 480px) {
+  .drink-option {
+    width: 98vw;
+    height: 60px;
+    font-size: 1.25rem;
+  }
 }
 
 /* Hover effect for drink buttons */
@@ -878,15 +887,6 @@ input[type="number"] {
   transform: scale(1.05); /* Slightly scale up on hover */
   background-color: #f4f4f4; /* Add a light background color on hover */
   color: #000; /* Change the text color on hover */
-}
-
-
-/* Style for drink button images (if any) */
-.drink-option img {
-  width: 24px; /* Reduce image size */
-  height: 24px; /* Maintain aspect ratio */
-  margin-right: 8px; /* Add spacing between the image and text */
-  object-fit: contain; /* Ensure the image doesn't distort */
 }
 
 #close-modal-btn {
@@ -906,22 +906,6 @@ input[type="number"] {
 .drink-option:active {
   outline: none !important;
   box-shadow: none !important;
-}
-
-.drink-option img {
-  width: 70px; /* make it bigger if you want */
-  height: 50px;
-  object-fit: cover;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-.drink-option img {
-  width: 300px; /* Increase the width to make the image more rectangular */
-  height: 60px; /* Set height for a longer rectangular shape */
-  object-fit: cover; /* Ensure the image covers the button without distortion */
-  border-radius: 5px; /* Optional: rounded edges for the image */
 }
 
 .drink-option:hover {
@@ -1234,23 +1218,17 @@ input[type="number"] {
 }
 
 /* Ensure the modal is positioned within the dark blue frame */
-#clear-history-modal {
-  position: absolute; /* Use absolute positioning relative to the parent frame */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Offset by 50% to truly center */
-  width: 70%; /* Adjust width to fit within the frame */
-  max-width: 250px; /* Optional: set a maximum width */
-  background-color: white; /* Modal background color */
-  border-radius: 10px; /* Optional: rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
-  z-index: 1000; /* Ensure it appears on top of other elements */
-  padding: 20px; /* Add padding for content inside the modal */
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: center; /* Center text vertically */
-  align-items: center; /* Center text horizontally */
-  text-align: center; /* Ensure text alignment is centered */
+#clear-history-modal, .modal
+/* Modal Overlay */
+.modal, #clear-history-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Overlay to dim the background */
@@ -1299,17 +1277,21 @@ input[type="number"] {
   z-index: 1002;
 }
 /* Modal Content Container */
-.modal-content {
+/* Modal Content Container */
+.modal-content, #modal-content {
   position: relative;
   background: #fff;
   border-radius: 16px;
   padding: 32px 22px 24px 22px;
-  width: 95vw;
-  max-width: 320px; /* Adjust for your design */
+  width: 90vw;
+  max-width: 320px;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 8px rgba(0,0,0,0.10);
   text-align: center;
   animation: modalIn 0.33s cubic-bezier(.25,.8,.25,1);
+  max-height: 80vh;       /* Limit modal box height */
+  overflow-y: auto;       /* Scroll if content is too tall */
+  margin: 0;              /* No margin */
 }
 
 /* Modal Title (add extra top margin for close button space) */
@@ -1532,4 +1514,35 @@ input[type="number"] {
   font-size: 15px;
   line-height: 1.6;
   color: #e2e2e2;
+}
+
+.drink-modal-content {
+  background: transparent !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  width: 380px;
+  min-height: 540px;
+  max-width: 98vw;
+  max-height: 90vh;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 64px !important;
+  text-align: center; 
+}
+
+#drink-options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drink-modal-content .close-btn, 
+#close-modal-btn {
+  top: 29px !important; /* Move the X button down to match the new padding */
+  right: 4px !important;
 }
