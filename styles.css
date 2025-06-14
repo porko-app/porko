@@ -313,12 +313,15 @@ input::-webkit-inner-spin-button {
 /* Adjust the text position inside the speech bubbles */
 /* Ensure speech bubble text wraps properly and fits */
 .bubble-text {
-  word-wrap: break-word; /* Ensure long words break to the next line */
+  display: inline-block;
+   max-width: 320px;                 /* Adjust this value to control bubble width */
+  padding: 16px 24px;
+    white-space: normal;              /* Allow text to wrap onto multiple lines */
+  word-break: break-word; 
   white-space: normal; /* Allow text to wrap onto multiple lines */
   line-height: 1.5; /* Improve readability between lines */
-  font-size: 13px; /* Adjust font size for better visibility */
+  font-size: 14px; /* Adjust font size for better visibility */
   text-align: center; /* Center align the text in the bubble */
-  padding: 10px; /* Add padding for spacing around the text */
   width: 90%; /* Ensure the text fits within the bubble */
   margin: 0 auto; /* Center the text block horizontally */
   margin-top: -100px;

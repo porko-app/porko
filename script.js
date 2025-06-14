@@ -6,12 +6,12 @@ const translations = {
         howto1: "• Напиши твоето име за да стартираш приложението",
         howto2: "• Въвеждай твоите напитки и разбери алкохолните ти единици",
         howto3: "• Гледай как порчето ти се променя и какво казва според алкохолните единици",
-        start: "Продължи",
+        start: "ПРОДЪЛЖИ",
         visitor: "порчета са станали приятели с нас",
         appName: "Порко приложение",
         usernameLabel: "Напиши твоето име",
         usernamePlaceholder: "пример: Порко",
-        startBtn: "Старт",
+        startBtn: "СТАРТ",
         infoBtnAlt: "Покажи информация",
         infoTitle: "Важна информация",
         infoText: "Приложението е за проследяване на консумацията на алкохол и не насърчава прекомерната консумация на алкохол. Моля, бъдете отговорни и се грижете за здравето си.",
@@ -37,6 +37,70 @@ const translations = {
         drinkErrorTitle: "Моля въведете процент на алкохола и милилитри.",
         closeDrinkError: "Назад",
         drinkDetailsTitle: "Въведи повече информация за {drink} (прибл. {percent}%)",
+        settingsTitle: "Настройки",
+        faqAlcoholInfo: "ЧЗВ за алкохола",
+        historyLog: "История на логовете",
+        statistics: "Показване на статистика",
+        changeName: "Смени името си",
+        qrCode: "QR код за споделяне",
+        termsOfUse: "Общи условия",
+        back: "Назад",
+        faqBack: "← Назад",
+    faqTitle: "ЧЗВ за алкохола",
+    faqQ1: "Какво е алкохолна единица и как се измерва?",
+    faqA1_1: "Алкохолните единици са официалната мярка за алкохол.",
+    faqA1_2: "Една напитка обаче НЕ е равна на една алкохолна единица.",
+    faqA1_3: "Измерват се като количество чист етанол.",
+    faqA1_4: "Една алкохолна единица е еквивалентна на 8 г или 10 милилитра чист алкохол/етанол.",
+    faqQ2: "За колко време се усвоява 1 алкохолна единица в тялото ни?",
+    faqA2_1: "1 алкохолна единица се разгражда от човешкият организъм средно за малко повече от 1 час.",
+    faqA2_2: "Времето за абсорбация зависи от различни фактори, като пол, ръст и тегло, колко бързо се пие, какъв вид и по колко и дали по време на консумацията се храни и пие вода.",
+    faqQ3: "Какви съвети може да приемем за отговорна консумация?",
+    faqA3_1: "Преди и по време на консумация на алкохол е важно да се храните и да пиете вода.",
+    faqA3_2: "Предварително си поставете граници за количеството, което искате да изпиете.",
+    faqA3_3: "Планирайте по какъв начин ще се приберете вкъщи.",
+    faqA3_4: "Бройте напитките, които изпивате и споделяйте с приятели, в първия момент, в който почувствате, че сте изпили достатъчно.",
+    faqA3_5: "Важно е да устоите на натиска от приятели и/или непознати, които искат да продължите, дори когато вие не желаете!",
+    faqQ4: "Какво да правим ако сме прекалили с алкохола?",
+    faqA4_1: "Въпреки всички положени усилия, се случва прекаляването с алкохол.",
+    faqA4_2: "Важно е преди да си легнете да пиете много вода и да поставите до леглото си още толкова количество вода.",
+    faqA4_3: "Ако имате възможност вземете хапче против киселини в стомаха. Консумирайки много алкохол предната вечер, ще е добре да не консумирате никакви алкохолни напитки следващите 48 часа.",
+    faqQ5: "Не на последно място по важност:",
+    faqA5_1: "НИКОГА НЕ сядайте зад волана след употреба на алкохол!",
+    faqA5_2: "Използвайте алтернативи на шофирането в нетрезво състояние!",
+     termsBack: "← Назад",
+    termsTitle: "Общи условия",
+    termsTitle1: "Предназначение на приложението",
+    termsText1: "Това приложение е създадено с цел да помага на потребителите да следят консумацията си на алкохол за информационни и развлекателни цели. То не насърчава и не поощрява прекомерната употреба на алкохол.",
+    termsTitle2: "Отговорност на потребителя",
+    termsText2: "Потребителите носят пълна отговорност за информацията, която въвеждат в приложението, включително избраните напитки и въведените псевдоними (имена).",
+    termsTitle3: "Отказ от отговорност",
+    termsText3: "Това приложение не е медицински инструмент. За здравни съвети винаги се консултирайте с квалифициран специалист.",
+    termsTitle4: "Поверителност и имена",
+    termsText4: 'Приложението съхранява въведеното от вас име за целите на статистика и персонализация. <u>Моля, не използвайте своето истинско име, имейл или друга чувствителна лична информация като име.</u><br>Не носим отговорност, ако въведете чувствителна или лична информация в полето за име, тъй като това име се запазва в нашата система.',
+    termsTitle5: "История на напитките и локални данни",
+    termsText5: 'Всички данни за вашите напитки и историята на консумация (включително данните, които въвеждате чрез менюто за напитки) се съхраняват само локално на вашето устройство (телефон или компютър). Тази информация <u>не се качва на нашите сървъри</u> и е достъпна само за вас. Можете да изтриете историята си по всяко време чрез наличната опция в приложението.',
+    termsTitle6: "Съхранение на данни",
+    termsText6: "Приложението съхранява само вашето име (за статистика) в нашите сървъри. Не се изисква или съхранява друга лична информация на нашите сървъри.",
+    termsTitle7: "Ограничение на отговорността",
+    termsText7: "Създателите на това приложение не носят отговорност за каквито и да е последствия, произтичащи от употребата или неправилната употреба на приложението.",
+    historyLogTitle: "История на логовете",
+    backFromHistory: "← Назад",
+    clearHistory: "Изчисти историята",
+    clearHistoryTitle: "Сигурни ли сте, че искате да изчистите историята?",
+    clearHistoryYes: "Да",
+    clearHistoryNo: "Не",
+    noHistory: "Няма записана история.",
+    ml: "мл",
+    percentAlcohol: "% алкохол",
+    statisticsTitle: "Статистика",
+backFromStatistics: "← Назад",
+dailyStatsTitle: "Общо за последните 24 часа:",
+weeklyStatsTitle: "Общо за седмицата:",
+monthlyStatsTitle: "Общо за месеца:",
+unitsAlcohol: "единици алкохол",
+backFromQr: "← Назад",
+qrCodeTitle: "QR код за споделяне",
         ferretStates: {
             neutral: [
                 "Хей, {name}! Всичко е супер!",
@@ -70,12 +134,12 @@ const translations = {
         howto1: "• Write your name to start the app",
         howto2: "• Enter your drinks and see your alcohol units",
         howto3: "• Watch your ferret change and talk based on your alcohol units",
-        start: "Continue",
+        start: "CONTINUE",
         visitor: "ferrets have became friends with us",
         appName: "Porko App",
         usernameLabel: "Write your name",
         usernamePlaceholder: "e.g. Porko",
-        startBtn: "Start",
+        startBtn: "START",
         infoBtnAlt: "Show information",
         infoTitle: "Important Information",
         infoText: "This app is for tracking alcohol consumption and does not encourage excessive drinking. Please be responsible and take care of your health.",
@@ -101,6 +165,70 @@ const translations = {
         closeDetailsAria: "Close modal",
         drinkErrorTitle: "Please enter alcohol percentage and milliliters.",
         closeDrinkError: "Go back",
+        settingsTitle: "Settings",
+        faqAlcoholInfo: "Alcohol FAQ",
+        historyLog: "Log History",
+        statistics: "Show Statistics",
+        changeName: "Change Your Name",
+        qrCode: "QR Code for Sharing",
+        termsOfUse: "Terms of Use",
+        back: "Back",
+        faqBack: "← Back",
+    faqTitle: "Alcohol FAQ",
+    faqQ1: "What is an alcohol unit and how is it measured?",
+    faqA1_1: "Alcohol units are the official measure of alcohol.",
+    faqA1_2: "However, one drink is NOT equal to one alcohol unit.",
+    faqA1_3: "They are measured by the amount of pure ethanol.",
+    faqA1_4: "One alcohol unit is equivalent to 8g or 10 milliliters of pure alcohol/ethanol.",
+    faqQ2: "How long does it take for the body to process 1 alcohol unit?",
+    faqA2_1: "1 alcohol unit is broken down by the human body in a little over 1 hour on average.",
+    faqA2_2: "Absorption time depends on factors like gender, height and weight, how quickly you drink, the type and amount consumed, and whether you eat or drink water while drinking.",
+    faqQ3: "What tips can we follow for responsible drinking?",
+    faqA3_1: "Before and during alcohol consumption, it is important to eat and drink water.",
+    faqA3_2: "Set your limits in advance for how much you want to drink.",
+    faqA3_3: "Plan how you will get home.",
+    faqA3_4: "Count your drinks and share with friends the moment you feel you've had enough.",
+    faqA3_5: "It's important to resist peer pressure from friends and/or strangers who want you to continue even when you don't want to!",
+    faqQ4: "What should we do if we've had too much alcohol?",
+    faqA4_1: "Despite all efforts, sometimes overdrinking happens.",
+    faqA4_2: "Before going to bed, drink plenty of water and leave more water by your bed.",
+    faqA4_3: "If possible, take an antacid. After heavy drinking, it's good to avoid any alcoholic beverages for the next 48 hours.",
+    faqQ5: "Not least in importance:",
+    faqA5_1: "NEVER drive after drinking alcohol!",
+    faqA5_2: "Use alternatives to driving under the influence!",
+     termsBack: "← Back",
+    termsTitle: "Terms of Use",
+    termsTitle1: "Purpose of the App",
+    termsText1: "This app is designed to help users track their alcohol consumption for informational and entertainment purposes. It does not encourage or promote excessive alcohol use.",
+    termsTitle2: "User Responsibility",
+    termsText2: "Users are fully responsible for the information they enter in the app, including chosen drinks and submitted nicknames (names).",
+    termsTitle3: "Disclaimer",
+    termsText3: "This app is not a medical tool. Always consult a qualified professional for health advice.",
+    termsTitle4: "Privacy and Names",
+    termsText4: 'The app stores your entered name for statistics and personalization purposes. <u>Please do not use your real name, email, or other sensitive personal information as your name.</u><br>We are not responsible if you enter sensitive or personal information in the name field, as this name is saved in our system.',
+    termsTitle5: "Drink History and Local Data",
+    termsText5: 'All your drink data and consumption history (including data you enter via the drinks menu) are stored only locally on your device (phone or computer). This information <u>is not uploaded to our servers</u> and is only accessible to you. You can delete your history at any time using the available option in the app.',
+    termsTitle6: "Data Storage",
+    termsText6: "The app only stores your name (for statistics) on our servers. No other personal information is required or stored on our servers.",
+    termsTitle7: "Limitation of Liability",
+    termsText7: "The creators of this app are not responsible for any consequences arising from the use or misuse of the app.",
+    historyLogTitle: "History Log",
+    backFromHistory: "← Back",
+    clearHistory: "Clear History",
+    clearHistoryTitle: "Are you sure you want to clear the history?",
+    clearHistoryYes: "Yes",
+    clearHistoryNo: "No",
+    noHistory: "No history recorded.",
+    ml: "ml",
+    percentAlcohol: "% alcohol",
+    statisticsTitle: "Statistics",
+backFromStatistics: "← Back",
+dailyStatsTitle: "Total for the last 24 hours:",
+weeklyStatsTitle: "Total for the week:",
+monthlyStatsTitle: "Total for the month:",
+unitsAlcohol: "alcohol units",
+backFromQr: "← Back",
+qrCodeTitle: "QR Code for Sharing",
         ferretStates: {
             neutral: [
                 "Hey, {name}! Everything is great!",
@@ -179,38 +307,41 @@ function updateLangButtons() {
   }
 }
 
-// --- Language Switcher
+// --- Language switch handler (TOP LEVEL!) ---
+function handleLanguageSwitch() {
+  currentLanguage = currentLanguage === "bg" ? "en" : "bg";
+  localStorage.setItem("language", currentLanguage);
+  updateWelcomeScreenLanguage();
+  updateFirstScreenLanguage();
+  updateSecondScreenLanguage();
+  updateSettingsScreenLanguage();
+  updateFaqScreenLanguage();
+  updateQrCodeScreenLanguage();
+  updateStatisticsScreenLanguage();
+  updateTermsOfUseScreenLanguage();
+  updateHistoryLogScreenLanguage();
+  updateMenuButton();
+  updateDrinkModalLanguage();
+  updateDrinkDetailsModalLanguage();
+  updateMenuLanguage();
+  updateFerretMood(totalUnits);
+  updateLangButtons();
+  updateVisitorCountDisplay();
+  updateTermsTranslation();
+  updateLogoLanguage();
+}
+
+// --- DOM loaded event ---
 document.addEventListener("DOMContentLoaded", () => {
   updateLogoLanguage();
   updateLangButtons();
 
-  function handleLanguageSwitch() {
-    currentLanguage = currentLanguage === "bg" ? "en" : "bg";
-    localStorage.setItem("language", currentLanguage);
-    updateWelcomeScreenLanguage();
-    updateFirstScreenLanguage();
-    updateSecondScreenLanguage();
-    updateMenuButton();
-    updateDrinkModalLanguage();
-    updateDrinkDetailsModalLanguage();
-    updateFerretMood(totalUnits);
-    updateLangButtons();
-    updateVisitorCountDisplay();
-    updateTermsTranslation();
-    updateLogoLanguage();
-  }
-  const langBtnWelcome = document.getElementById("welcome-language-switch-btn");
+  // Attach the handler to the button
+  const langBtnWelcome = document.getElementById('welcome-language-switch-btn');
   if (langBtnWelcome) {
-    langBtnWelcome.addEventListener("click", handleLanguageSwitch);
-  }
-  const langBtnFirst = document.getElementById("language-switch-btn");
-  if (langBtnFirst) {
-    langBtnFirst.addEventListener("click", handleLanguageSwitch);
+    langBtnWelcome.addEventListener('click', handleLanguageSwitch);
   }
 });
-
-// ... rest of translation functions unchanged ...
-
 function updateWelcomeScreenLanguage() {
     const t = translations[currentLanguage];
     if (!t) return;
@@ -387,6 +518,90 @@ function updateMenuLanguage() {
   if (tequilaBtn) tequilaBtn.textContent = t.tequila;
 }
 
+function updateSettingsScreenLanguage() {
+  const t = translations[currentLanguage];
+
+  document.getElementById('settings-title').textContent = t.settingsTitle;
+  document.getElementById('faq-alcohol-info-btn').textContent = t.faqAlcoholInfo;
+  document.getElementById('history-log-btn').textContent = t.historyLog;
+  document.getElementById('statistics-btn').textContent = t.statistics;
+  document.getElementById('change-name-btn').textContent = t.changeName;
+  document.getElementById('qr-code-btn').textContent = t.qrCode;
+  document.getElementById('terms-of-use-btn').textContent = t.termsOfUse;
+  document.getElementById('back-from-settings-btn').textContent = t.back;
+}
+
+function updateStatisticsScreenLanguage() {
+  const t = translations[currentLanguage];
+  document.getElementById('back-from-statistics-btn').textContent = t.backFromStatistics;
+  document.querySelector('#statistics-screen h2').textContent = t.statisticsTitle;
+  document.getElementById('daily-stats-title').textContent = t.dailyStatsTitle;
+  document.getElementById('weekly-stats-title').textContent = t.weeklyStatsTitle;
+  document.getElementById('monthly-stats-title').textContent = t.monthlyStatsTitle;
+}
+
+function updateQrCodeScreenLanguage() {
+  const t = translations[currentLanguage];
+  document.getElementById('back-from-qr-btn').textContent = t.backFromQr;
+  document.getElementById('qr-code-title').textContent = t.qrCodeTitle;
+}
+
+function updateFaqScreenLanguage() {
+  const t = translations[currentLanguage];
+
+  document.getElementById('back-from-faq-btn').textContent = t.faqBack;
+  document.getElementById('faq-title').textContent = t.faqTitle;
+
+  document.getElementById('faq-q1').textContent = t.faqQ1;
+  document.getElementById('faq-a1-1').textContent = t.faqA1_1;
+  document.getElementById('faq-a1-2').textContent = t.faqA1_2;
+  document.getElementById('faq-a1-3').textContent = t.faqA1_3;
+  document.getElementById('faq-a1-4').textContent = t.faqA1_4;
+
+  document.getElementById('faq-q2').textContent = t.faqQ2;
+  document.getElementById('faq-a2-1').textContent = t.faqA2_1;
+  document.getElementById('faq-a2-2').textContent = t.faqA2_2;
+
+  document.getElementById('faq-q3').textContent = t.faqQ3;
+  document.getElementById('faq-a3-1').textContent = t.faqA3_1;
+  document.getElementById('faq-a3-2').textContent = t.faqA3_2;
+  document.getElementById('faq-a3-3').textContent = t.faqA3_3;
+  document.getElementById('faq-a3-4').textContent = t.faqA3_4;
+  document.getElementById('faq-a3-5').textContent = t.faqA3_5;
+
+  document.getElementById('faq-q4').textContent = t.faqQ4;
+  document.getElementById('faq-a4-1').textContent = t.faqA4_1;
+  document.getElementById('faq-a4-2').textContent = t.faqA4_2;
+  document.getElementById('faq-a4-3').textContent = t.faqA4_3;
+
+  document.getElementById('faq-q5').textContent = t.faqQ5;
+  document.getElementById('faq-a5-1').textContent = t.faqA5_1;
+  document.getElementById('faq-a5-2').textContent = t.faqA5_2;
+}
+
+function updateHistoryLogScreenLanguage() {
+  const t = translations[currentLanguage];
+
+  document.getElementById('back-from-history-btn').textContent = t.backFromHistory;
+  document.querySelector('#history-log-screen h2').textContent = t.historyLogTitle;
+  document.getElementById('clear-history-btn').textContent = t.clearHistory;
+  document.getElementById('clear-history-title').textContent = t.clearHistoryTitle;
+  document.getElementById('confirm-clear-btn').textContent = t.clearHistoryYes;
+  document.getElementById('cancel-clear-btn').textContent = t.clearHistoryNo;
+}
+
+function updateTermsOfUseScreenLanguage() {
+  const t = translations[currentLanguage];
+
+  document.getElementById('back-from-terms-btn').textContent = t.termsBack;
+  document.getElementById('terms-title').textContent = t.termsTitle;
+
+  for (let i = 1; i <= 7; i++) {
+    document.getElementById(`terms-title-${i}`).textContent = t[`termsTitle${i}`];
+    document.getElementById(`terms-text-${i}`).innerHTML = t[`termsText${i}`];
+  }
+}
+
 // === GLOBAL VARIABLES FOR STATE PERSISTENCE ===
 let selectedDrink = "";
 let totalUnits = 0;
@@ -550,14 +765,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateWelcomeScreenLanguage();
     updateFirstScreenLanguage();
     updateSecondScreenLanguage();
+    updateSettingsScreenLanguage();
+    updateFaqScreenLanguage();
+    updateQrCodeScreenLanguage();
+    updateStatisticsScreenLanguage();
+    updateTermsOfUseScreenLanguage();
+    updateHistoryLogScreenLanguage();
     updateLangButtons();
+    updateTermsTranslation();
     updateMenuButton();
     updateDrinkModalLanguage();
     updateDrinkDetailsModalLanguage();
+    updateMenuLanguage()
     migrateHistoryDatesToIso();
     checkFerretResetAndReload();
+    updateAlcoholUnitsDisplay();
+    updateFerretMood(totalUnits);
     initializeVisitorCounter().then(updateVisitorCountDisplay);
-    updateTermsTranslation();
 
     // List of drink keys you support
     const drinkKeys = ['whiskey', 'vodka', 'rum', 'gin', 'tequila'];
@@ -646,21 +870,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return total.toFixed(1);
     }
 
-    function updateStatistics() {
-        const now = new Date();
-        const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-        const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
-        document.getElementById('daily-total').textContent = `${dailyTotal} единици алкохол`;
+function updateStatistics() {
+    const t = translations[currentLanguage];
+    const now = new Date();
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const dailyTotal = calculateTotalAlcohol(oneDayAgo, now);
+    document.getElementById('daily-total').textContent = `${dailyTotal} ${t.unitsAlcohol}`;
 
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(now.getDate() - 7);
-        const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
-        document.getElementById('weekly-total').textContent = `${weeklyTotal} единици алкохол`;
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(now.getDate() - 7);
+    const weeklyTotal = calculateTotalAlcohol(oneWeekAgo, now);
+    document.getElementById('weekly-total').textContent = `${weeklyTotal} ${t.unitsAlcohol}`;
 
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
-        document.getElementById('monthly-total').textContent = `${monthlyTotal} единици алкохол`;
-    }
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthlyTotal = calculateTotalAlcohol(startOfMonth, now);
+    document.getElementById('monthly-total').textContent = `${monthlyTotal} ${t.unitsAlcohol}`;
+}
 
     const infoBtn = document.getElementById('info-btn');
     const infoPopup = document.getElementById('info-popup');
@@ -832,32 +1057,36 @@ if (backFromTermsBtn) {
     const historyLogScreen = document.getElementById('history-log-screen');
     const backFromHistoryBtn = document.getElementById('back-from-history-btn');
     const historyList = document.getElementById('history-list');
-    function loadHistory() {
-        const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
-        historyList.innerHTML = '';
+   function loadHistory() {
+    const t = translations[currentLanguage];
+    const history = JSON.parse(localStorage.getItem('drinkHistory')) || [];
+    historyList.innerHTML = '';
 
-        if (history.length === 0) {
-            const noHistoryMessage = document.createElement('li');
-            noHistoryMessage.textContent = 'Няма записана история.';
-            noHistoryMessage.style.color = '#cccccc';
-            historyList.appendChild(noHistoryMessage);
-            return;
-        }
-
-        history.slice().reverse().forEach(entry => {
-            const listItem = document.createElement('li');
-            let formattedDate = '';
-            if (entry.date) {
-                const dateObj = new Date(entry.date);
-                formattedDate = !isNaN(dateObj)
-                    ? dateObj.toLocaleString(undefined, { hour12: false })
-                    : entry.date;
-            }
-            listItem.textContent = `${formattedDate} - ${entry.drinkName}, ${entry.amount} мл, ${entry.percentage}% алкохол`;
-            historyList.appendChild(listItem);
-        });
+    if (history.length === 0) {
+        const noHistoryMessage = document.createElement('li');
+        noHistoryMessage.textContent = t.noHistory;
+        noHistoryMessage.style.color = '#cccccc';
+        historyList.appendChild(noHistoryMessage);
+        return;
     }
 
+    history.slice().reverse().forEach(entry => {
+        const listItem = document.createElement('li');
+        let formattedDate = '';
+        if (entry.date) {
+            const dateObj = new Date(entry.date);
+            formattedDate = !isNaN(dateObj)
+                ? dateObj.toLocaleString(undefined, { hour12: false })
+                : entry.date;
+        }
+
+        // Translate drink name if stored as key (e.g. 'whiskey'), else fallback to original
+        const drinkDisplayName = t[entry.drinkName] || entry.drinkName;
+
+        listItem.textContent = `${formattedDate} - ${drinkDisplayName}, ${entry.amount} ${t.ml}, ${entry.percentage}${t.percentAlcohol}`;
+        historyList.appendChild(listItem);
+    });
+}
     const clearHistoryBtn = document.getElementById('clear-history-btn');
     const clearHistoryModal = document.getElementById('clear-history-modal');
     const confirmClearBtn = document.getElementById('confirm-clear-btn');
@@ -896,21 +1125,15 @@ if (backFromTermsBtn) {
         });
     }
 
-// === AUTO FERRET RESET TIMER ===
-// This code will check every 30 seconds if a reset is needed, and update the ferret and UI instantly.
-
-setInterval(() => {
-    const oldUnits = totalUnits;
-    // Use the same logic as on page load
-    checkFerretReset();
-    const newUnits = parseFloat(localStorage.getItem('totalUnits')) || 0;
-    console.log("Timer tick", { oldUnits, current: parseFloat(localStorage.getItem('totalUnits')) });
-    if (oldUnits !== newUnits) {
-        totalUnits = newUnits;
+// On tab focus
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        checkFerretReset();
+        totalUnits = parseFloat(localStorage.getItem('totalUnits')) || 0;
         updateAlcoholUnitsDisplay();
         updateFerretMood(totalUnits);
     }
-}, 30000); // every 30 seconds
+});
 
 // Also, call this once on page load to ensure UI is correct
 checkFerretReset();
