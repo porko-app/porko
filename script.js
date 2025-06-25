@@ -326,7 +326,6 @@ function handleLanguageSwitch() {
   updateMenuLanguage();
   updateFerretMood(totalUnits);
   updateLangButtons();
-  updateVisitorCountDisplay();
   updateTermsTranslation();
   updateLogoLanguage();
 }
@@ -710,56 +709,6 @@ function migrateHistoryDatesToIso() {
     }
 }
 
-// ===== FIREBASE VISITOR COUNTER LOGIC (SAFE, NO USER DATA WRITE) =====
-import { database } from "./firebase.js";
-import { ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-
-// ---- Only allow reading/incrementing the visitor counter, not writing user data ----
-const auth = getAuth();
-signInAnonymously(auth);
-const visitorRef = ref(database, "visitorCounter");
-
-const initializeVisitorCounter = async () => {
-    try {
-        const snapshot = await get(visitorRef);
-        if (!snapshot.exists()) {
-            try {
-                await set(visitorRef, { count: 0 });
-            } catch (err) {}
-        }
-    } catch (error) {}
-};
-
-const updateVisitorCountDisplay = async () => {
-    const visitorCounterElement = document.getElementById("visitor-count");
-    if (!visitorCounterElement) return;
-    try {
-        const snapshot = await get(visitorRef);
-        if (snapshot.exists()) {
-            const visitorCount = snapshot.val().count || 0;
-            visitorCounterElement.textContent = visitorCount;
-        } else {
-            visitorCounterElement.textContent = 0;
-        }
-    } catch (error) {
-        visitorCounterElement.textContent = "Error";
-    }
-};
-
-const incrementVisitorCount = () => {
-    runTransaction(visitorRef, (currentData) => {
-        if (!currentData || typeof currentData.count !== "number") {
-            return { count: 1 };
-        }
-        return { count: currentData.count + 1 };
-    })
-    .then(() => {
-        updateVisitorCountDisplay();
-    })
-    .catch(() => {});
-};
-
 // === APP INIT ===
 document.addEventListener('DOMContentLoaded', () => {
     updateWelcomeScreenLanguage();
@@ -781,7 +730,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkFerretResetAndReload();
     updateAlcoholUnitsDisplay();
     updateFerretMood(totalUnits);
-    initializeVisitorCounter().then(updateVisitorCountDisplay);
 
     // List of drink keys you support
     const drinkKeys = ['whiskey', 'vodka', 'rum', 'gin', 'tequila'];
@@ -1003,29 +951,38 @@ if (backFromTermsBtn) {
         });
     }
 
-    // === CRUCIAL: always update UI after user logs in ===
-    const userForm = document.getElementById('user-info-form');
-    userForm.addEventListener('submit', async event => {
-        event.preventDefault();
-        const usernameInput = document.getElementById('username');
-        userName = usernameInput.value.trim();
+// By June 25 2025, the system counted 122 people. Due to counter system change, the code after will start from the number 122 to save the number from before.
+const VISITOR_OFFSET = 122;
 
-        if (!userName) {
-            alert(translations[currentLanguage].emptyNameAlert || "Please enter your name.");
-            return;
-        }
+const userForm = document.getElementById('user-info-form');
+userForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const usernameInput = document.getElementById('username');
+    userName = usernameInput.value.trim();
 
-        // --- FIX: No user info write to Firebase, only increment visitor count ---
-        if (!localStorage.getItem('visitorCounted')) {
-            incrementVisitorCount();
-            localStorage.setItem('visitorCounted', 'true');
-        }
+    if (!userName) {
+        alert(translations[currentLanguage].emptyNameAlert || "Please enter your name.");
+        return;
+    }
 
-        document.getElementById('first-screen').style.display = 'none';
-        document.getElementById('second-screen').style.display = 'flex';
-        updateAlcoholUnitsDisplay();
-        updateFerretMood(totalUnits);
-    });
+    // GoatCounter: count after username entered
+    if (window.goatcounter) {
+      window.goatcounter.count({
+        path: '/username-entered',
+        title: 'Username Entered'
+      });
+    }
+
+// Helper function to display count
+function updateVisitorCountDisplay(count) {
+    document.getElementById('visitor-count').textContent = count;
+}
+
+    document.getElementById('first-screen').style.display = 'none';
+    document.getElementById('second-screen').style.display = 'flex';
+    updateAlcoholUnitsDisplay();
+    updateFerretMood(totalUnits);
+});
 
     const menuButton = document.getElementById('menu-btn');
     const drinkModal = document.getElementById('drink-modal');
