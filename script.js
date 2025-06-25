@@ -712,8 +712,8 @@ function migrateHistoryDatesToIso() {
 
 // ===== FIREBASE VISITOR COUNTER LOGIC (SAFE, NO USER DATA WRITE) =====
 import { database } from "./firebase.js";
-import { ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+import { ref, get, set, runTransaction } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // ---- Only allow reading/incrementing the visitor counter, not writing user data ----
 const auth = getAuth();
