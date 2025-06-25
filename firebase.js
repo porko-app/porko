@@ -5,7 +5,7 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
 
 // Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyChAofMIo_rp1hdtAlrYjnR4CggDqJnWGA",
+    apiKey: "AAIzaSyChAofMIo_rp1hdtAlrYjnR4CggDqJnWGA",
     authDomain: "porko-app.firebaseapp.com",
     databaseURL: "https://porko-app-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "porko-app",
