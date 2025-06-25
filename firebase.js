@@ -1,19 +1,20 @@
 // firebase.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 
 // Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyA2aVdbddoZDY7L_AlLWIwJDMuHxmh0HHk",
-    authDomain: "porko-bdad4.firebaseapp.com",
-    databaseURL: "https://porko-bdad4-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "porko-bdad4",
-    storageBucket: "porko-bdad4.firebasestorage.app",
-    messagingSenderId: "903004439010",
-    appId: "1:903004439010:web:33d37f46d52d1bc7d2b9bb",
-    measurementId: "G-PPTSVS7Z1R"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyChAofMIo_rp1hdtAlrYjnR4CggDqJnWGA",
+    authDomain: "porko-app.firebaseapp.com",
+    databaseURL: "https://porko-app-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "porko-app",
+    storageBucket: "porko-app.firebasestorage.app",
+    messagingSenderId: "968129139984",
+    appId: "1:968129139984:web:d079868e547a263733c195",
+    measurementId: "G-3WLMV4DYHF"
+  };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
