@@ -258,6 +258,10 @@ qrCodeTitle: "QR Code for Sharing",
     }
 };
 
+const SUPABASE_URL = "https://ljepawviopqlnhjhpzze.supabase.co/";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqZXBhd3Zpb3BxbG5oamhwenplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4NDcwMDQsImV4cCI6MjA2NjQyMzAwNH0.LCs1Ovi0zQEM6VG7fUz0afOb-LJiGtI5cu87SQKqdFw";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const drinkPercents = {
   whiskey: 40,
   vodka: 40,
@@ -730,6 +734,9 @@ document.addEventListener('DOMContentLoaded', () => {
     checkFerretResetAndReload();
     updateAlcoholUnitsDisplay();
     updateFerretMood(totalUnits);
+      getVisitorCount().then(count => {
+        updateVisitorCountDisplay(count + VISITOR_OFFSET);
+      });
 
     // List of drink keys you support
     const drinkKeys = ['whiskey', 'vodka', 'rum', 'gin', 'tequila'];
@@ -951,9 +958,85 @@ if (backFromTermsBtn) {
         });
     }
 
-// By June 25 2025, the system counted 122 people. Due to counter system change, the code after will start from the number 122 to save the number from before.
+// 2. Offset from previous system
 const VISITOR_OFFSET = 122;
 
+// 3. Display the visitor count in the DOM
+function updateVisitorCountDisplay(count) {
+    const el = document.getElementById('visitor-count');
+    if (el) el.textContent = count;
+}
+
+// 4. Get the current visitor count from Supabase
+async function getVisitorCount() {
+    const { data, error } = await supabase
+        .from('visitor_count')
+        .select('count')
+          .eq('id', 1)
+        .single();
+    if (error || !data) {
+        console.error('Supabase getVisitorCount error:', error);
+        return 0;
+    }
+    return data.count;
+}
+
+// 5. Increment the visitor count by 1 (once per browser/device)
+async function incrementVisitorCount() {
+    // Get the current count
+    const { data, error } = await supabase
+        .from('visitor_count')
+        .select('count')
+        .single();
+
+    if (error || !data) {
+        console.error('Supabase incrementVisitorCount select error:', error);
+        return 0;
+    }
+
+    // Try to increment the count by 1 (RLS+trigger in your DB ensures only +1 allowed)
+    const { data: updated, error: updateError } = await supabase
+        .from('visitor_count')
+        .update({ count: data.count + 1 })
+        .eq('id', 1) // Change 1 to your PK value if not 1!
+        .select('count')
+        .single();
+
+    if (updateError || !updated) {
+        console.error('Supabase incrementVisitorCount update error:', updateError);
+        return data.count;
+    }
+    return updated.count;
+}
+
+// 6. Logic to handle the count on form submit or page load
+function handleVisitorCount() {
+    // Optional: GoatCounter analytics, safe to leave as-is
+    if (window.goatcounter) {
+        window.goatcounter.count({
+            path: '/username-entered',
+            title: 'Username Entered'
+        });
+    }
+
+    // Only increment once per browser/device
+    if (!localStorage.getItem('visitorCounted')) {
+        incrementVisitorCount().then(newCount => {
+            updateVisitorCountDisplay(newCount + VISITOR_OFFSET);
+        }).catch(() => {
+            // fallback: show only the offset
+            updateVisitorCountDisplay(VISITOR_OFFSET + 1);
+        });
+        localStorage.setItem('visitorCounted', 'true');
+    } else {
+        // On repeat visits, show current count (with offset)
+        getVisitorCount().then(newCount => {
+            updateVisitorCountDisplay(newCount + VISITOR_OFFSET);
+        });
+    }
+}
+
+// Example: call handleVisitorCount() in your form submit handler
 const userForm = document.getElementById('user-info-form');
 userForm.addEventListener('submit', async event => {
     event.preventDefault();
@@ -965,19 +1048,9 @@ userForm.addEventListener('submit', async event => {
         return;
     }
 
-    // GoatCounter: count after username entered
-    if (window.goatcounter) {
-      window.goatcounter.count({
-        path: '/username-entered',
-        title: 'Username Entered'
-      });
-    }
+    handleVisitorCount();
 
-// Helper function to display count
-function updateVisitorCountDisplay(count) {
-    document.getElementById('visitor-count').textContent = count;
-}
-
+ 
     document.getElementById('first-screen').style.display = 'none';
     document.getElementById('second-screen').style.display = 'flex';
     updateAlcoholUnitsDisplay();
