@@ -1,0 +1,1551 @@
+/* GENERAL STYLES */
+
+/* Make the body take full screen and align content to the top */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans BG', sans-serif; /* Use Open Sans BG as the primary font */
+  background-color: #0f0f0f;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligns everything to the top */
+  min-height: 100vh;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Media Query for smaller screens (mobile) */
+@media (max-width: 480px) {
+  body {
+      background-color: #1d192e; /* Dark Blue Background on mobile */
+  }
+}
+
+/* Container with 9:16 aspect ratio (360x640 is standard mobile) */
+.app-container {
+  aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+  max-width: 100%;                       /* Base width for phone-sized view */
+  max-height: 100vh;                  /* Prevent it from exceeding screen height */
+  background-color: #1d192e;          /* Dark blue frame */
+  border-radius: 0px;
+  box-shadow: none;
+  padding: 30px 20px;                 /* Consistent inner spacing */
+  box-sizing: border-box;            /* Includes padding in size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;           /* Center content vertically */
+  align-items: center;               /* Center content horizontally */
+  margin: 0 auto;                    /* Center horizontally on large screens */
+  position: relative;
+}
+
+/* Title styling */
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px; /* Reduced margin */
+  color: #f4f4f4; /* Almost white text */
+}
+
+/* Logo styling */
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px; /* Adjust this to control the space between logo and content */
+  border-radius: 10px; /* Optional: make it roundy */
+}
+
+/* Label styling */
+label {
+  font-size: 16px;
+  color: #fcfcfc; /* This is the current text color */
+  margin-top: 15px;
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+
+/* Input and select field styling */
+input,
+select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #f4f4f4; /* Almost white input fields */
+  color: #333; /* Dark text inside inputs for contrast */
+}
+
+/* Button styling */
+button {
+  margin-top: 40px; /* Increase the space above the button */
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: orange; /* Orange background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 50%; /* Make button take full width */
+  margin-top: 20px; /* Add space between button and form elements */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+}
+
+
+
+/* Container with 9:16 aspect ratio (360x640) */
+.app-container {
+  aspect-ratio: 9 / 16;               /* Maintain perfect 9:16 ratio */
+  width: 360px;
+  height: 640px;
+  background-color: #1d192e; /* Dark Blue Background */
+  position: relative; /* Make the container the reference point for absolute positioning */
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+}
+
+/* Info Button inside 9:16 frame (below start button) */
+.info-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 500px;
+  right: 40px;
+  width: 40px;
+  height: 40px;
+  outline: none;         /* removes the dotted border on focus */
+}
+
+/* Wiggle animation on hover */
+.info-btn:hover {
+  animation: wiggle 0.5s ease-in-out infinite; /* Apply the wiggle animation */
+}
+
+/* Define the wiggle animation */
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0); /* Default position */
+  }
+  25% {
+    transform: rotate(-20deg); /* Rotate slightly counter-clockwise */
+  }
+  75% {
+    transform: rotate(20deg); /* Rotate slightly clockwise */
+  }
+}
+
+.info-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none; /* ensures image doesn't trigger hover style separately */
+}
+
+/* Remove any orange-ish hover/focus styles */
+.info-btn:focus,
+.info-btn:hover {
+  outline: none;
+  background: none;
+  box-shadow: none;
+}
+ 
+
+/* Info Popup */
+.info-popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth fade-in/out */
+}
+
+/* Popup content styling */
+.info-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  width: 80%; /* Adjusted to fit the 9:16 container */
+  max-width: 320px; /* Set a max-width to keep it inside the 9:16 frame */
+  box-sizing: border-box;
+  opacity: 1; /* Keep the content visible when the pop-up shows */
+}
+
+/* Title styling */
+.info-content h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+/* Paragraph styling */
+.info-content p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* TERMS OF USE FROM INFO BUTTON */
+#terms-from-info-btn {
+  background: #211e38;
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 600;
+  padding: 12px 0;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: -5px;
+  margin-top: 20px;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.07s;
+  cursor: pointer;
+  outline: none;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  transition: transform 0.13s;
+}
+.back-btn img {
+  width: 48px;
+  height: 48px;
+  opacity: 0.9;
+  transition: filter 0.2s;
+}
+.back-btn:hover,
+.back-btn:focus {
+  transform: scale(1.08);
+}
+
+@media (max-width: 480px) {
+  .info-content {
+    padding: 22px 8vw 20px 8vw;
+    max-width: 95vw;
+  }
+  .info-content h2 {
+    font-size: 1.3rem;
+  }
+  #terms-from-info-btn {
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+}
+/* TO HERE */
+
+/* Image-style back button */
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 20px;
+  outline: none;
+}
+
+.back-icon {
+  width: 40px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+  animation:  0.4s ease-in-out;
+  background: none;
+  border: none;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+
+
+/* For Webkit browsers like Chrome/Safari */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Second Screen Layout */
+#second-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align elements to the top */
+  align-items: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background for second screen */
+  border-radius: 00px;
+  box-shadow: none;
+  height: 100%; /* Full height for the second screen */
+  box-sizing: border-box;
+}
+
+/* Adjust the text position inside the speech bubbles */
+/* Ensure speech bubble text wraps properly and fits */
+.bubble-text {
+  display: inline-block;
+   max-width: 320px;                 /* Adjust this value to control bubble width */
+  padding: 16px 24px;
+    white-space: normal;              /* Allow text to wrap onto multiple lines */
+  word-break: break-word; 
+  white-space: normal; /* Allow text to wrap onto multiple lines */
+  line-height: 1.5; /* Improve readability between lines */
+  font-size: 14px; /* Adjust font size for better visibility */
+  text-align: center; /* Center align the text in the bubble */
+  width: 90%; /* Ensure the text fits within the bubble */
+  margin: 0 auto; /* Center the text block horizontally */
+  margin-top: -100px;
+}
+
+/* Adjust speech bubble positioning */
+#second-screen .speech-bubble {
+  margin-top: -15px; /* Move the speech bubble higher (adjust value as needed) */
+}
+
+/* Ensure alignment for all elements */
+#second-screen h1,
+#second-screen .bubble-text,
+#second-screen .speech-bubble {
+  margin-bottom: 0px; /* Add consistent spacing between elements */
+}
+
+/* Title for Second Screen */
+#second-screen h1 {
+  font-size: 24px;
+  color: #f4f4f4;
+  margin-bottom: 20px;
+}
+
+
+/* Bottom Buttons (Menu & Settings) */
+.bottom-buttons {
+  position: absolute;
+   left: 0;
+  right: 0;
+  bottom: 16px;
+   margin-left: auto;
+  margin-right: auto;  
+  width: 100%;
+  display: flex;
+  justify-content: center;           /* Center children horizontally */
+  align-items: flex-start;           /* Align items to the top (for visual alignment) */
+  position: relative;
+  margin-top: 30px;
+  gap: 0;                            /* No gap, we’ll use absolute for settings */
+  min-height: 90px;                  /* Ensure enough height for buttons */
+    margin-bottom: 10px
+}
+
+/* Center the menu button */
+#menu-btn {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  color: #ff9800;
+  background: transparent;
+  border: 2.5px solid #ff9800;
+  border-radius: 26px;
+  padding: 13px 38px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 0 0 0 transparent;
+  outline: none;
+  text-align: center;
+  min-width: 120px;
+  margin: 0 auto;
+  display: block;
+  /* Ensure it's above the background */
+  z-index: 2;
+}
+
+#menu-btn:focus,
+#menu-btn:hover {
+  background: rgba(255, 152, 0, 0.12);
+  color: #fff;
+  box-shadow: 0 0 8px 2px rgba(255, 152, 0, 0.15);
+}
+
+#menu-btn:active {
+  background: #ff9800;
+  color: #1a1625;
+}
+
+/* Position the settings button absolutely to the right of the bottom-buttons container */
+#settings-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  right: 18%;           /* Adjust this value for more/less rightward push */
+  top: 8px;             /* Align vertically with menu button */
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style the settings image for size and color filter if needed */
+#settings-btn img {
+  width: 54px;
+  height: 54px;
+  display: block;
+  filter: drop-shadow(0 0 2px #ff9800);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+  .bottom-buttons {
+    min-height: 70px;
+  }
+  #menu-btn {
+    font-size: 1rem;
+    padding: 10px 18px;
+    min-width: 82px;
+  }
+  #settings-btn img {
+    width: 40px;
+    height: 40px;
+  }
+  #settings-btn {
+    right: 10%;
+    top: 0;
+  }
+}
+
+/* SETTINGS SCREEN BUTTON STYLES */
+#settings-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  right: 1%;                  /* Adjust this value for your layout */
+  top: -22px;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;                /* Square shape */
+  height: 62px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+#settings-btn:focus,
+#settings-btn:hover {
+  background: rgba(255, 152, 0, 0.12);
+}
+
+#settings-btn img {
+  width: 54px;
+  height: 54px;
+  display: block;
+  margin: auto;
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  #settings-btn {
+    width: 44px;
+    height: 44px;
+    right: 4%;
+    top: 0;
+  }
+  #settings-btn img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.settings-btn {
+  display: block;
+  width: 90%;
+  max-width: 320px;
+  margin: 10px auto;
+  padding: 13px 0 12px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff; /* White text */
+  background: #1d192e; /* Same as container background */
+  border: 3px solid #ff9800; /* Orange border */
+  border-radius: 32px; /* Pill shape */
+  text-align: center;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  transition:
+    border-color 0.18s cubic-bezier(.4,0,.2,1),
+    color 0.18s cubic-bezier(.4,0,.2,1),
+    background 0.18s cubic-bezier(.4,0,.2,1),
+    transform 0.16s cubic-bezier(.4,0,.2,1);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.settings-btn:hover,
+.settings-btn:focus {
+  background: #251f37;
+  color: #ff9800;
+  border-color: #ff9800;
+  transform: scale(1.03);
+}
+
+.settings-btn:active {
+  background: #181430;
+  color: #ff9800;
+  border-color: #ff9800;
+  transform: scale(0.98);
+}
+
+.settings-btn:last-child {
+  margin-bottom: 4px;
+}
+
+@media (max-width: 480px) {
+  .settings-btn {
+    font-size: 0.98rem;
+    padding: 11px 0 10px 0;
+    border-radius: 24px;
+    max-width: 97%;
+  }
+}
+
+/* FAQ Screen Styling */
+#faq-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+  text-align: left;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background */
+  color: #f4f4f4; /* White text */
+  height: 100%;
+  box-sizing: border-box;
+    /* Add scrollability */
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox: Make the scrollbar thin */
+    scrollbar-color: #888 #1d192e; /* For Firefox: Custom scrollbar colors */
+  }
+
+
+/* Header styling for FAQ screen */
+#faq-screen h2 {
+  margin-top: 50px; /* Add space at the top to move header down */
+  font-size: 24px; /* Keep font size consistent */
+  color: #ffffff; /* Ensure the header text is white */
+  text-align: left; /* Center-align the header */
+  margin-bottom: 20px; /* Maintain spacing below the header */
+}
+
+/* Paragraph text styling for FAQ screen */
+#faq-screen p {
+  margin-top: 30px; /* Add space at the top to move text down */
+  font-size: 16px; /* Keep font size consistent */
+  line-height: 1.5; /* Improve readability */
+  color: #cccccc; /* Light gray text for better readability */
+  text-align: left; 
+  margin-bottom: 20px; /* Maintain spacing below the text */
+}
+
+/* Back Button in Top Right Corner (Clear Background) */
+.back-top-right-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none; /* Clear background */
+  border: none; /* Remove border */
+  color: #ffffff; /* White text/icon for visibility */
+  font-size: 18px; /* Adjust font size for readability */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  padding: 5px 10px; /* Add some padding for spacing */
+  border-radius: 5px; /* Optional: rounded edges */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for Back Button */
+.back-top-right-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle overlay on hover */
+  color: #ffffff; /* Keep the text/icon color white */
+}
+
+/* WELCOME SCREEN */
+#welcome-screen {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center;
+  text-align: center;
+  background-color: #1d192e;
+  color: #f4f4f4;
+  height: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  font-family: 'Montserrat'
+}
+
+/* Header Styling */
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffffff; /* Bright white for visibility */
+  text-align: center;
+  margin-bottom: 25px; /* Space below the header */
+}
+
+/* Specific styling for welcome screen header */
+#welcome-screen h1 {
+  margin-top: 2px; /* Add some space above the header */
+  margin-bottom: 5px; /* Reduce space below the header */
+}
+
+#welcome-screen h2 {
+  font-size: 22px;
+  margin-bottom: 40px; /* Reduced margin for h2 */
+  margin-top: -50px; /* Added margin to push the header down */
+  line-height: 1.2; /* Tightened line height */
+}
+
+#welcome-screen p {
+  font-size: 14px;
+  min-height: 18px; /* Ensures stable height for short EN strings */
+  line-height: 1.0; /* Reduced line height for paragraphs */
+  margin-bottom: 2px; /* Reduced margin between paragraphs */
+  margin-top: 30px; /* Add margin-top to move text down */
+  color: #f4f4f4;
+}
+
+#welcome-screen ul {
+  font-size: 14px;  /* Reduce font size of list items */
+  min-height: 52px; /* Ensures the whole list area stays the same */
+  line-height: 1.2; /* Reduced line height */
+  margin-bottom: 10px; /* Reduced margin-bottom to give more space */
+  list-style-type: none !important; /* Force removal of bullets */
+  padding: 0 !important; /* Force removal of padding */
+  margin: 0 !important; /* Force removal of margin */
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Welcome Screen Paragraph Styling */
+#welcome-screen p:first-of-type {
+  font-weight: 600; /* Make the first paragraph slightly bolder */
+  
+}
+
+/* New Logo Styling */
+#welcome-logo {
+  width: 160px; /* Adjust logo size */
+  height: auto;
+  margin: 0 0 0px 0; /* Add more space below the logo */
+  border-radius: 10px; /* Optional: round the edges of the logo */
+}
+
+/* Continue Button welcome screen */
+/* Welcome main button styling */
+.welcome-main-btn {
+  display: block;
+  margin: 32px auto 0 auto;
+  padding: 12px 0;
+  width: 70%;
+  max-width: 230px;
+  border: 2px solid #fbb040;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.1s;
+  box-shadow: 0 2px 8px 0 rgba(251, 176, 64, 0.06);
+}
+
+.welcome-main-btn:hover,
+.welcome-main-btn:focus {
+  background: #fbb040;
+  color: #1d192e;
+  box-shadow: 0 6px 24px 0 rgba(251, 176, 64, 0.18);
+  transform: translateY(-2px) scale(1.02);
+  outline: none;
+}
+
+#continue-btn-label {
+  display: block;
+  width: 100%;
+}
+
+.visitor-counter {
+    min-width: 260px;          /* Large enough for both languages */
+  max-width: 320px;          /* Still responsive */
+  width: 90%;                /* As before */
+  white-space: nowrap;       /* Prevent line breaks */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #1d192e;
+  padding: 10px;
+  border-radius: 8px;
+  width: 90%; /* Slightly narrower than the screen */
+  max-width: 300px; /* Limit maximum width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#visitor-count {
+  font-weight: bold;
+  color: orange;
+}
+
+/* Hide spinner arrows in number input fields for Webkit browsers (Chrome/Safari) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spinner arrows in number input fields for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Apply to ferret image */
+#second-screen .ferret-mood {
+  width: 350px; /* Increase the width of the ferret image */
+  height: 350px; /* Increase the height of the ferret image */
+  object-fit: contain; /* Maintain aspect ratio */
+  display: block; /* Ensure the image is displayed */
+  margin: 10px 0; /* Add spacing around the ferret image */
+  animation: float 2s infinite ease-in-out; /* Apply the animation */
+  margin-top: 20px;
+}
+
+/* Define the up and down animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0); /* Default position */
+  }
+  50% {
+    transform: translateY(-15px); /* Move up by 15px */
+  }
+}
+
+/* Stretch the speech bubble to the left and right */
+.speech-bubble {
+  width: 450px; /* Increase width to make it stretchier */
+  max-width: 90%; /* Ensure it remains responsive on smaller screens */
+  height: auto; /* Allow height to adjust dynamically based on content */
+  padding: 15px; /* Add padding for better spacing inside the bubble */
+  object-fit: contain;
+  display: none; /* Keep it hidden by default */
+  border-radius: 15px; /* Maintain rounded corners for a polished look */
+  text-align: center; /* Center the text inside the bubble */
+  margin: 0 auto; /* Center the bubble horizontally */
+  margin-top: 40px;
+}
+
+/* Style for the dynamic number in the alcohol units text */
+.orange-text {
+  color: orange; /* Set the text color to orange */
+  font-weight: bold; /* Optionally make it bold for visibility */
+}
+
+/* When they're active (shown) */
+.ferret-mood.active,
+.speech-bubble.active {
+  display: block;
+}
+
+/* Modal for Drink Selection (adjusted to fit within the 9:16 frame) */
+#drink-modal {
+  display: none; 
+  position: fixed;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 80%; 
+  max-width: 300px; 
+  height: auto; 
+  max-height: 80%; 
+  background-color: white; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  overflow-y: auto; 
+  padding: 20px; 
+  box-sizing: border-box; 
+  z-index: 10;
+}
+
+#drink-modal .close-btn {
+  position: absolute;
+  top: -13px;
+  right: -3px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: orange;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#drink-modal .close-btn:hover,
+#drink-modal .close-btn:focus {
+  background: #ff9800;
+  outline: 2px solid #fff;
+  transform: scale(1.09);
+}
+
+#drink-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.drink-option {
+  width: 240px;
+  max-width: 90vw;
+  height: 48px;
+  background: #221e32;
+  border: none;
+  border-radius: 24px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 0;
+  outline: none;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: background 0.16s, transform 0.13s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.drink-option:hover,
+.drink-option:focus {
+  background: #2f2843;
+  color: #ffae1a;
+  transform: scale(1.04);
+}
+
+/* Responsive for mobile */
+@media (max-width: 480px) {
+  .drink-option {
+    width: 98vw;
+    height: 60px;
+    font-size: 1.25rem;
+  }
+}
+
+/* Hover effect for drink buttons */
+.drink-option:hover {
+  transform: scale(1.05); /* Slightly scale up on hover */
+  background-color: #f4f4f4; /* Add a light background color on hover */
+  color: #000; /* Change the text color on hover */
+}
+
+#close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+}
+
+#close-modal-btn:hover {
+  color: orange; /* Optional: Make the X button red when hovered */
+}
+
+.drink-option:focus,
+.drink-option:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.drink-option:hover {
+  transform: scale(1.1); /* Button scaling effect */
+}
+
+#choose-drink {
+  text-align: center; /* Centers the text horizontally */
+  margin-right: 80px;
+  margin-top: 2px; /* Moves it a little lower from the top */
+  font-size: 24px; /* You can adjust the size of the text */
+  color: white; /* Or whatever color you prefer */
+}
+
+.details-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); /* dark background */
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.details-content {
+  background: white;
+  padding: 25px 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  box-shadow: none;
+}
+
+.details-content input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.details-content button {
+  padding: 10px;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Style for labels in the drink details modal */
+.details-content label {
+  color: #333333; /* Set a dark color for visibility */
+  font-size: 16px; /* Ensure the text is readable */
+  font-weight: bold; /* Make the text stand out */
+  margin-bottom: 5px; /* Add spacing below the labels */
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+}
+
+#second-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Adjust Logo Position on Second Screen */
+#first-screen .logo {
+  width: 160px; /* Adjust logo size */
+  height: auto;
+  margin-top: 60px; /* Add space above the logo */
+  margin-bottom: 30px; /* Add space below the logo */
+}
+
+#bac-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+
+#alcohol-units-text {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  color: #ffffff;
+}
+
+#back-to-second-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: -140px;  /* Make it a little higher */
+  margin-left: 200px;  /* Push it a bit to the right */
+  transition: transform 0.2s ease-in-out;
+}
+
+#back-to-second-btn img {
+  width: 60px;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add a little bounce on hover */
+#back-to-second-btn:hover img {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* History Log Screen Styling */
+#history-log-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Align content at the top */
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Dark blue background */
+  color: #f4f4f4; /* White text */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Header in History Log Screen */
+#history-log-screen h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* History List Styling */
+#history-list {
+  list-style-type: none; /* Remove bullets */
+  padding: 0;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 300px;
+  overflow-y: auto; /* Scrollable if too many entries */
+  max-height: 300px; /* Limit height for scrolling */
+}
+
+/* History Entry Styling */
+#history-list li {
+  background-color: #2a292e;
+  color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Clear History Button */
+#clear-history-btn {
+  margin-top: 20px;
+  background-color: #ff4d4d; /* Red button for delete */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for Clear History Button */
+#clear-history-btn:hover {
+  background-color: #ff3333;
+}
+
+#statistics-screen {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* White background for contrast */
+  color: #ffffff; /* Dark text color for visibility */
+}
+
+#statistics-screen h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #ff9900; /* Ensure text is visible */
+}
+
+#statistics-screen div {
+  margin-bottom: 15px;
+}
+
+#statistics-screen p {
+  font-size: 18px;
+  color: #ffffff; /* Ensure text is visible */
+}
+
+/* Terms of Use Screen Styling */
+#terms-of-use-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Matches app container background */
+  color: #f4f4f4; /* Light text color for readability */
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Scroll for long content */
+}
+
+/* Header styling for Terms of Use screen */
+#terms-of-use-screen h2 {
+  margin-top: 50px; /* Add space at the top to move the header down */
+  font-size: 24px; /* Ensure consistent font size */
+  color: #ffffff; /* Match the same white color as FAQ screen */
+  text-align: center; /* Center-align the header */
+  margin-bottom: 20px; /* Add spacing below the header */
+}
+
+/* Paragraph text styling for Terms of Use screen */
+#terms-of-use-screen p {
+  margin-top: 30px; /* Add space at the top to move the text down */
+  font-size: 16px; /* Keep font size consistent */
+  line-height: 1.5; /* Improve readability */
+  color: #cccccc; /* Match text color with the FAQ screen */
+  text-align: center; /* Center-align the text */
+  margin-bottom: 20px; /* Add spacing below the text */
+}
+
+#terms-of-use-screen button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: orange; /* Bright button for visibility */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#terms-of-use-screen button:hover {
+  background-color: #e69500; /* Slightly darker orange on hover */
+}
+
+/* QR Code Screen Styling */
+#qr-code-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #1d192e; /* Matches app container background */
+  color: #f4f4f4; /* Light text color for readability */
+  height: 100%; /* Full height */
+}
+
+#qr-code-screen h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffffff; /* Bright text for header */
+}
+
+/* Header styling for the settings screen */
+#settings-screen h1, 
+#settings-screen h2 {
+  color: #ffffff; /* Set the text color to white */
+  font-size: 24px; /* Ensure the font size is consistent */
+  text-align: center; /* Center-align the header text */
+  margin-top: -7px;  /* Was 50px or more, now less for higher placement */
+  margin-bottom: 20px;
+}
+
+/* Back Button in Top Right Corner (Clear Background for Terms of Use Screen) */
+#terms-of-use-screen .back-top-right-btn {
+  background: none; /* Clear background */
+  border: none; /* Remove any border */
+  color: #ffffff; /* Ensure text/icon is white for visibility */
+  font-size: 18px; /* Adjust font size for readability */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  padding: 5px 10px; /* Add some padding for spacing */
+  border-radius: 5px; /* Optional: rounded edges */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for Back Button */
+#terms-of-use-screen .back-top-right-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle overlay on hover */
+  color: #ffffff; /* Keep the text/icon color white */
+}
+
+/* Ensure the modal is positioned within the dark blue frame */
+#clear-history-modal, .modal
+/* Modal Overlay */
+.modal, #clear-history-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay to dim the background */
+#clear-history-modal-overlay {
+  position: absolute; /* Same parent as the modal */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 999; /* Just below the modal */
+}
+
+#daily-statistics, #weekly-statistics, #monthly-statistics {
+  margin-bottom: 20px;
+}
+
+#daily-statistics h4, #weekly-statistics h4, #monthly-statistics h4 {
+  font-size: 1.2em;
+  color: #f4f4f4;
+}
+
+#daily-statistics p, #weekly-statistics p, #monthly-statistics p {
+  font-size: 1em;
+  color: #f4f4f4;
+}
+
+#qr-code-image {
+  border: none; /* Removes any border */
+  box-shadow: none; /* Removes any shadow */
+  width: 200px; /* Example: Adjust width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Center the QR code */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Custom Modal (use same as clear-history-modal/modal) */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1002;
+}
+/* Modal Content Container */
+/* Modal Content Container */
+.modal-content, #modal-content {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 22px 24px 22px;
+  width: 90vw;
+  max-width: 320px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 8px rgba(0,0,0,0.10);
+  text-align: center;
+  animation: modalIn 0.33s cubic-bezier(.25,.8,.25,1);
+  max-height: 80vh;       /* Limit modal box height */
+  overflow-y: auto;       /* Scroll if content is too tall */
+  margin: 0;              /* No margin */
+}
+
+/* Modal Title (add extra top margin for close button space) */
+.modal-content h2,
+.modal-content h3 {
+  margin-top: 28px;
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.modal-btn {
+  margin-top: 18px;
+  background: orange;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal-content, .details-content, #modal-content {
+  position: relative;
+}
+
+/* Consistent, small, circular orange close button for all modals */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: orange;
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  z-index: 2;
+}
+.close-btn:hover,
+.close-btn:focus {
+  background: #ff9800;
+  outline: 2px solid #fff;
+  transform: scale(1.07);
+}
+
+/* Responsive: Make modal content fit on small screens */
+@media (max-width: 420px) {
+  .modal-content {
+    padding: 18px 8px 14px 8px;
+    max-width: 96vw;
+  }
+  .modal-content h2,
+  .modal-content h3 {
+    font-size: 1rem;
+    margin-top: 24px;
+  }
+}
+
+#drink-modal {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+#drink-modal::-webkit-scrollbar {
+  display: none;         /* Chrome/Safari/Edge */
+}
+
+/* Modal fade-in animation */
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.96);}
+  to   { opacity: 1; transform: translateY(0) scale(1);}
+}
+
+#drink-modal #close-modal-btn {
+  position: absolute;
+  top: -16px;
+  right: -8px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: orange;
+  color: #fff;
+  border: none;
+  border-radius: 8px;      /* Makes it a square with rounded corners */
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.16s, transform 0.1s;
+  box-shadow: 0 2px 6px rgba(255,140,0,0.08);
+}
+#drink-modal #close-modal-btn:hover,
+#drink-modal #close-modal-btn:focus {
+  background: #ff9800;
+  outline: 2px solid #fff;
+  transform: scale(1.09);
+}
+
+/* FAQ Section Formatting */
+.faq-list {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 10px 0 30px 0;
+}
+
+.faq-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 18px 16px 14px 16px;
+  box-shadow: 0 2px 12px rgba(76,130,201,0.05);
+}
+
+.faq-question {
+  font-weight: bold;
+  color: #ff9900;
+  font-size: 1.08em;
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.faq-answer {
+  font-weight: normal;
+  font-size: 0.98em;
+  color: #f4f4f4;
+  line-height: 1.6;
+  margin-left: 10px;
+}
+
+@media (max-width: 480px) {
+  .faq-list {
+    max-width: 98vw;
+    padding: 3px 0 10px 0;
+  }
+  .faq-item {
+    padding: 14px 7px 12px 10px;
+  }
+  .faq-question {
+    font-size: 1em;
+  }
+  .faq-answer {
+    font-size: 0.96em;
+  }
+}
+
+/* Language Switch Button */
+.language-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  background: #1d192e;        /* matches frame color */
+  color: #fff;                /* white text */
+  border: 2px solid orange;   /* orange border */
+  border-radius: 10px;        /* rounded corners */
+  display: flex;                /* NEW: enables flexbox */
+  align-items: center;          /* NEW: vertical centering */
+  justify-content: center;      /* NEW: horizontal centering */
+  padding: 7px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  outline: none;
+}
+
+.language-btn:hover,
+.language-btn:focus {
+  background: orange;
+  color: #1d192e;
+  border-color: #fff;
+}
+
+/* Terms of Use - FAQ style */
+.terms-list {
+  width: 100%;
+  max-width: 380px;
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.terms-item {
+  background: #232146;
+  border-radius: 10px;
+  padding: 18px 18px 14px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  color: #f4f4f4;
+  text-align: left;
+}
+
+.terms-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #ffb347; /* Optional: orange highlight like FAQ */
+}
+
+.terms-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #e2e2e2;
+}
+
+.drink-modal-content {
+  background: transparent !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  width: 380px;
+  min-height: 540px;
+  max-width: 98vw;
+  max-height: 90vh;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 64px !important;
+  text-align: center; 
+}
+
+#drink-options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drink-modal-content .close-btn, 
+#close-modal-btn {
+  top: 29px !important; /* Move the X button down to match the new padding */
+  right: 4px !important;
+}

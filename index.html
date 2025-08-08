@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+
+  <!-- Include Open Sans BG font -->
+  <link rel="stylesheet" href="//npoekmu.me/wp-content/uploads/display_custom_font/css/opensans_bg.css">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ✅ Welcome Screen -->
+<div class="app-container" id="welcome-screen" style="display: flex;">
+  <h2></h2>
+  <button id="welcome-language-switch-btn" class="language-btn">EN</button>
+  <img src="logoporko.png" alt="FerretFeels Logo" id="welcome-logo" class="logo" />
+  <p></p>
+  <p></p>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <button id="continue-btn" class="welcome-main-btn" type="button">
+    <span id="continue-btn-label"></span>
+  </button>
+  <div id="visitor-counter" class="visitor-counter">
+    <span id="visitor-count">0</span>
+  </div>
+</div>
+
+<!-- ✅ First Screen (Main UI) -->
+<div class="app-container" id="first-screen">
+  <img src="logoporko.png" alt="FerretFeels Logo" class="logo" id="logo-img" />
+
+  <!-- Info button ONLY on first screen -->
+  <button id="info-btn" class="info-btn" aria-label="Покажи информация">
+    <img src="info-button.png" alt="Info" />
+  </button>
+
+  <form id="user-info-form">
+    <label for="username"></label>
+    <input type="text" id="username" placeholder="пример: Порко" required autocomplete="username" />
+    <button type="submit" id="start-btn" class="welcome-main-btn">
+      <span id="start-btn-label"></span>
+    </button>
+  </form>
+</div>
+
+<!-- Info Popup (can be outside; appears above everything when needed) -->
+<div id="info-popup" class="info-popup" role="dialog" aria-modal="true" aria-labelledby="info-title" style="display: none;">
+  <div class="info-content">
+    <h2 id="info-title"></h2>
+    <p>
+    </p>
+    <button id="back-btn" class="back-btn" aria-label="Затвори информацията">
+      <img src="back-button.png" alt="Back" class="back-icon" />
+    </button>
+    <button id="terms-from-info-btn" class="settings-btn" style="margin-top: 15px;"></button>
+  </div>
+</div>
+
+  <!-- Second Screen -->
+  <div id="second-screen" class="app-container" style="display: none; flex-direction: column; justify-content: space-between; padding: 20px;">
+
+    <!-- Speech bubble images -->
+    <img id="bubble-neutral" class="speech-bubble" src="speech-bubble-neutral.png" alt="" style="display: none;">
+    <img id="bubble-tipsy" class="speech-bubble" src="speech-bubble-tipsy.png" alt="" style="display: none;">
+    <img id="bubble-drunk" class="speech-bubble" src="speech-bubble-drunk.png" alt="" style="display: none;">
+    <img id="bubble-wobbly" class="speech-bubble" src="speech-bubble-wobbly.png" alt="" style="display: none;">
+
+    <!-- Text within the bubbles -->
+    <div id="bubble-text-neutral" class="bubble-text" style="display: none;"></div>
+    <div id="bubble-text-tipsy" class="bubble-text" style="display: none;"></div>
+    <div id="bubble-text-drunk" class="bubble-text" style="display: none;"></div>
+    <div id="bubble-text-wobbly" class="bubble-text" style="display: none;"></div>
+
+    <!-- Ferret images -->
+    <img id="ferret-neutral" class="ferret-mood" src="ferret-neutral.png" alt="" style="display: none;">
+    <img id="ferret-tipsy" class="ferret-mood" src="ferret-tipsy.png" alt="" style="display: none;">
+    <img id="ferret-drunk" class="ferret-mood" src="ferret-drunk.png" alt="" style="display: none;">
+    <img id="ferret-wobbly" class="ferret-mood" src="ferret-wobbly.png" alt="" style="display: none;">
+
+<div id="alcohol-units-text"></div>
+
+    <!-- Bottom Buttons -->
+<div class="bottom-buttons">
+  <button id="menu-btn"></button>
+  <button id="settings-btn" aria-label="Настройки">
+    <img src="settings-button.png" alt="Settings" />
+  </button>
+</div>
+  </div>
+
+  <!-- Choose Drink Button (In Second Screen) -->
+  <div id="choose-drink-btn" style="display: none;"></div>
+
+  <!-- Modal Popup for Drink Selection -->
+<div id="drink-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="drink-modal-title" style="display: none;">
+  <div id="modal-content" class="drink-modal-content">
+    <button type="button" class="close-btn" id="close-modal-btn" aria-label="Close">×</button>
+    <h2 id="drink-modal-title"></h2>
+    <div id="drink-options">
+      <button class="drink-option" id="whiskey-btn"></button>
+      <button class="drink-option" id="vodka-btn"></button>
+      <button class="drink-option" id="rum-btn"></button>
+      <button class="drink-option" id="gin-btn"></button>
+      <button class="drink-option" id="tequila-btn"></button>
+    </div>
+  </div>
+</div>
+
+  <!-- Mini Modal: Enter Drink Info -->
+  <div id="drink-details-modal" class="details-modal" role="dialog" aria-modal="true" aria-labelledby="drink-details-title" style="display: none;">
+    <div class="details-content">
+      <button id="close-details-btn" class="close-btn" aria-label="Затвори модала">×</button>
+      <h2 id="drink-details-title"></h2>
+      <label for="alcohol-percentage"></label>
+      <input type="number" id="alcohol-percentage" placeholder="процент на алкохол" min="0" max="100" />
+      <label for="drink-amount"></label>
+      <input type="number" id="drink-amount" placeholder="милилитри" min="0" />
+      <button id="submit-drink" type="button">OK</button>
+    </div>
+  </div>
+
+  <!-- Drink Input Error Modal (Custom) -->
+  <div id="drink-error-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="drink-error-title" style="display: none;">
+    <div class="modal-content">
+      <h3 id="drink-error-title"></h3>
+      <button id="close-drink-error-btn" class="modal-btn">Go back</button>
+    </div>
+  </div>
+
+<!-- THIRD SCREEN: Settings -->
+<div id="settings-screen" class="app-container" style="display: none;">
+  <h2 id="settings-title"></h2>
+  <button id="faq-alcohol-info-btn" class="settings-btn"></button>
+  <button id="history-log-btn" class="settings-btn"></button>
+  <button id="statistics-btn" class="settings-btn"></button>
+  <button id="change-name-btn" class="settings-btn"></button>
+  <button id="qr-code-btn" class="settings-btn"></button>
+  <button id="terms-of-use-btn" class="settings-btn"></button>
+  <button id="back-from-settings-btn"></button>
+</div>
+
+<!-- Statistics Screen -->
+<div id="statistics-screen" class="app-container" style="display: none;">
+  <button id="back-from-statistics-btn" class="back-top-right-btn"></button>
+  <h2></h2>
+  <div id="daily-statistics">
+    <h4 id="daily-stats-title"></h4>
+    <p id="daily-total"></p>
+  </div>
+  <div id="weekly-statistics">
+    <h4 id="weekly-stats-title"></h4>
+    <p id="weekly-total"></p>
+  </div>
+  <div id="monthly-statistics">
+    <h4 id="monthly-stats-title"></h4>
+    <p id="monthly-total"></p>
+  </div>
+</div>
+
+ <!-- FAQ Alcohol Info Screen -->
+<div id="faq-screen" class="app-container" style="display: none;">
+  <button id="back-from-faq-btn" class="back-top-right-btn"></button>
+  <h2 id="faq-title"></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question" id="faq-q1"></div>
+      <div class="faq-answer" id="faq-a1-1"></div>
+      <div class="faq-answer" id="faq-a1-2"></div>
+      <div class="faq-answer" id="faq-a1-3"></div>
+      <div class="faq-answer" id="faq-a1-4"></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="faq-q2"></div>
+      <div class="faq-answer" id="faq-a2-1"></div>
+      <div class="faq-answer" id="faq-a2-2"></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="faq-q3"></div>
+      <div class="faq-answer" id="faq-a3-1"></div>
+      <div class="faq-answer" id="faq-a3-2"></div>
+      <div class="faq-answer" id="faq-a3-3"></div>
+      <div class="faq-answer" id="faq-a3-4"></div>
+      <div class="faq-answer" id="faq-a3-5"></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="faq-q4"></div>
+      <div class="faq-answer" id="faq-a4-1"></div>
+      <div class="faq-answer" id="faq-a4-2"></div>
+      <div class="faq-answer" id="faq-a4-3"></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" id="faq-q5"></div>
+      <div class="faq-answer" id="faq-a5-1"></div>
+      <div class="faq-answer" id="faq-a5-2"></div>
+    </div>
+  </div>
+</div>
+
+  <!-- History Log Screen -->
+  <div id="history-log-screen" class="app-container" style="display: none;">
+    <button id="back-from-history-btn" class="back-top-right-btn"></button>
+    <h2></h2>
+    <ul id="history-list">
+    </ul>
+    <button id="clear-history-btn" class="settings-btn"></button>
+  </div>
+
+  <!-- Clear History Confirmation Modal -->
+  <div id="clear-history-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="clear-history-title" style="display: none;">
+    <div class="modal-content">
+      <h3 id="clear-history-title"></h3>
+      <div class="modal-buttons">
+        <button id="confirm-clear-btn" class="modal-btn"></button>
+        <button id="cancel-clear-btn" class="modal-btn"></button>
+      </div>
+    </div>
+  </div>
+
+<!-- QR Code Screen -->
+<div id="qr-code-screen" class="app-container" style="display: none;">
+  <button id="back-from-qr-btn" class="back-top-right-btn"></button>
+  <h2 id="qr-code-title"></h2>
+  <img id="qr-code-image" src="qr-code-image.png" alt="QR Code" />
+</div>
+
+<div id="terms-of-use-screen" class="app-container" style="display: none;">
+  <button id="back-from-terms-btn" class="back-top-right-btn"></button>
+  <h2 id="terms-title"></h2>
+  <div class="terms-list">
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-1"></div>
+      <div class="terms-text" id="terms-text-1"></div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-2"></div>
+      <div class="terms-text" id="terms-text-2"></div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-3"></div>
+      <div class="terms-text" id="terms-text-3"></div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-4"></div>
+      <div class="terms-text" id="terms-text-4"></div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-5"></div>
+      <div class="terms-text" id="terms-text-5"></div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-6"></div>
+      <div class="terms-text" id="terms-text-6"></div>
+    </div>
+    <div class="terms-item">
+      <div class="terms-title" id="terms-title-7"></div>
+      <div class="terms-text" id="terms-text-7"></div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
